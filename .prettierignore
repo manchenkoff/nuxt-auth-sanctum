@@ -1,0 +1,8 @@
+.vscode
+.nuxt
+dist
+node_modules
+
+playground/.nuxt
+playground/.output
+playground/node_modules
