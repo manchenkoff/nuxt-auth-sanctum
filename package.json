@@ -1,8 +1,8 @@
 {
-    "name": "my-module",
+    "name": "nuxt-auth-sanctum",
     "version": "1.0.0",
-    "description": "My new Nuxt module",
-    "repository": "your-org/my-module",
+    "description": "Nuxt 3 module for Laravel Sanctum authentication",
+    "repository": "your-org/nuxt-auth-sanctum",
     "license": "MIT",
     "type": "module",
     "exports": {

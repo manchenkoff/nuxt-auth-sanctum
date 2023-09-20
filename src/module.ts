@@ -5,7 +5,7 @@ export interface ModuleOptions {}
 
 export default defineNuxtModule<ModuleOptions>({
     meta: {
-        name: 'my-module',
+        name: 'nuxt-auth-sanctum',
         configKey: 'myModule',
     },
     // Default configuration options of the Nuxt module
