@@ -2,7 +2,7 @@
 .nuxt
 dist
 node_modules
-
+package.json
 playground/.nuxt
 playground/.output
 playground/node_modules
