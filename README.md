@@ -105,7 +105,7 @@ await login(userCredentials);
 
 If login operation was successful, the `user` property will be updated with the current user information returned by the Laravel API.
 
-By default, methods will be used with the following endpoints:
+By default, methods will use the following Laravel endpoints:
 
 -   `/login` to authenticate the user
 -   `/logout` to log out the user
