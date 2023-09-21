@@ -58,7 +58,8 @@ async function onFormSubmit() {
             <input
                 id="password"
                 v-model="credentials.password"
-                type="current-password"
+                type="password"
+                autocomplete="current-password"
                 name="password"
             />
         </div>
