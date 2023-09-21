@@ -64,29 +64,149 @@ In this package you can find the following:
 
 1. `useSanctumUser`
 
-TODO: How to use
+This composable provides access to the current authenticated user. It supports generic types, so you can get the user as any class you want.
+
+```ts
+interface MyCustomUser {
+    id: number;
+    login: string;
+    custom_metadata: {
+        group: string;
+        role: string;
+    };
+}
+
+const user = useSanctumUser<MyCustomUser>();
+```
+
+If there is no authenticated user, the composable will return `null`.
 
 2. `useSanctumAuth`
 
-TODO: How to use
+Composable provides 2 computed properties and 2 methods:
+
+-   `user` - current authenticated user (basically the same as `useSanctumUser`)
+-   `isAuthenticated` - boolean flag indicating whether the user is authenticated or not
+-   `login` - method for logging in the user
+-   `logout` - method for logging out the user
+
+To authenticate a user you should pass credentials payload as an argument to the `login` method. The payload should contain all fields that are required by your Laravel Sanctum backend.
+
+```ts
+const { login } = useSanctumAuth();
+
+const userCredentials = {
+    email: 'user@mail.com',
+    password: '123123',
+};
+
+await login(userCredentials);
+```
+
+If login operation was successful, the `user` property will be updated with the current user information returned by the Laravel API.
+
+By default, methods will be used with the following endpoints:
+
+-   `/login` to authenticate the user
+-   `/logout` to log out the user
+-   `/api/user` to get the current user information
+-   `/sanctum/csrf-cookie` to get the `CSRF` token cookie
+
+To change the default endpoints, please check the [Configuration](#configuration) section.
 
 1. `useSanctumClient`
 
-TODO: How to use
+All previous composables work on top of the `ofetch` client which can be used in your application as well.
+The client is pre-configured with `CSRF` token header and cookie management.
+
+All requests will be sent to the `baseUrl` specified in the [Configuration](#configuration) section.
+
+```ts
+const { client } = useSanctumClient();
+
+const { data, pending, error, refresh } = await useAsyncData('users', () =>
+    client('/api/users')
+);
+```
+
+Since `client` implements `$Fetch` interface, you can use it as a regular `ofetch` client.
+Check examples in the 'ofetch' [documentation](https://github.com/unjs/ofetch?tab=readme-ov-file#%EF%B8%8F-create-fetch-with-default-options).
 
 ### Middleware
 
 1. `sanctum:auth`
 
-TODO: How to use
+This middleware checks if the user is authenticated. If not, it will redirect a user to the page specified in the `redirect.onAuthOnly` option (default is `/login`).
+
+Also, you might want to remember what page the **user was trying to access** and redirect him back to that page after successful authentication. To do that, just enable the `redirect.keepRequestedRoute` option and it will be automatically stored in the URL for later redirect.
+
+If there is no redirect rule the middleware will throw `403` error.
 
 2. `sanctum:guest`
 
-TODO: How to use
+This middleware checks if the user is not authenticated. If not, it will redirect a user to the page specified in the `redirect.onGuestOnly` option (default is `/`).
+
+If there is no redirect rule the middleware will throw `403` error.
 
 ### Configuration
 
-TODO: How to configure
+Here is the full example of the default module configuration:
+
+```ts
+baseUrl: 'http://localhost:80', // Laravel API
+origin: 'http://localhost:3000', // Nuxt app (required for CSRF cookie)
+userStateKey: 'sanctum.user.identity', // user state key for Vue `useState` composable
+endpoints: {
+    csrf: '/sanctum/csrf-cookie', // CSRF cookie endpoint
+    login: '/login', // Endpoint that accepts user credentials
+    logout: '/logout', // Endpoint to destroy the current session
+    user: '/api/user', // Endpoint that return current user information
+},
+csrf: {
+    cookie: 'XSRF-TOKEN', // CSRF cookie name
+    header: 'X-XSRF-TOKEN', // CSRF header name
+},
+client: {
+    retry: false, // ofetch retry option (number | false)
+},
+redirect: {
+    keepRequestedRoute: false, // Keep requested route in the URL for later redirect
+    onLogin: '/', // Redirect to this page after successful login
+    onLogout: '/', // Redirect to this page after successful logout
+    onAuthOnly: '/login', // Redirect to this page if user is not authenticated
+    onGuestOnly: '/', // Redirect to this page if user is authenticated
+},
+```
+
+You can override any of these options in the `nuxt.config.ts` file:
+
+```ts
+export default defineNuxtConfig({
+    modules: ['nuxt-auth-sanctum'],
+
+    sanctum: {
+        baseUrl: 'http://localhost:80', // Your Laravel API
+        origin: 'http://localhost:3000', // Your Nuxt app
+        redirect: {
+            onLogin: '/dashboard', // Custom route after successful login
+        },
+    },
+});
+```
+
+Also, it is possible to override options via environment variables. It might be useful when you want to use `.env` file to provide `baseUrl` for Laravel API.
+
+```ts
+export default defineNuxtConfig({
+    modules: ['nuxt-auth-sanctum'],
+
+    runtimeConfig: {
+        sanctum: {
+            baseUrl: 'http://localhost:80',
+        },
+    },
+});
+```
 
 ## Development
 

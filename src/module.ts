@@ -34,7 +34,7 @@ export default defineNuxtModule<SanctumOptions>({
             retry: false,
         },
         redirect: {
-            keepRequestedRoute: true,
+            keepRequestedRoute: false,
             onLogin: '/',
             onLogout: '/',
             onAuthOnly: '/login',
