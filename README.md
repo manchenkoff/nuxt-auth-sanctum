@@ -122,7 +122,7 @@ The client is pre-configured with `CSRF` token header and cookie management.
 All requests will be sent to the `baseUrl` specified in the [Configuration](#configuration) section.
 
 ```ts
-const { client } = useSanctumClient();
+const client = useSanctumClient();
 
 const { data, pending, error, refresh } = await useAsyncData('users', () =>
     client('/api/users')
@@ -130,7 +130,7 @@ const { data, pending, error, refresh } = await useAsyncData('users', () =>
 ```
 
 Since `client` implements `$Fetch` interface, you can use it as a regular `ofetch` client.
-Check examples in the 'ofetch' [documentation](https://github.com/unjs/ofetch?tab=readme-ov-file#%EF%B8%8F-create-fetch-with-default-options).
+Check examples in the [ofetch documentation](https://github.com/unjs/ofetch?tab=readme-ov-file#%EF%B8%8F-create-fetch-with-default-options).
 
 ### Middleware
 
@@ -201,8 +201,10 @@ export default defineNuxtConfig({
     modules: ['nuxt-auth-sanctum'],
 
     runtimeConfig: {
-        sanctum: {
-            baseUrl: 'http://localhost:80',
+        public: {
+            sanctum: {
+                baseUrl: 'http://localhost:80',
+            },
         },
     },
 });
