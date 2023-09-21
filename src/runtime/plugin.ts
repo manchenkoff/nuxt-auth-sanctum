@@ -13,7 +13,7 @@ function handleIdentityLoadError(error: Error) {
     ) {
         // unauthenticated user, unable to get information
     } else {
-        throw error;
+        console.error('Unable to load user identity', error);
     }
 }
 
