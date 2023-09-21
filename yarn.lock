@@ -1877,6 +1877,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/set-cookie-parser@npm:^2.4.3":
+  version: 2.4.3
+  resolution: "@types/set-cookie-parser@npm:2.4.3"
+  dependencies:
+    "@types/node": "*"
+  checksum: 8c0ded364c5a53598dc58f6c668d6fdbefa3bb78fcb1181202b92f4d8495ca33b4317f54ac0fe42824278e789d730ee5cbd2f7f864466e708589ff4eab2bf457
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/eslint-plugin@npm:^6.5.0":
   version: 6.7.2
   resolution: "@typescript-eslint/eslint-plugin@npm:6.7.2"
@@ -5963,30 +5972,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt-auth-sanctum@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "nuxt-auth-sanctum@workspace:."
-  dependencies:
-    "@nuxt/devtools": latest
-    "@nuxt/eslint-config": ^0.2.0
-    "@nuxt/kit": ^3.7.3
-    "@nuxt/module-builder": ^0.5.1
-    "@nuxt/schema": ^3.7.3
-    "@nuxt/test-utils": ^3.7.3
-    "@types/node": ^18.17.17
-    changelogen: ^0.5.5
-    eslint: ^8.49.0
-    eslint-config-prettier: ^9.0.0
-    eslint-plugin-prettier: ^5.0.0
-    nuxi: ^3.9.0
-    nuxt: ^3.7.3
-    prettier: ^3.0.3
-    vite: ^4.4.9
-    vitest: ^0.33.0
-    vue: ^3.3.4
-  languageName: unknown
-  linkType: soft
-
 "nanoid@npm:^3.3.6":
   version: 3.3.6
   resolution: "nanoid@npm:3.3.6"
@@ -6387,6 +6372,32 @@ __metadata:
   checksum: 12e36bd4ecca7198d4b7104078697917b7c326bb66e8e99f0ca549c2c96fb19ba08b225b197392d37bca09387f25a80f94a861be0307b5dd9c579f762591e081
   languageName: node
   linkType: hard
+
+"nuxt-auth-sanctum@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "nuxt-auth-sanctum@workspace:."
+  dependencies:
+    "@nuxt/devtools": latest
+    "@nuxt/eslint-config": ^0.2.0
+    "@nuxt/kit": ^3.7.3
+    "@nuxt/module-builder": ^0.5.1
+    "@nuxt/schema": ^3.7.3
+    "@nuxt/test-utils": ^3.7.3
+    "@types/node": ^18.17.17
+    "@types/set-cookie-parser": ^2.4.3
+    changelogen: ^0.5.5
+    eslint: ^8.49.0
+    eslint-config-prettier: ^9.0.0
+    eslint-plugin-prettier: ^5.0.0
+    nuxi: ^3.9.0
+    nuxt: ^3.7.3
+    prettier: ^3.0.3
+    set-cookie-parser: ^2.6.0
+    vite: ^4.4.9
+    vitest: ^0.33.0
+    vue: ^3.3.4
+  languageName: unknown
+  linkType: soft
 
 "nuxt@npm:^3.7.3":
   version: 3.7.3
@@ -7679,6 +7690,13 @@ __metadata:
   version: 2.0.0
   resolution: "set-blocking@npm:2.0.0"
   checksum: 6e65a05f7cf7ebdf8b7c75b101e18c0b7e3dff4940d480efed8aad3a36a4005140b660fa1d804cb8bce911cac290441dc728084a30504d3516ac2ff7ad607b02
+  languageName: node
+  linkType: hard
+
+"set-cookie-parser@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "set-cookie-parser@npm:2.6.0"
+  checksum: bf11ebc594c53d84588f1b4c04f1b8ce14e0498b1c011b3d76b5c6d5aac481bbc3f7c5260ec4ce99bdc1d9aed19f9fc315e73166a36ca74d0f12349a73f6bdc9
   languageName: node
   linkType: hard
 

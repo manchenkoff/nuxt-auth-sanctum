@@ -1,4 +1,17 @@
 {
     "root": true,
-    "extends": ["@nuxt/eslint-config", "prettier", "plugin:@typescript-eslint/recommended"]
+    "extends": [
+        "@nuxt/eslint-config",
+        "prettier",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "vue-eslint-parser",
+    "parserOptions": {
+        "parser": {
+            "ts": "@typescript-eslint/parser"
+        }
+    },
+    "rules": {
+        "vue/no-multiple-template-root": "off"
+    }
 }

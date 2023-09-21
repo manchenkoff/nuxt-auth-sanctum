@@ -5,16 +5,16 @@
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-This module provides a simple way to use Laravel Sanctum with Nuxt 3 by leveraging cookies-based authentication. SSR-ready!
+This module provides a simple way to use Laravel Sanctum with Nuxt by leveraging cookies-based authentication. SSR-ready!
 
 ## Features
 
--   `useAuth` composable for easy access to the current user and authentication methods
+-   `useSanctumAuth` composable for easy access to the current user and authentication methods
 -   Automated `CSRF` token header and cookie management
 -   Both `CSR` and `SSR` modes support
 -   Pre-configured middleware for pages that require authentication
 -   Cast current user information to any class you want
--   Compatible with default Nuxt 3 `ofetch` client
+-   Compatible with default Nuxt `ofetch` client
 -   TypeScript support
 
 ## Quick Setup
@@ -40,26 +40,53 @@ export default defineNuxtConfig({
 
     // nuxt-auth-sanctum options (also configurable via environment variables)
     sanctum: {
-        baseUrl: 'http://localhost:80',
-        endpoints: {
-            csrf: '/sanctum/csrf-cookie',
-            login: '/api/login',
-            logout: '/api/logout',
-            user: '/api/user',
-        },
-        csrf: {
-            cookie: 'XSRF-TOKEN',
-            header: 'X-XSRF-TOKEN',
-        },
-        redirect: {
-            enabled: true,
-            route: '/login',
-        },
+        baseUrl: 'http://localhost:80', // Laravel API
+        origin: 'http://localhost:3000', // Nuxt app
     },
 });
 ```
 
 That's it! You can now use Nuxt Auth Sanctum in your Nuxt app ✨
+
+## Usage
+
+In this package you can find the following:
+
+-   **composables**
+    -   `useSanctumAuth` - provides access to the current user and authentication methods
+    -   `useSanctumUser` - provides access to the current user
+    -   `useSanctumClient` - provides access to the `ofetch` client with pre-configured `CSRF` token header and cookie management
+-   **middleware**
+    -   `sanctum:auth` - middleware for pages that require authenticated user
+    -   `sanctum:guest` - middleware for pages that require guest user
+
+### Composables
+
+1. `useSanctumUser`
+
+TODO: How to use
+
+2. `useSanctumAuth`
+
+TODO: How to use
+
+1. `useSanctumClient`
+
+TODO: How to use
+
+### Middleware
+
+1. `sanctum:auth`
+
+TODO: How to use
+
+2. `sanctum:guest`
+
+TODO: How to use
+
+### Configuration
+
+TODO: How to configure
 
 ## Development
 

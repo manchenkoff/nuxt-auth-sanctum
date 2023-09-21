@@ -1,19 +1,60 @@
-import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit';
+import {
+    defineNuxtModule,
+    addPlugin,
+    createResolver,
+    addImportsDir,
+} from '@nuxt/kit';
+import { defu } from 'defu';
+import { SanctumOptions } from './types';
 
-// Module options TypeScript interface definition
-export interface ModuleOptions {}
-
-export default defineNuxtModule<ModuleOptions>({
+export default defineNuxtModule<SanctumOptions>({
     meta: {
         name: 'nuxt-auth-sanctum',
-        configKey: 'myModule',
+        configKey: 'sanctum',
+        compatibility: {
+            nuxt: '^3.0.0',
+        },
     },
-    // Default configuration options of the Nuxt module
-    defaults: {},
+
+    defaults: {
+        baseUrl: 'http://localhost:80',
+        origin: 'http://localhost:3000',
+        userStateKey: 'sanctum.user.identity',
+        endpoints: {
+            csrf: '/sanctum/csrf-cookie',
+            login: '/login',
+            logout: '/logout',
+            user: '/api/user',
+        },
+        csrf: {
+            cookie: 'XSRF-TOKEN',
+            header: 'X-XSRF-TOKEN',
+        },
+        client: {
+            retry: false,
+        },
+        redirect: {
+            keepRequestedRoute: true,
+            onLogin: '/',
+            onLogout: '/',
+            onAuthOnly: '/login',
+            onGuestOnly: '/',
+        },
+    },
+
     setup(options, nuxt) {
         const resolver = createResolver(import.meta.url);
 
-        // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
+        const publicConfig = nuxt.options.runtimeConfig.public;
+        const userModuleConfig =
+            publicConfig.sanctum as Partial<SanctumOptions>;
+
+        nuxt.options.runtimeConfig.public.sanctum = defu(
+            userModuleConfig,
+            options
+        );
+
+        addImportsDir(resolver.resolve('./runtime/composables'));
         addPlugin(resolver.resolve('./runtime/plugin'));
     },
 });
