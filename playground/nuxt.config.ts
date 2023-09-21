@@ -1,5 +1,13 @@
 export default defineNuxtConfig({
     modules: ['../src/module'],
+    runtimeConfig: {
+        public: {
+            sanctum: {
+                baseUrl: 'http://localhost:80',
+                userStateKey: 'sanctum.user.identity',
+            },
+        },
+    },
     sanctum: {
         baseUrl: 'http://localhost:80',
         origin: 'http://localhost:3000',
