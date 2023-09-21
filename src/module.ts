@@ -3,6 +3,7 @@ import {
     addPlugin,
     createResolver,
     addImportsDir,
+    addRouteMiddleware,
 } from '@nuxt/kit';
 import { defu } from 'defu';
 import { SanctumOptions } from './types';
@@ -54,6 +55,16 @@ export default defineNuxtModule<SanctumOptions>({
         );
 
         addImportsDir(resolver.resolve('./runtime/composables'));
+
+        addRouteMiddleware({
+            name: 'sanctum:auth',
+            path: resolver.resolve('./runtime/middleware/sanctum.auth'),
+        });
+        addRouteMiddleware({
+            name: 'sanctum:guest',
+            path: resolver.resolve('./runtime/middleware/sanctum.guest'),
+        });
+
         addPlugin(resolver.resolve('./runtime/plugin'));
     },
 });

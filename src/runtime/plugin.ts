@@ -1,9 +1,7 @@
 import { FetchError } from 'ofetch';
-import { addRouteMiddleware, defineNuxtPlugin } from '#app';
+import { defineNuxtPlugin } from '#app';
 import { createHttpClient } from './httpFactory';
 import { useSanctumUser } from './composables/useSanctumUser';
-import sanctumAuth from './middleware/sanctum.auth';
-import sanctumGuest from './middleware/sanctum.guest';
 import { SanctumOptions } from '../types';
 
 function handleIdentityLoadError(error: Error) {
@@ -23,9 +21,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     const client = createHttpClient();
 
     const options = nuxtApp.$config.public.sanctum as SanctumOptions;
-
-    addRouteMiddleware('sanctum:auth', sanctumAuth);
-    addRouteMiddleware('sanctum:guest', sanctumGuest);
 
     if (process.server && user.value === null) {
         try {
