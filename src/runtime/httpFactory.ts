@@ -5,8 +5,8 @@ import {
     useCookie,
     useRequestEvent,
     useRequestHeaders,
-    useRouter,
     useRuntimeConfig,
+    navigateTo,
 } from '#app';
 import { SanctumOptions } from '../types';
 
@@ -15,7 +15,6 @@ export const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch']);
 export function createHttpClient(): $Fetch {
     const options = useRuntimeConfig().public.sanctum as SanctumOptions;
     const event = useRequestEvent();
-    const router = useRouter();
 
     /**
      * Request a new CSRF cookie from the API and pass it to the headers collection
@@ -107,7 +106,7 @@ export function createHttpClient(): $Fetch {
 
             // follow redirects on client
             if (response.redirected) {
-                await router.push(response.url);
+                await navigateTo(response.url);
             }
         },
     };

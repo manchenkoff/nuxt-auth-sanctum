@@ -1,7 +1,7 @@
 import { computed } from 'vue';
 import { useSanctumClient } from './useSanctumClient';
 import { useSanctumUser } from './useSanctumUser';
-import { useRoute, useRouter, useRuntimeConfig } from '#app';
+import { navigateTo, useRoute, useRuntimeConfig } from '#app';
 import { SanctumOptions } from '~/src/types';
 
 /**
@@ -12,7 +12,6 @@ import { SanctumOptions } from '~/src/types';
 export const useSanctumAuth = <T>() => {
     const user = useSanctumUser<T>();
     const client = useSanctumClient();
-    const router = useRouter();
     const options = useRuntimeConfig().public.sanctum as SanctumOptions;
 
     const isAuthenticated = computed(() => {
@@ -45,14 +44,12 @@ export const useSanctumAuth = <T>() => {
             const requestedRoute = route.query.redirect as string | undefined;
 
             if (requestedRoute) {
-                await router.push(requestedRoute);
-
-                return;
+                return await navigateTo(requestedRoute);
             }
         }
 
         if (options.redirect.onLogin) {
-            await router.push(options.redirect.onLogin);
+            return await navigateTo(options.redirect.onLogin);
         }
     }
 
@@ -69,7 +66,7 @@ export const useSanctumAuth = <T>() => {
         user.value = null;
 
         if (options.redirect.onLogout) {
-            await router.push(options.redirect.onLogout);
+            return await navigateTo(options.redirect.onLogout);
         }
     }
 
