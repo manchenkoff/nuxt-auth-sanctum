@@ -17,6 +17,8 @@ This module provides a simple way to use Laravel Sanctum with Nuxt by leveraging
 -   Compatible with default Nuxt `ofetch` client
 -   TypeScript support
 
+**Note:** Before using this module, please make sure that you have already configured Laravel Sanctum on your backend. You can find more information about Laravel Sanctum [here](https://laravel.com/docs/10.x/sanctum#spa-authentication).
+
 ## Quick Setup
 
 1. Add `nuxt-auth-sanctum` dependency to your project
