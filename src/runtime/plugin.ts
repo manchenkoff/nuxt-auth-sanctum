@@ -4,6 +4,7 @@ import { createHttpClient } from './httpFactory';
 import { useSanctumUser } from './composables/useSanctumUser';
 import sanctumAuth from './middleware/sanctum.auth';
 import sanctumGuest from './middleware/sanctum.guest';
+import { SanctumOptions } from '../types';
 
 function handleIdentityLoadError(error: Error) {
     if (
@@ -21,7 +22,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     const user = useSanctumUser();
     const client = createHttpClient();
 
-    const options = nuxtApp.$config.public.sanctum;
+    const options = nuxtApp.$config.public.sanctum as SanctumOptions;
 
     addRouteMiddleware('sanctum:auth', sanctumAuth);
     addRouteMiddleware('sanctum:guest', sanctumGuest);

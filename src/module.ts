@@ -46,8 +46,7 @@ export default defineNuxtModule<SanctumOptions>({
         const resolver = createResolver(import.meta.url);
 
         const publicConfig = nuxt.options.runtimeConfig.public;
-        const userModuleConfig =
-            publicConfig.sanctum as Partial<SanctumOptions>;
+        const userModuleConfig = publicConfig.sanctum;
 
         nuxt.options.runtimeConfig.public.sanctum = defu(
             userModuleConfig,

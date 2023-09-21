@@ -2,6 +2,7 @@ import { computed } from 'vue';
 import { useSanctumClient } from './useSanctumClient';
 import { useSanctumUser } from './useSanctumUser';
 import { useRoute, useRouter, useRuntimeConfig } from '#app';
+import { SanctumOptions } from '~/src/types';
 
 /**
  * Provides authentication methods for Laravel Sanctum
@@ -12,7 +13,7 @@ export const useSanctumAuth = <T>() => {
     const user = useSanctumUser<T>();
     const client = useSanctumClient();
     const router = useRouter();
-    const options = useRuntimeConfig().public.sanctum;
+    const options = useRuntimeConfig().public.sanctum as SanctumOptions;
 
     const isAuthenticated = computed(() => {
         return user.value !== null;
