@@ -1,6 +1,6 @@
 import { $Fetch, FetchOptions } from 'ofetch';
 import { appendHeader } from 'h3';
-import { splitCookiesString } from 'set-cookie-parser';
+import cookieParser from 'set-cookie-parser';
 import {
     useCookie,
     useRequestEvent,
@@ -97,7 +97,8 @@ export function createHttpClient(): $Fetch {
                     return;
                 }
 
-                const cookies = splitCookiesString(rawCookiesHeader);
+                const cookies =
+                    cookieParser.splitCookiesString(rawCookiesHeader);
 
                 for (const cookie of cookies) {
                     appendHeader(event, serverCookieName, cookie);
