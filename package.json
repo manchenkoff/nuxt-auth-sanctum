@@ -34,9 +34,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.7.3",
-    "@types/set-cookie-parser": "^2.4.3",
-    "defu": "^6.1.2",
-    "set-cookie-parser": "^2.6.0"
+    "defu": "^6.1.2"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",

@@ -1,6 +1,5 @@
 import { $Fetch, FetchOptions } from 'ofetch';
 import { appendHeader } from 'h3';
-import cookieParser from 'set-cookie-parser';
 import {
     useCookie,
     useRequestEvent,
@@ -91,18 +90,13 @@ export function createHttpClient(): $Fetch {
             // pass all cookies from the API to the client on SSR response
             if (process.server) {
                 const serverCookieName = 'set-cookie';
-                const rawCookiesHeader = response.headers.get(serverCookieName);
+                const cookie = response.headers.get(serverCookieName);
 
-                if (rawCookiesHeader === null) {
+                if (cookie === null) {
                     return;
                 }
 
-                const cookies =
-                    cookieParser.splitCookiesString(rawCookiesHeader);
-
-                for (const cookie of cookies) {
-                    appendHeader(event, serverCookieName, cookie);
-                }
+                appendHeader(event, serverCookieName, cookie);
             }
 
             // follow redirects on client
