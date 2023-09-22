@@ -1,18 +1,25 @@
-import { computed } from 'vue';
+import { type Ref, computed } from 'vue';
 import { useSanctumClient } from './useSanctumClient';
 import { useSanctumUser } from './useSanctumUser';
 import { navigateTo, useRoute, useRuntimeConfig } from '#app';
-import { SanctumOptions } from '~/src/types';
+import { SanctumModuleOptions } from '~/src/types';
+
+export interface SanctumAuth<T> {
+    user: Ref<T | null>;
+    isAuthenticated: Ref<boolean>;
+    login: (credentials: Record<string, any>) => Promise<void>;
+    logout: () => Promise<void>;
+}
 
 /**
  * Provides authentication methods for Laravel Sanctum
  *
  * @param T Type of the user object
  */
-export const useSanctumAuth = <T>() => {
+export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     const user = useSanctumUser<T>();
     const client = useSanctumClient();
-    const options = useRuntimeConfig().public.sanctum as SanctumOptions;
+    const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
 
     const isAuthenticated = computed(() => {
         return user.value !== null;
@@ -27,7 +34,7 @@ export const useSanctumAuth = <T>() => {
      *
      * @param credentials Credentials to pass to the login endpoint
      */
-    async function login(credentials: Record<string, string | boolean>) {
+    async function login(credentials: Record<string, any>) {
         if (isAuthenticated.value === true) {
             throw new Error('User is already authenticated');
         }
@@ -75,5 +82,5 @@ export const useSanctumAuth = <T>() => {
         isAuthenticated,
         login,
         logout,
-    };
+    } as SanctumAuth<T>;
 };

@@ -2,7 +2,7 @@ import { FetchError } from 'ofetch';
 import { defineNuxtPlugin } from '#app';
 import { createHttpClient } from './httpFactory';
 import { useSanctumUser } from './composables/useSanctumUser';
-import { SanctumOptions } from '../types';
+import { SanctumModuleOptions } from '../types';
 
 function handleIdentityLoadError(error: Error) {
     if (
@@ -20,7 +20,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     const user = useSanctumUser();
     const client = createHttpClient();
 
-    const options = nuxtApp.$config.public.sanctum as SanctumOptions;
+    const options = nuxtApp.$config.public.sanctum as SanctumModuleOptions;
 
     if (process.server && user.value === null) {
         try {

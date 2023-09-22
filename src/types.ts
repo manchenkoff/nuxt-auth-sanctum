@@ -77,7 +77,7 @@ export interface RedirectOptions {
 /**
  * Options to be passed to the plugin.
  */
-export interface SanctumOptions {
+export interface SanctumModuleOptions {
     /**
      * The base URL of the Laravel API.
      */

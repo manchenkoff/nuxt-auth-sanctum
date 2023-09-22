@@ -8,12 +8,12 @@ import {
     useRuntimeConfig,
     navigateTo,
 } from '#app';
-import { SanctumOptions } from '../types';
+import { SanctumModuleOptions } from '../types';
 
 export const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch']);
 
 export function createHttpClient(): $Fetch {
-    const options = useRuntimeConfig().public.sanctum as SanctumOptions;
+    const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
     const event = useRequestEvent();
 
     /**

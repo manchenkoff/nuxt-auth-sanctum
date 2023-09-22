@@ -1,7 +1,7 @@
-import { SanctumOptions } from './types';
+import { SanctumModuleOptions } from './types';
 
 declare module 'nuxt/schema' {
     interface PublicRuntimeConfig {
-        sanctum: Partial<SanctumOptions>;
+        sanctum: Partial<SanctumModuleOptions>;
     }
 }

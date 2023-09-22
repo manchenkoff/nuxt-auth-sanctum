@@ -6,9 +6,9 @@ import {
     addRouteMiddleware,
 } from '@nuxt/kit';
 import { defu } from 'defu';
-import { SanctumOptions } from './types';
+import { SanctumModuleOptions } from './types';
 
-export default defineNuxtModule<SanctumOptions>({
+export default defineNuxtModule<SanctumModuleOptions>({
     meta: {
         name: 'nuxt-auth-sanctum',
         configKey: 'sanctum',
