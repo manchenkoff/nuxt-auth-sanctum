@@ -1,7 +1,7 @@
 import { type Ref, computed } from 'vue';
 import { useSanctumClient } from './useSanctumClient';
 import { useSanctumUser } from './useSanctumUser';
-import { navigateTo, useRoute, useRuntimeConfig } from '#app';
+import { navigateTo, useNuxtApp, useRoute, useRuntimeConfig } from '#app';
 import { SanctumModuleOptions } from '~/src/types';
 
 export interface SanctumAuth<T> {
@@ -17,6 +17,8 @@ export interface SanctumAuth<T> {
  * @param T Type of the user object
  */
 export const useSanctumAuth = <T>(): SanctumAuth<T> => {
+    const nuxtApp = useNuxtApp();
+
     const user = useSanctumUser<T>();
     const client = useSanctumClient();
     const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
@@ -51,12 +53,14 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
             const requestedRoute = route.query.redirect as string | undefined;
 
             if (requestedRoute) {
-                await navigateTo(requestedRoute);
+                await nuxtApp.runWithContext(() => navigateTo(requestedRoute));
             }
         }
 
         if (options.redirect.onLogin) {
-            await navigateTo(options.redirect.onLogin);
+            const redirect = options.redirect.onLogin as string;
+
+            await nuxtApp.runWithContext(() => navigateTo(redirect));
         }
     }
 
@@ -73,7 +77,9 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
         user.value = null;
 
         if (options.redirect.onLogout) {
-            await navigateTo(options.redirect.onLogout);
+            const redirect = options.redirect.onLogout as string;
+
+            await nuxtApp.runWithContext(() => navigateTo(redirect));
         }
     }
 
