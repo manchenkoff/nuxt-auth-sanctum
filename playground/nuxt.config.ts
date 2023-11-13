@@ -28,7 +28,7 @@ export default defineNuxtConfig({
         },
         endpoints: {
             csrf: '/sanctum/csrf-cookie',
-            login: '/api/login/credentials',
+            login: '/api/login',
             logout: '/api/logout',
             user: '/api/user',
         },

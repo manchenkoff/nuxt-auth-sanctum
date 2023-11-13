@@ -51,12 +51,12 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
             const requestedRoute = route.query.redirect as string | undefined;
 
             if (requestedRoute) {
-                return await navigateTo(requestedRoute);
+                await navigateTo(requestedRoute);
             }
         }
 
         if (options.redirect.onLogin) {
-            return await navigateTo(options.redirect.onLogin);
+            await navigateTo(options.redirect.onLogin);
         }
     }
 
@@ -73,7 +73,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
         user.value = null;
 
         if (options.redirect.onLogout) {
-            return await navigateTo(options.redirect.onLogout);
+            await navigateTo(options.redirect.onLogout);
         }
     }
 
