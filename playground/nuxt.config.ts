@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
     modules: ['../src/module'],
+    ssr: true,
     runtimeConfig: {
         public: {
             sanctum: {

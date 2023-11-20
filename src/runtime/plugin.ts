@@ -22,7 +22,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
     const options = nuxtApp.$config.public.sanctum as SanctumModuleOptions;
 
-    if (process.server && user.value === null) {
+    if (user.value === null) {
         try {
             user.value = await client(options.endpoints.user);
         } catch (error) {
