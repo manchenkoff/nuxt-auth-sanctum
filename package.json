@@ -1,6 +1,6 @@
 {
   "name": "nuxt-auth-sanctum",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "author": "Artem Manchenkov",
   "description": "Nuxt module for Laravel Sanctum authentication",
   "repository": {
