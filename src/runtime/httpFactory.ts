@@ -6,14 +6,18 @@ import {
     useRequestHeaders,
     useRuntimeConfig,
     navigateTo,
+    useNuxtApp,
 } from '#app';
 import { SanctumModuleOptions } from '../types';
+import { useSanctumUser } from './composables/useSanctumUser';
 
 export const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch']);
 
 export function createHttpClient(): $Fetch {
     const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
     const event = useRequestEvent();
+    const user = useSanctumUser();
+    const nuxtApp = useNuxtApp();
 
     /**
      * Request a new CSRF cookie from the API and pass it to the headers collection
@@ -101,7 +105,25 @@ export function createHttpClient(): $Fetch {
 
             // follow redirects on client
             if (response.redirected) {
-                await navigateTo(response.url);
+                await nuxtApp.runWithContext(() => navigateTo(response.url));
+            }
+        },
+
+        async onResponseError({ request, response }): Promise<void> {
+            if (response.status === 401) {
+                // do not redirect when requesting the user endpoint
+                // this prevents an infinite loop (ERR_TOO_MANY_REDIRECTS)
+                if (request.toString().endsWith(options.endpoints.user)) {
+                    return;
+                }
+
+                user.value = null;
+
+                if (options.redirect.onLogout) {
+                    await nuxtApp.runWithContext(() =>
+                        navigateTo(options.redirect.onLogout as string)
+                    );
+                }
             }
         },
     };
