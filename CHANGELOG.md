@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.13
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/list...v0.0.13)
+
+### 🏡 Chore
+
+- **release:** V0.0.12 ([8230041](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/8230041))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.0.12
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/list...v0.0.12)
