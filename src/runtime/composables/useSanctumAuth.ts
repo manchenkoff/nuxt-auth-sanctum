@@ -38,7 +38,17 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
      */
     async function login(credentials: Record<string, any>) {
         if (isAuthenticated.value === true) {
-            throw new Error('User is already authenticated');
+            if (options.redirectIfAuthenticated === false) {
+                throw new Error('User is already authenticated');
+            }
+
+            if (options.redirect.onLogin === false) {
+                return;
+            }
+
+            const redirect = options.redirect.onLogin as string;
+
+            await nuxtApp.runWithContext(() => navigateTo(redirect));
         }
 
         await client(options.endpoints.login, {
