@@ -158,6 +158,7 @@ Here is the full example of the default module configuration:
 baseUrl: 'http://localhost:80', // Laravel API
 origin: 'http://localhost:3000', // Nuxt app (required for CSRF cookie)
 userStateKey: 'sanctum.user.identity', // user state key for Vue `useState` composable
+redirectIfAuthenticated: false, // Redirect to onLogin if already authenticated
 endpoints: {
     csrf: '/sanctum/csrf-cookie', // CSRF cookie endpoint
     login: '/login', // Endpoint that accepts user credentials

@@ -13,6 +13,7 @@ export default defineNuxtConfig({
         baseUrl: 'http://localhost:80',
         origin: 'http://localhost:3000',
         userStateKey: 'sanctum.user.identity',
+        redirectIfAuthenticated: false,
         client: {
             retry: false,
         },

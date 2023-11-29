@@ -21,6 +21,7 @@ export default defineNuxtModule<SanctumModuleOptions>({
         baseUrl: 'http://localhost:80',
         origin: 'http://localhost:3000',
         userStateKey: 'sanctum.user.identity',
+        redirectIfAuthenticated: false,
         endpoints: {
             csrf: '/sanctum/csrf-cookie',
             login: '/login',
