@@ -1,0 +1,63 @@
+# Pipeline to run code quality checks (eslint, prettier, typecheck)
+name: Nuxt 3 [Validate]
+
+env:
+    node_version: 20.x
+    package_manager: yarn # or npm
+    install_command: yarn install # or npm ci
+    script_command: yarn # or npm run
+
+on:
+    workflow_dispatch: # manual trigger
+    pull_request:
+        branches: [main]
+
+concurrency:
+    group: module-validation
+    cancel-in-progress: false
+
+jobs:
+    validate:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ env.node_version }}
+                  cache: ${{ env.package_manager }}
+
+            - name: Create packages cache
+              uses: actions/cache@v3
+              with:
+                  path: |
+                      dist
+                      .nuxt
+                  key: ${{ runner.os }}-nuxt-build-${{ hashFiles('dist') }}
+                  restore-keys: |
+                      ${{ runner.os }}-nuxt-build-
+
+            - name: Install dependencies
+              run: ${{ env.install_command }}
+
+            - name: Run Prettier
+              run: |
+                  ${{ env.script_command }} fmt:check
+
+            - name: Run ESLint
+              run: |
+                  ${{ env.script_command }} lint
+
+            - name: Run TypeCheck
+              run: |
+                  ${{ env.script_command }} types
+
+            - name: Run tests
+              run: |
+                  ${{ env.script_command }} test
+
+            - name: Run build
+              run: |
+                  ${{ env.script_command }} prepack
