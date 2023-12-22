@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.14
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.0.13...v0.0.14)
+
+### 🏡 Chore
+
+- Test bundler module resolution ([4dc2cde](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/4dc2cde))
+
+### ❤️ Contributors
+
+- Daniel Roe <daniel@roe.dev>
+
 ## v0.0.13
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/list...v0.0.13)
