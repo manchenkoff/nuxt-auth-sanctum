@@ -58,13 +58,17 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
 
         await refreshIdentity();
 
-        const route = useRoute();
-        const requestedRoute = route.query.redirect as string | undefined;
-        if (options.redirect.keepRequestedRoute && requestedRoute) {
-            await nuxtApp.runWithContext(() => navigateTo(requestedRoute));
-        } else if (options.redirect.onLogin) {
-            const redirect = options.redirect.onLogin as string;
+        if (options.redirect.keepRequestedRoute) {
+            const route = useRoute();
+            const requestedRoute = route.query.redirect as string | undefined;
+            if (requestedRoute) {
+                await nuxtApp.runWithContext(() => navigateTo(requestedRoute));
+                return;
+            }
+        }
 
+        if (options.redirect.onLogin) {
+            const redirect = options.redirect.onLogin as string;
             await nuxtApp.runWithContext(() => navigateTo(redirect));
         }
     }
