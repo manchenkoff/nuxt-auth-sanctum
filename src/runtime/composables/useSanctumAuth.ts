@@ -61,15 +61,14 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
         if (options.redirect.keepRequestedRoute) {
             const route = useRoute();
             const requestedRoute = route.query.redirect as string | undefined;
-
             if (requestedRoute) {
                 await nuxtApp.runWithContext(() => navigateTo(requestedRoute));
+                return;
             }
         }
 
         if (options.redirect.onLogin) {
             const redirect = options.redirect.onLogin as string;
-
             await nuxtApp.runWithContext(() => navigateTo(redirect));
         }
     }
