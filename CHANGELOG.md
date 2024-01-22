@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.0.16
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.0.15...v0.0.16)
+
+### 🚀 Enhancements
+
+- **origin:** Set to optional ([dfe0805](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/dfe0805))
+- **origin:** Fix indent ([a50d2c7](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/a50d2c7))
+
+### ❤️ Contributors
+
+- Ugo Mignon <ugomignon@gmail.com>
+
 ## v0.0.14
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.0.13...v0.0.14)
