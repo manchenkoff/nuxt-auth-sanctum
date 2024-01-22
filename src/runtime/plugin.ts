@@ -2,7 +2,7 @@ import { FetchError } from 'ofetch';
 import { defineNuxtPlugin } from '#app';
 import { createHttpClient } from './httpFactory';
 import { useSanctumUser } from './composables/useSanctumUser';
-import { SanctumModuleOptions } from '../types';
+import type { SanctumModuleOptions } from '../types';
 
 function handleIdentityLoadError(error: Error) {
     if (

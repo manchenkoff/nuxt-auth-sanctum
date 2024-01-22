@@ -2,7 +2,7 @@ import { type Ref, computed } from 'vue';
 import { useSanctumClient } from './useSanctumClient';
 import { useSanctumUser } from './useSanctumUser';
 import { navigateTo, useNuxtApp, useRoute, useRuntimeConfig } from '#app';
-import { SanctumModuleOptions } from '~/src/types';
+import type { SanctumModuleOptions } from '../../types';
 
 export interface SanctumAuth<T> {
     user: Ref<T | null>;

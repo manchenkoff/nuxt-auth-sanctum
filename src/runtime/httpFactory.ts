@@ -8,8 +8,9 @@ import {
     navigateTo,
     useNuxtApp,
 } from '#app';
-import { SanctumModuleOptions } from '../types';
+import type { SanctumModuleOptions } from '../types';
 import { useSanctumUser } from './composables/useSanctumUser';
+import { useRequestURL } from 'nuxt/app';
 
 export const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch']);
 
@@ -48,10 +49,12 @@ export function createHttpClient(): $Fetch {
     function buildServerHeaders(headers: HeadersInit | undefined): HeadersInit {
         const csrfToken = useCookie(options.csrf.cookie).value;
         const clientCookies = useRequestHeaders(['cookie']);
+        const origin = options.origin ?? useRequestURL().origin;
 
         return {
             ...headers,
-            Referer: options.origin,
+            // use the origin from the request headers if not set
+            Referer: origin,
             ...(clientCookies.cookie && clientCookies),
             ...(csrfToken && { [options.csrf.header]: csrfToken }),
         };

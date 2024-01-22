@@ -4,7 +4,7 @@ import {
     useRuntimeConfig,
     createError,
 } from '#app';
-import { SanctumModuleOptions } from '~/src/types';
+import type { SanctumModuleOptions } from '../../types';
 import { useSanctumUser } from '../composables/useSanctumUser';
 
 export default defineNuxtRouteMiddleware(() => {

@@ -43,7 +43,7 @@ export default defineNuxtConfig({
     // nuxt-auth-sanctum options (also configurable via environment variables)
     sanctum: {
         baseUrl: 'http://localhost:80', // Laravel API
-        origin: 'http://localhost:3000', // Nuxt app
+        origin: 'http://localhost:3000', // Nuxt app, by default will be used 'useRequestURL().origin'
     },
 });
 ```
@@ -156,7 +156,7 @@ Here is the full example of the default module configuration:
 
 ```ts
 baseUrl: 'http://localhost:80', // Laravel API
-origin: 'http://localhost:3000', // Nuxt app (required for CSRF cookie)
+origin: 'http://localhost:3000', // Nuxt app (required for CSRF cookie), by default uses `useRequestURL().origin`
 userStateKey: 'sanctum.user.identity', // user state key for Vue `useState` composable
 redirectIfAuthenticated: false, // Redirect to onLogin if already authenticated
 endpoints: {

@@ -53,7 +53,7 @@ export default defineNuxtModule<SanctumModuleOptions>({
         nuxt.options.runtimeConfig.public.sanctum = defu(
             userModuleConfig,
             options
-        );
+        ) as SanctumModuleOptions;
 
         addImportsDir(resolver.resolve('./runtime/composables'));
 

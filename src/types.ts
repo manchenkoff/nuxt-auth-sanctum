@@ -83,9 +83,9 @@ export interface SanctumModuleOptions {
      */
     baseUrl: string;
     /**
-     * The URL of the current application to use in Referrer header.
+     * The URL of the current application to use in Referrer header. (Optional)
      */
-    origin: string;
+    origin?: string;
     /**
      * The key to use to store the user identity in the `useState` variable.
      */
