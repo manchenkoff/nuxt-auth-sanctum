@@ -1,6 +1,6 @@
 import { useState, useRuntimeConfig } from '#app';
 import { type Ref } from 'vue';
-import { SanctumModuleOptions } from '~/src/types';
+import type { SanctumModuleOptions } from '../../types';
 
 /**
  * Returns a current authenticated user information.

@@ -6,7 +6,7 @@ import {
 } from '#app';
 import { RouteLocationRaw } from 'vue-router';
 import { useSanctumUser } from '../composables/useSanctumUser';
-import { SanctumModuleOptions } from '~/src/types';
+import type { SanctumModuleOptions } from '../../types';
 
 export default defineNuxtRouteMiddleware((to) => {
     const user = useSanctumUser();

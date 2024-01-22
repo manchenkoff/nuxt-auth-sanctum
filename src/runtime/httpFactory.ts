@@ -8,7 +8,7 @@ import {
     navigateTo,
     useNuxtApp,
 } from '#app';
-import { SanctumModuleOptions } from '../types';
+import type { SanctumModuleOptions } from '../types';
 import { useSanctumUser } from './composables/useSanctumUser';
 import { useRequestURL } from 'nuxt/app';
 
