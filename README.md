@@ -85,12 +85,13 @@ If there is no authenticated user, the composable will return `null`.
 
 2. `useSanctumAuth`
 
-Composable provides 2 computed properties and 2 methods:
+Composable provides 2 computed properties and 3 methods:
 
 -   `user` - current authenticated user (basically the same as `useSanctumUser`)
 -   `isAuthenticated` - boolean flag indicating whether the user is authenticated or not
 -   `login` - method for logging in the user
 -   `logout` - method for logging out the user
+-   `refreshIdentity` - method for manually re-fetching current authenticated user data
 
 To authenticate a user you should pass credentials payload as an argument to the `login` method. The payload should contain all fields that are required by your Laravel Sanctum backend.
 

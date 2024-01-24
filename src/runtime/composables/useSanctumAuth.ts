@@ -9,6 +9,7 @@ export interface SanctumAuth<T> {
     isAuthenticated: Ref<boolean>;
     login: (credentials: Record<string, any>) => Promise<void>;
     logout: () => Promise<void>;
+    refreshIdentity: () => Promise<void>;
 }
 
 /**
@@ -97,5 +98,6 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
         isAuthenticated,
         login,
         logout,
+        refreshIdentity,
     } as SanctumAuth<T>;
 };
