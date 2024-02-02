@@ -1,5 +1,4 @@
-import { $Fetch, FetchOptions } from 'ofetch';
-import { appendHeader } from 'h3';
+import type { $Fetch, FetchOptions } from 'ofetch';
 import {
     useCookie,
     useRequestEvent,
@@ -33,7 +32,9 @@ export function createHttpClient(): $Fetch {
             credentials: 'include',
         });
 
-        const csrfToken = useCookie(options.csrf.cookie).value;
+        const csrfToken = useCookie(options.csrf.cookie, {
+            readonly: true,
+        }).value;
 
         return {
             ...headers,
@@ -47,7 +48,9 @@ export function createHttpClient(): $Fetch {
      * @returns { HeadersInit }
      */
     function buildServerHeaders(headers: HeadersInit | undefined): HeadersInit {
-        const csrfToken = useCookie(options.csrf.cookie).value;
+        const csrfToken = useCookie(options.csrf.cookie, {
+            readonly: true,
+        }).value;
         const clientCookies = useRequestHeaders(['cookie']);
         const origin = options.origin ?? useRequestURL().origin;
 
@@ -103,7 +106,7 @@ export function createHttpClient(): $Fetch {
                     return;
                 }
 
-                appendHeader(event, serverCookieName, cookie);
+                event?.headers.append(serverCookieName, cookie);
             }
 
             // follow redirects on client
