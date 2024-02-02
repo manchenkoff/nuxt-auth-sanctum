@@ -235,6 +235,9 @@ yarn fmt
 # Run ESLint
 yarn lint
 
+# Run Nuxt type check
+yarn types
+
 # Run Vitest
 yarn test
 yarn test:watch
