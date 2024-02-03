@@ -13,7 +13,7 @@ export default defineNuxtModule<Partial<SanctumModuleOptions>>({
         name: 'nuxt-auth-sanctum',
         configKey: 'sanctum',
         compatibility: {
-            nuxt: '^3.10.0',
+            nuxt: '^3.9.0',
         },
     },
 
