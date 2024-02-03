@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.1.0...v0.1.1)
+
+### 🩹 Fixes
+
+- Dumped compatibility version to 3.9 ([1268ffc](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1268ffc))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.1.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.0.17...v0.1.0)
