@@ -1,5 +1,7 @@
+import MyModule from '../../../src/module';
+
 export default defineNuxtConfig({
-    modules: ['../../../src/module'],
+    modules: [MyModule],
 
     runtimeConfig: {
         public: {
