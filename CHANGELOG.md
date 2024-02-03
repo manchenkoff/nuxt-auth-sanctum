@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.1.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.0.17...v0.1.0)
+
+### 🚀 Enhancements
+
+- Upgraded nuxt dependencies ([2c82ae6](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/2c82ae6))
+- Handle cookies in read-only mode ([632abab](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/632abab))
+
+### 🩹 Fixes
+
+- Remove redundant config from playground ([8288cc0](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/8288cc0))
+- Revert nuxt 3.10 to 3.9 because of bugs ([1eb3f0a](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1eb3f0a))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.0.17
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.0.16...v0.0.17)
