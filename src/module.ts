@@ -6,20 +6,18 @@ import {
     addRouteMiddleware,
 } from '@nuxt/kit';
 import { defu } from 'defu';
-import { SanctumModuleOptions } from './types';
+import type { SanctumModuleOptions } from './types';
 
-export default defineNuxtModule<SanctumModuleOptions>({
+export default defineNuxtModule<Partial<SanctumModuleOptions>>({
     meta: {
         name: 'nuxt-auth-sanctum',
         configKey: 'sanctum',
         compatibility: {
-            nuxt: '^3.0.0',
+            nuxt: '^3.10.0',
         },
     },
 
     defaults: {
-        baseUrl: 'http://localhost:80',
-        origin: 'http://localhost:3000',
         userStateKey: 'sanctum.user.identity',
         redirectIfAuthenticated: false,
         endpoints: {
@@ -51,9 +49,9 @@ export default defineNuxtModule<SanctumModuleOptions>({
         const userModuleConfig = publicConfig.sanctum;
 
         nuxt.options.runtimeConfig.public.sanctum = defu(
-            userModuleConfig,
+            userModuleConfig as any,
             options
-        ) as SanctumModuleOptions;
+        );
 
         addImportsDir(resolver.resolve('./runtime/composables'));
 

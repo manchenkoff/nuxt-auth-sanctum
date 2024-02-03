@@ -4,7 +4,7 @@ import {
     useRuntimeConfig,
     createError,
 } from '#app';
-import { RouteLocationRaw } from 'vue-router';
+import type { RouteLocationRaw } from 'vue-router';
 import { useSanctumUser } from '../composables/useSanctumUser';
 import type { SanctumModuleOptions } from '../../types';
 

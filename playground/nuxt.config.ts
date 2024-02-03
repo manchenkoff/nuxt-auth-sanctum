@@ -14,17 +14,6 @@ export default defineNuxtConfig({
         },
     },
     sanctum: {
-        baseUrl: 'http://localhost:80',
-        origin: 'http://localhost:3000',
-        userStateKey: 'sanctum.user.identity',
-        redirectIfAuthenticated: false,
-        client: {
-            retry: false,
-        },
-        csrf: {
-            cookie: 'XSRF-TOKEN',
-            header: 'X-XSRF-TOKEN',
-        },
         redirect: {
             keepRequestedRoute: true,
             onAuthOnly: '/login',
