@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.1.2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.1.1...v0.1.2)
+
+### 🩹 Fixes
+
+- Added required config to fixture env ([09b621d](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/09b621d))
+- Updated nuxt dependencies and fixed test behavior ([e06cb36](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e06cb36))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.1.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.1.0...v0.1.1)
