@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "author": "Artem Manchenkov",
   "description": "Nuxt module for Laravel Sanctum authentication",
+  "homepage": "https://manchenkoff.gitbook.io/nuxt-auth-sanctum/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manchenkoff/nuxt-auth-sanctum.git"
