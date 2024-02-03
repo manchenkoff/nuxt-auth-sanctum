@@ -153,7 +153,7 @@ If there is no redirect rule the middleware will throw `403` error.
 
 ### Configuration
 
-Here is the full example of the default module configuration:
+Here is the full example of the module configuration:
 
 ```ts
 baseUrl: 'http://localhost:80', // Laravel API
