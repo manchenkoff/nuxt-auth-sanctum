@@ -7,6 +7,11 @@
 
 This module provides a simple way to use Laravel Sanctum with Nuxt by leveraging cookies-based authentication. SSR-ready!
 
+-   [Documentation](https://manchenkoff.gitbook.io/nuxt-auth-sanctum/)
+-   [Features](#features)
+-   [Quick Setup](#quick-setup)
+-   [Development](#development)
+
 ## Features
 
 -   `useSanctumAuth` composable for easy access to the current user and authentication methods
