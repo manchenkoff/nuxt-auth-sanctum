@@ -128,6 +128,12 @@ export function createHttpClient(): $Fetch {
                     return;
                 }
 
+                if (Capacitor.isNativePlatform()) {
+                    await Preferences.remove({
+                        key: 'token',
+                    });
+                }
+
                 user.value = null;
 
                 if (options.redirect.onLogout) {
