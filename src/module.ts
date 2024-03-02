@@ -24,6 +24,8 @@ export default defineNuxtModule<Partial<SanctumModuleOptions>>({
             csrf: '/sanctum/csrf-cookie',
             login: '/login',
             logout: '/logout',
+            loginMobile: '/login/mobile',
+            logoutMobile: '/logout/mobile',
             user: '/api/user',
         },
         csrf: {

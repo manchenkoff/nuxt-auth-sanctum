@@ -10,6 +10,8 @@ import {
 import type { SanctumModuleOptions } from '../types';
 import { useSanctumUser } from './composables/useSanctumUser';
 import { useRequestURL } from 'nuxt/app';
+import { Capacitor } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
 
 export const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch']);
 
@@ -72,9 +74,12 @@ export function createHttpClient(): $Fetch {
         async onRequest({ options }): Promise<void> {
             const method = options.method?.toLowerCase() ?? 'get';
 
+            const authToken = Capacitor.isNativePlatform() && await Preferences.get({ key: 'token' }).value;
+
             options.headers = {
                 Accept: 'application/json',
                 ...options.headers,
+                ...(authToken && { 'Authorization': `Bearer ${authToken}` }),
             };
 
             // https://laravel.com/docs/10.x/routing#form-method-spoofing

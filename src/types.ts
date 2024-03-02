@@ -15,6 +15,14 @@ export interface SanctumEndpoints {
      */
     logout: string;
     /**
+     * The endpoint to send user credentials to authenticate.
+     */
+    loginMobile: string;
+    /**
+     * The endpoint to destroy current user session.
+     */
+    logoutMobile: string;
+    /**
      * The endpoint to fetch current user data.
      */
     user: string;

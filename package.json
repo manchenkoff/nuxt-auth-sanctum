@@ -37,6 +37,8 @@
     "release": "npm run validate && npm run prepack && changelogen --release && npm publish && git push --follow-tags"
   },
   "dependencies": {
+    "@capacitor/core": "^5.7.1",
+    "@capacitor/preferences": "^5.0.7",
     "@nuxt/kit": "^3.9.0",
     "defu": "^6.1.4"
   },

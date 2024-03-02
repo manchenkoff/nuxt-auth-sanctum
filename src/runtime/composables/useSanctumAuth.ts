@@ -3,6 +3,8 @@ import { useSanctumClient } from './useSanctumClient';
 import { useSanctumUser } from './useSanctumUser';
 import { navigateTo, useNuxtApp, useRoute, useRuntimeConfig } from '#app';
 import type { SanctumModuleOptions } from '../../types';
+import { Capacitor } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
 
 export interface SanctumAuth<T> {
     user: Ref<T | null>;
@@ -52,10 +54,19 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
             await nuxtApp.runWithContext(() => navigateTo(redirect));
         }
 
-        await client(options.endpoints.login, {
+        const loginEndpoint = Capacitor.isNativePlatform() ? options.endpoints.loginMobile : options.endpoints.login;
+
+        const loginResponse = await client(loginEndpoint, {
             method: 'post',
             body: credentials,
         });
+
+        if (Capacitor.isNativePlatform()) {
+            await Preferences.set({
+                key: 'token',
+                value: loginResponse.token,
+            });
+        }
 
         await refreshIdentity();
 
@@ -82,7 +93,15 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
             throw new Error('User is not authenticated');
         }
 
-        await client(options.endpoints.logout, { method: 'post' });
+        const logoutEndpoint = Capacitor.isNativePlatform() ? options.endpoints.logoutMobile : options.endpoints.logout;
+
+        await client(logoutEndpoint, { method: 'post' });
+
+        if (Capacitor.isNativePlatform()) {
+            await Preferences.remove({
+                key: 'token',
+            });
+        }
 
         user.value = null;
 
