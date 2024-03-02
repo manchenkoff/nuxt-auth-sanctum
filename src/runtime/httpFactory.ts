@@ -9,7 +9,7 @@ import {
 } from '#app';
 import type { SanctumModuleOptions } from '../types';
 import { useSanctumUser } from './composables/useSanctumUser';
-import { useRequestURL } from 'nuxt/app';
+import { useRequestURL, useRoute } from 'nuxt/app';
 
 export const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch']);
 
@@ -125,7 +125,7 @@ export function createHttpClient(): $Fetch {
 
                 user.value = null;
 
-                if (options.redirect.onLogout) {
+                if (options.redirect.onLogout && useRoute().path !== options.redirect.onAuthOnly) {
                     await nuxtApp.runWithContext(() =>
                         navigateTo(options.redirect.onLogout as string)
                     );
