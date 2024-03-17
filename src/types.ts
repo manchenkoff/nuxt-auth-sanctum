@@ -75,9 +75,37 @@ export interface RedirectOptions {
 }
 
 /**
- * Options to be passed to the plugin.
+ * Interface for auth token storages to share.
+ */
+export interface AuthTokenStorage {
+    /**
+     * Adds token from store.
+     */
+    add(clientResult: any): void;
+    /**
+     * Removes token from store.
+     */
+    delete(): void;
+    /**
+     * Gets the token from store.
+     */
+    get(): string | undefined;
+}
+
+/**
+ * Options to be passed to the module plugin.
  */
 export interface SanctumModuleOptions {
+    /**
+     * The path for the configuration file, defaults to "sanctum.config.ts".
+     */
+    configFile?: string;
+}
+
+/**
+ * Options to be passed to the configuration file.
+ */
+export interface SanctumConfigOptions {
     /**
      * The base URL of the Laravel API.
      */
@@ -110,4 +138,8 @@ export interface SanctumModuleOptions {
      * Behavior of the plugin redirects when user is authenticated or not.
      */
     redirect: RedirectOptions;
-}
+    /**
+     * Storage to be used when saving an auth token.
+     */
+    authTokenStorage?: AuthTokenStorage;
+};

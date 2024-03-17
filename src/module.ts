@@ -1,3 +1,4 @@
+import type { SanctumModuleOptions, SanctumConfigOptions } from './types';
 import {
     defineNuxtModule,
     addPlugin,
@@ -5,10 +6,9 @@ import {
     addImportsDir,
     addRouteMiddleware,
 } from '@nuxt/kit';
-import { defu } from 'defu';
-import type { SanctumModuleOptions } from './types';
+import { addNuxtAuthSanctumConfig } from './config';
 
-export default defineNuxtModule<Partial<SanctumModuleOptions>>({
+export default defineNuxtModule<SanctumModuleOptions>({
     meta: {
         name: 'nuxt-auth-sanctum',
         configKey: 'sanctum',
@@ -18,40 +18,13 @@ export default defineNuxtModule<Partial<SanctumModuleOptions>>({
     },
 
     defaults: {
-        userStateKey: 'sanctum.user.identity',
-        redirectIfAuthenticated: false,
-        endpoints: {
-            csrf: '/sanctum/csrf-cookie',
-            login: '/login',
-            logout: '/logout',
-            user: '/api/user',
-        },
-        csrf: {
-            cookie: 'XSRF-TOKEN',
-            header: 'X-XSRF-TOKEN',
-        },
-        client: {
-            retry: false,
-        },
-        redirect: {
-            keepRequestedRoute: false,
-            onLogin: '/',
-            onLogout: '/',
-            onAuthOnly: '/login',
-            onGuestOnly: '/',
-        },
+        configFile: 'sanctum.config.ts',
     },
 
-    setup(options, nuxt) {
+    setup(options) {
         const resolver = createResolver(import.meta.url);
 
-        const publicConfig = nuxt.options.runtimeConfig.public;
-        const userModuleConfig = publicConfig.sanctum;
-
-        nuxt.options.runtimeConfig.public.sanctum = defu(
-            userModuleConfig as any,
-            options
-        );
+        addNuxtAuthSanctumConfig(options);
 
         addImportsDir(resolver.resolve('./runtime/composables'));
 
@@ -67,3 +40,5 @@ export default defineNuxtModule<Partial<SanctumModuleOptions>>({
         addPlugin(resolver.resolve('./runtime/plugin'));
     },
 });
+
+export const defineNuxtAuthSanctumConfig = (config: Partial<SanctumConfigOptions>) => config;

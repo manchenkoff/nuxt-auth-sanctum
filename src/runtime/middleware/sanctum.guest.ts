@@ -1,15 +1,14 @@
 import {
     defineNuxtRouteMiddleware,
     navigateTo,
-    useRuntimeConfig,
     createError,
 } from '#app';
-import type { SanctumModuleOptions } from '../../types';
 import { useSanctumUser } from '../composables/useSanctumUser';
+import { useSanctumConfig } from '../composables/useSanctumConfig';
 
 export default defineNuxtRouteMiddleware(() => {
     const user = useSanctumUser();
-    const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
+    const config = useSanctumConfig();
 
     const isAuthenticated = user.value !== null;
 
@@ -17,7 +16,7 @@ export default defineNuxtRouteMiddleware(() => {
         return;
     }
 
-    const endpoint = options.redirect.onGuestOnly;
+    const endpoint = config.redirect.onGuestOnly;
 
     if (endpoint === false) {
         throw createError({ statusCode: 403 });

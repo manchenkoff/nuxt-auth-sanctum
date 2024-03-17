@@ -1,8 +1,8 @@
 import { type Ref, computed } from 'vue';
 import { useSanctumClient } from './useSanctumClient';
 import { useSanctumUser } from './useSanctumUser';
-import { navigateTo, useNuxtApp, useRoute, useRuntimeConfig } from '#app';
-import type { SanctumModuleOptions } from '../../types';
+import { useSanctumConfig } from './useSanctumConfig';
+import { navigateTo, useNuxtApp, useRoute } from '#app';
 
 export interface SanctumAuth<T> {
     user: Ref<T | null>;
@@ -22,14 +22,14 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
 
     const user = useSanctumUser<T>();
     const client = useSanctumClient();
-    const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
+    const config = useSanctumConfig();
 
     const isAuthenticated = computed(() => {
         return user.value !== null;
     });
 
     async function refreshIdentity() {
-        user.value = await client<T>(options.endpoints.user);
+        user.value = await client<T>(config.endpoints.user);
     }
 
     /**
@@ -39,27 +39,29 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
      */
     async function login(credentials: Record<string, any>) {
         if (isAuthenticated.value === true) {
-            if (options.redirectIfAuthenticated === false) {
+            if (config.redirectIfAuthenticated === false) {
                 throw new Error('User is already authenticated');
             }
 
-            if (options.redirect.onLogin === false) {
+            if (config.redirect.onLogin === false) {
                 return;
             }
 
-            const redirect = options.redirect.onLogin as string;
+            const redirect = config.redirect.onLogin as string;
 
             await nuxtApp.runWithContext(() => navigateTo(redirect));
         }
 
-        await client(options.endpoints.login, {
+        const endpointResult = await client(config.endpoints.login, {
             method: 'post',
             body: credentials,
         });
 
+        if (config.authTokenStorage) config.authTokenStorage.add(endpointResult);
+
         await refreshIdentity();
 
-        if (options.redirect.keepRequestedRoute) {
+        if (config.redirect.keepRequestedRoute) {
             const route = useRoute();
             const requestedRoute = route.query.redirect as string | undefined;
             if (requestedRoute) {
@@ -68,8 +70,8 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
             }
         }
 
-        if (options.redirect.onLogin) {
-            const redirect = options.redirect.onLogin as string;
+        if (config.redirect.onLogin) {
+            const redirect = config.redirect.onLogin as string;
             await nuxtApp.runWithContext(() => navigateTo(redirect));
         }
     }
@@ -82,12 +84,14 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
             throw new Error('User is not authenticated');
         }
 
-        await client(options.endpoints.logout, { method: 'post' });
+        await client(config.endpoints.logout, { method: 'post' });
+
+        if (config.authTokenStorage) config.authTokenStorage.delete();
 
         user.value = null;
 
-        if (options.redirect.onLogout) {
-            const redirect = options.redirect.onLogout as string;
+        if (config.redirect.onLogout) {
+            const redirect = config.redirect.onLogout as string;
 
             await nuxtApp.runWithContext(() => navigateTo(redirect));
         }

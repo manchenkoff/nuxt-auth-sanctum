@@ -3,18 +3,17 @@ import {
     useCookie,
     useRequestEvent,
     useRequestHeaders,
-    useRuntimeConfig,
     navigateTo,
     useNuxtApp,
 } from '#app';
-import type { SanctumModuleOptions } from '../types';
 import { useSanctumUser } from './composables/useSanctumUser';
+import { useSanctumConfig } from './composables/useSanctumConfig';
 import { useRequestURL } from 'nuxt/app';
 
 export const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch']);
 
 export function createHttpClient(): $Fetch {
-    const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
+    const config = useSanctumConfig();
     const event = useRequestEvent();
     const user = useSanctumUser();
     const nuxtApp = useNuxtApp();
@@ -27,18 +26,18 @@ export function createHttpClient(): $Fetch {
     async function buildClientHeaders(
         headers: HeadersInit | undefined
     ): Promise<HeadersInit> {
-        await $fetch(options.endpoints.csrf, {
-            baseURL: options.baseUrl,
+        await $fetch(config.endpoints.csrf, {
+            baseURL: config.baseUrl,
             credentials: 'include',
         });
 
-        const csrfToken = useCookie(options.csrf.cookie, {
+        const csrfToken = useCookie(config.csrf.cookie, {
             readonly: true,
         }).value;
 
         return {
             ...headers,
-            ...(csrfToken && { [options.csrf.header]: csrfToken }),
+            ...(csrfToken && { [config.csrf.header]: csrfToken }),
         };
     }
 
@@ -48,26 +47,26 @@ export function createHttpClient(): $Fetch {
      * @returns { HeadersInit }
      */
     function buildServerHeaders(headers: HeadersInit | undefined): HeadersInit {
-        const csrfToken = useCookie(options.csrf.cookie, {
+        const csrfToken = useCookie(config.csrf.cookie, {
             readonly: true,
         }).value;
         const clientCookies = useRequestHeaders(['cookie']);
-        const origin = options.origin ?? useRequestURL().origin;
+        const origin = config.origin ?? useRequestURL().origin;
 
         return {
             ...headers,
             // use the origin from the request headers if not set
             Referer: origin,
             ...(clientCookies.cookie && clientCookies),
-            ...(csrfToken && { [options.csrf.header]: csrfToken }),
+            ...(csrfToken && { [config.csrf.header]: csrfToken }),
         };
     }
 
     const httpOptions: FetchOptions = {
-        baseURL: options.baseUrl,
+        baseURL: config.baseUrl,
         credentials: 'include',
         redirect: 'manual',
-        retry: options.client.retry,
+        retry: config.client.retry,
 
         async onRequest({ options }): Promise<void> {
             const method = options.method?.toLowerCase() ?? 'get';
@@ -76,6 +75,14 @@ export function createHttpClient(): $Fetch {
                 Accept: 'application/json',
                 ...options.headers,
             };
+
+            if (config.authTokenStorage) {
+                const authToken = config.authTokenStorage.get();
+                if (authToken) options.headers = {
+                    ...options.headers,
+                    Authorization: `Bearer ${authToken}`,
+                };
+            }
 
             // https://laravel.com/docs/10.x/routing#form-method-spoofing
             if (options.body instanceof FormData && method === 'put') {
@@ -119,15 +126,15 @@ export function createHttpClient(): $Fetch {
             if (response.status === 401) {
                 // do not redirect when requesting the user endpoint
                 // this prevents an infinite loop (ERR_TOO_MANY_REDIRECTS)
-                if (request.toString().endsWith(options.endpoints.user)) {
+                if (request.toString().endsWith(config.endpoints.user)) {
                     return;
                 }
 
                 user.value = null;
 
-                if (options.redirect.onLogout) {
+                if (config.redirect.onLogout) {
                     await nuxtApp.runWithContext(() =>
-                        navigateTo(options.redirect.onLogout as string)
+                        navigateTo(config.redirect.onLogout as string)
                     );
                 }
             }
