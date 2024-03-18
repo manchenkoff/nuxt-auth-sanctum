@@ -1,5 +1,5 @@
-import { defineNuxtAuthSanctumConfig } from '../../../src/module'
+import { defineSanctumConfig } from '../../../src'
 
-export default defineNuxtAuthSanctumConfig({
+export default defineSanctumConfig({
     baseUrl: 'http://localhost:80',
 });
