@@ -1,4 +1,3 @@
-import { existsSync } from 'fs';
 import type { SanctumModuleOptions } from './types';
 import { createResolver, useNuxt, addPluginTemplate } from '@nuxt/kit';
 
@@ -7,17 +6,14 @@ export function addNuxtAuthSanctumConfig(options: SanctumModuleOptions) {
     const nuxt = useNuxt();
 
     const configPath = resolver.resolve(nuxt.options.rootDir, options.configFile ?? 'sanctum.config');
-    if (!existsSync(configPath)) throw new Error(
-        `Nuxt Auth Sanctum configuration was not located at "${configPath}".`
-    );
 
     addPluginTemplate({
         filename: 'nuxt-auth-sanctum-config.mjs',
         getContents() {
             return `
                 import { defineNuxtPlugin } from '#imports';
-                import defu from 'defu';
-                import sanctumConfig from '${configPath}';
+                ${configPath ? "import defu from 'defu';" : ''};
+                ${configPath ? `import sanctumConfig from '${configPath}';` : ''};
 
                 export default defineNuxtPlugin((nuxtApp) => {
                     const defaultConfig = {
@@ -45,7 +41,7 @@ export function addNuxtAuthSanctumConfig(options: SanctumModuleOptions) {
                         },
                     };
 
-                    const config = defu(sanctumConfig, defaultConfig);
+                    const config = ${configPath ? "defu(sanctumConfig, defaultConfig)" : 'defaultConfig'};
 
                     return {
                         provide: {
