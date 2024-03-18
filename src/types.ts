@@ -89,7 +89,7 @@ export interface AuthTokenStorage {
     /**
      * Gets the token from store.
      */
-    get(): string | undefined;
+    get(): string | undefined | Promise<string | undefined>;
 }
 
 /**

@@ -77,7 +77,7 @@ export function createHttpClient(): $Fetch {
             };
 
             if (config.authTokenStorage) {
-                const authToken = config.authTokenStorage.get();
+                const authToken = await config.authTokenStorage.get();
                 if (authToken) options.headers = {
                     ...options.headers,
                     Authorization: `Bearer ${authToken}`,
