@@ -1,4 +1,4 @@
-import type { SanctumModuleOptions, SanctumConfigOptions } from './types';
+import type { SanctumModuleOptions } from './types';
 import {
     defineNuxtModule,
     addPlugin,
@@ -40,5 +40,3 @@ export default defineNuxtModule<SanctumModuleOptions>({
         addPlugin(resolver.resolve('./runtime/plugin'));
     },
 });
-
-export const defineNuxtAuthSanctumConfig = (config: Partial<SanctumConfigOptions>) => config;
