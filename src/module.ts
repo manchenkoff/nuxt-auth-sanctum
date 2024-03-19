@@ -66,7 +66,7 @@ export default defineNuxtModule<SanctumModuleOptions>({
                             },
                         };
 
-                        const config = ${configPathExists ? `defu(sanctumConfig, defaultConfig)` : `defaultConfig`};
+                        const config = ${configPathExists ? `defu(typeof sanctumConfig === 'function' ? sanctumConfig() : sanctumConfig, defaultConfig)` : `defaultConfig`};
                         nuxtApp.provide('sanctumConfig', config);
                     });
                 `;
