@@ -25,7 +25,10 @@ export default defineNuxtModule<SanctumModuleOptions>({
     setup(options, nuxt) {
         const resolver = createResolver(import.meta.url);
 
-        const configBase = resolver.resolve(nuxt.options.rootDir, options.configFile ?? 'sanctum.config');
+        const configBase = resolver.resolve(
+            nuxt.options.rootDir,
+            options.configFile ?? 'sanctum.config'
+        );
 
         addPlugin(resolver.resolve('./runtime/plugin'));
 

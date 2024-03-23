@@ -1,8 +1,4 @@
-import {
-    defineNuxtRouteMiddleware,
-    navigateTo,
-    createError,
-} from '#app';
+import { defineNuxtRouteMiddleware, navigateTo, createError } from '#app';
 import { useSanctumUser } from '../composables/useSanctumUser';
 import { useSanctumConfig } from '../composables/useSanctumConfig';
 

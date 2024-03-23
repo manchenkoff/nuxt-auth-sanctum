@@ -142,4 +142,4 @@ export interface SanctumConfigOptions {
      * Storage to be used when saving an auth token.
      */
     authTokenStorage?: AuthTokenStorage;
-};
+}

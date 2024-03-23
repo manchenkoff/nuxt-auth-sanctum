@@ -57,7 +57,8 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
             body: credentials,
         });
 
-        if (config.authTokenStorage) config.authTokenStorage.add(endpointResult);
+        if (config.authTokenStorage)
+            config.authTokenStorage.add(endpointResult);
 
         await refreshIdentity();
 

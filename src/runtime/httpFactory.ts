@@ -78,10 +78,11 @@ export function createHttpClient(): $Fetch {
 
             if (config.authTokenStorage) {
                 const authToken = await config.authTokenStorage.get();
-                if (authToken) options.headers = {
-                    ...options.headers,
-                    Authorization: `Bearer ${authToken}`,
-                };
+                if (authToken)
+                    options.headers = {
+                        ...options.headers,
+                        Authorization: `Bearer ${authToken}`,
+                    };
             }
 
             // https://laravel.com/docs/10.x/routing#form-method-spoofing
