@@ -16,7 +16,7 @@ function handleIdentityLoadError(error: Error) {
     }
 }
 
-export default defineNuxtPlugin(async () => {
+export default defineNuxtPlugin(async (nuxtApp) => {
     const user = useSanctumUser();
     const config = useSanctumConfig();
     const client = createHttpClient();
@@ -29,9 +29,5 @@ export default defineNuxtPlugin(async () => {
         }
     }
 
-    return {
-        provide: {
-            sanctumClient: client,
-        },
-    };
+    nuxtApp.provide('sanctumClient', client);
 });

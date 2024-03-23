@@ -5,5 +5,27 @@ export default defineNuxtConfig({
         typeCheck: true,
     },
     ssr: true,
+    runtimeConfig: {
+        public: {
+            sanctum: {
+                userStateKey: 'sanctum.user.identity',
+            },
+        },
+    },
+    sanctum: {
+        redirect: {
+            keepRequestedRoute: true,
+            onAuthOnly: '/login',
+            onGuestOnly: '/profile',
+            onLogin: '/welcome',
+            onLogout: '/logout',
+        },
+        endpoints: {
+            csrf: '/sanctum/csrf-cookie',
+            login: '/api/login',
+            logout: '/api/logout',
+            user: '/api/user',
+        },
+    },
     devtools: { enabled: true },
 });

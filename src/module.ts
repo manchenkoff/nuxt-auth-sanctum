@@ -8,8 +8,9 @@ import {
     addRouteMiddleware,
     addPluginTemplate,
 } from '@nuxt/kit';
+import defu from 'defu';
 
-export default defineNuxtModule<SanctumModuleOptions>({
+export default defineNuxtModule<Partial<SanctumModuleOptions>>({
     meta: {
         name: 'nuxt-auth-sanctum',
         configKey: 'sanctum',
@@ -19,60 +20,55 @@ export default defineNuxtModule<SanctumModuleOptions>({
     },
 
     defaults: {
-        configFile: 'sanctum.config.ts',
+        userStateKey: 'sanctum.user.identity',
+        redirectIfAuthenticated: false,
+        endpoints: {
+            csrf: '/sanctum/csrf-cookie',
+            login: '/login',
+            logout: '/logout',
+            user: '/api/user',
+        },
+        csrf: {
+            cookie: 'XSRF-TOKEN',
+            header: 'X-XSRF-TOKEN',
+        },
+        client: {
+            retry: false,
+        },
+        redirect: {
+            keepRequestedRoute: false,
+            onLogin: '/',
+            onLogout: '/',
+            onAuthOnly: '/login',
+            onGuestOnly: '/',
+        },
     },
 
     setup(options, nuxt) {
         const resolver = createResolver(import.meta.url);
 
-        const configBase = resolver.resolve(
-            nuxt.options.rootDir,
-            options.configFile ?? 'sanctum.config'
-        );
-
         addPlugin(resolver.resolve('./runtime/plugin'));
 
         addPluginTemplate({
-            filename: 'sanctum-config.mjs',
+            filename: 'sanctum-plugin.mjs',
             async getContents() {
-                const configPath = await resolver.resolvePath(configBase);
-                const configPathExists = existsSync(configBase);
+                const configPath = await resolver.resolvePath(resolver.resolve(
+                    nuxt.options.rootDir,
+                    'sanctum.config'
+                ));
+                const configPathExists = existsSync(configPath);
 
                 return `
                     import { defineNuxtPlugin } from '#imports';
                     ${configPathExists ? "import defu from 'defu';" : ''}
-                    ${configPathExists ? `import sanctumConfig from '${configPath}'` : ''}
+                    ${configPathExists ? `import sanctumConfig from '${configPath}';` : ''}
 
                     export default defineNuxtPlugin((nuxtApp) => {
-                        const defaultConfig = {
-                            userStateKey: 'sanctum.user.identity',
-                            redirectIfAuthenticated: false,
-                            endpoints: {
-                                csrf: '/sanctum/csrf-cookie',
-                                login: '/login',
-                                logout: '/logout',
-                                user: '/api/user',
-                            },
-                            csrf: {
-                                cookie: 'XSRF-TOKEN',
-                                header: 'X-XSRF-TOKEN',
-                            },
-                            client: {
-                                retry: false,
-                            },
-                            redirect: {
-                                keepRequestedRoute: false,
-                                onLogin: '/',
-                                onLogout: '/',
-                                onAuthOnly: '/login',
-                                onGuestOnly: '/',
-                            },
-                        };
-
+                        const defaultConfig = ${JSON.stringify(defu(nuxt.options.runtimeConfig.public.sanctum, options))};
                         const config = ${configPathExists ? `defu(typeof sanctumConfig === 'function' ? sanctumConfig() : sanctumConfig, defaultConfig)` : `defaultConfig`};
                         nuxtApp.provide('sanctumConfig', config);
                     });
-                `;
+                `
             },
         });
 
