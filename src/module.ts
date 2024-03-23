@@ -52,10 +52,9 @@ export default defineNuxtModule<Partial<SanctumModuleOptions>>({
         addPluginTemplate({
             filename: 'sanctum-plugin.mjs',
             async getContents() {
-                const configPath = await resolver.resolvePath(resolver.resolve(
-                    nuxt.options.rootDir,
-                    'sanctum.config'
-                ));
+                const configPath = await resolver.resolvePath(
+                    resolver.resolve(nuxt.options.rootDir, 'sanctum.config')
+                );
                 const configPathExists = existsSync(configPath);
 
                 return `
@@ -68,7 +67,7 @@ export default defineNuxtModule<Partial<SanctumModuleOptions>>({
                         const config = ${configPathExists ? `defu(typeof sanctumConfig === 'function' ? sanctumConfig() : sanctumConfig, defaultConfig)` : `defaultConfig`};
                         nuxtApp.provide('sanctumConfig', config);
                     });
-                `
+                `;
             },
         });
 
