@@ -42,8 +42,8 @@ export default defineNuxtConfig({
 
 **Laravel environment:**
  - Version: [e.g. 11.0.0]
- - Sanctum installed via Breeze: [x]
- - (Checklist)[https://manchenkoff.gitbook.io/nuxt-auth-sanctum/other/laravel-api] completed: [x]
+ - Sanctum installed via Breeze: [ ]
+ - [Checklist](https://manchenkoff.gitbook.io/nuxt-auth-sanctum/other/laravel-api) completed: [ ]
 
 **Additional context**
 Add any other context about the problem here. For instance, you can attach the details about the request/response of the application or logs from the backend to make this problem easier to understand.
