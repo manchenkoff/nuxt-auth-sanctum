@@ -83,11 +83,11 @@ export function createHttpClient(): $Fetch {
                 options.body.append('_method', 'PUT');
             }
 
-            if (process.server) {
+            if (import.meta.server) {
                 options.headers = buildServerHeaders(options.headers);
             }
 
-            if (process.client) {
+            if (import.meta.client) {
                 if (!SECURE_METHODS.has(method)) {
                     return;
                 }
@@ -98,7 +98,7 @@ export function createHttpClient(): $Fetch {
 
         async onResponse({ response }): Promise<void> {
             // pass all cookies from the API to the client on SSR response
-            if (process.server) {
+            if (import.meta.server) {
                 const serverCookieName = 'set-cookie';
                 const cookie = response.headers.get(serverCookieName);
 
