@@ -1,16 +1,11 @@
-import {
-    defineNuxtRouteMiddleware,
-    navigateTo,
-    useRuntimeConfig,
-    createError,
-} from '#app';
+import { defineNuxtRouteMiddleware, navigateTo, createError } from '#app';
 import type { RouteLocationRaw } from 'vue-router';
 import { useSanctumUser } from '../composables/useSanctumUser';
-import type { SanctumModuleOptions } from '../../types';
+import { useSanctumConfig } from '../composables/useSanctumConfig';
 
 export default defineNuxtRouteMiddleware((to) => {
     const user = useSanctumUser();
-    const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
+    const config = useSanctumConfig();
 
     const isAuthenticated = user.value !== null;
 
@@ -18,7 +13,7 @@ export default defineNuxtRouteMiddleware((to) => {
         return;
     }
 
-    const endpoint = options.redirect.onAuthOnly;
+    const endpoint = config.redirect.onAuthOnly;
 
     if (endpoint === false) {
         throw createError({ statusCode: 403 });
@@ -26,7 +21,7 @@ export default defineNuxtRouteMiddleware((to) => {
 
     const redirect: RouteLocationRaw = { path: endpoint };
 
-    if (options.redirect.keepRequestedRoute) {
+    if (config.redirect.keepRequestedRoute) {
         redirect.query = { redirect: to.fullPath };
     }
 

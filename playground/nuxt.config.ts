@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             sanctum: {
-                baseUrl: 'http://localhost:80',
                 userStateKey: 'sanctum.user.identity',
             },
         },

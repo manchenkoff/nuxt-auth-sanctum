@@ -1,15 +1,15 @@
-import { useState, useRuntimeConfig } from '#app';
+import { useState } from '#app';
+import { useSanctumConfig } from './useSanctumConfig';
 import { type Ref } from 'vue';
-import type { SanctumModuleOptions } from '../../types';
 
 /**
  * Returns a current authenticated user information.
  * @returns Reference to the user state as T.
  */
 export const useSanctumUser = <T>(): Ref<T | null> => {
-    const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
+    const config = useSanctumConfig();
 
-    const user = useState<T | null>(options.userStateKey, () => null);
+    const user = useState<T | null>(config.userStateKey, () => null);
 
     return user;
 };

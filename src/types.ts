@@ -75,7 +75,25 @@ export interface RedirectOptions {
 }
 
 /**
- * Options to be passed to the plugin.
+ * Interface for auth token storages to share.
+ */
+export interface AuthTokenStorage {
+    /**
+     * Adds token from store.
+     */
+    add(clientResult: any): void;
+    /**
+     * Removes token from store.
+     */
+    delete(): void;
+    /**
+     * Gets the token from store.
+     */
+    get(): string | undefined | Promise<string | undefined>;
+}
+
+/**
+ * Options to be passed to the module plugin.
  */
 export interface SanctumModuleOptions {
     /**
@@ -89,25 +107,35 @@ export interface SanctumModuleOptions {
     /**
      * The key to use to store the user identity in the `useState` variable.
      */
-    userStateKey: string;
+    userStateKey?: string;
     /**
      * Determine to redirect when user is authenticated.
      */
-    redirectIfAuthenticated: boolean;
+    redirectIfAuthenticated?: boolean;
     /**
      * Laravel Sanctum endpoints to be used by the client.
      */
-    endpoints: SanctumEndpoints;
+    endpoints?: SanctumEndpoints;
     /**
      * CSRF token specific options.
      */
-    csrf: CsrfOptions;
+    csrf?: CsrfOptions;
     /**
      * OFetch client specific options.
      */
-    client: ClientOptions;
+    client?: ClientOptions;
     /**
      * Behavior of the plugin redirects when user is authenticated or not.
      */
-    redirect: RedirectOptions;
+    redirect?: RedirectOptions;
+}
+
+/**
+ * Options to be passed to the configuration file.
+ */
+export interface SanctumConfigOptions extends SanctumModuleOptions {
+    /**
+     * Storage to be used when saving an auth token.
+     */
+    authTokenStorage?: AuthTokenStorage;
 }

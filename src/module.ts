@@ -1,12 +1,14 @@
+import { existsSync } from 'node:fs';
+import type { SanctumModuleOptions } from './types';
 import {
     defineNuxtModule,
     addPlugin,
     createResolver,
     addImportsDir,
     addRouteMiddleware,
+    addPluginTemplate,
 } from '@nuxt/kit';
-import { defu } from 'defu';
-import type { SanctumModuleOptions } from './types';
+import defu from 'defu';
 
 export default defineNuxtModule<Partial<SanctumModuleOptions>>({
     meta: {
@@ -45,13 +47,29 @@ export default defineNuxtModule<Partial<SanctumModuleOptions>>({
     setup(options, nuxt) {
         const resolver = createResolver(import.meta.url);
 
-        const publicConfig = nuxt.options.runtimeConfig.public;
-        const userModuleConfig = publicConfig.sanctum;
+        addPlugin(resolver.resolve('./runtime/plugin'));
 
-        nuxt.options.runtimeConfig.public.sanctum = defu(
-            userModuleConfig as any,
-            options
-        );
+        addPluginTemplate({
+            filename: 'sanctum-plugin.mjs',
+            async getContents() {
+                const configPath = await resolver.resolvePath(
+                    resolver.resolve(nuxt.options.rootDir, 'sanctum.config')
+                );
+                const configPathExists = existsSync(configPath);
+
+                return `
+                    import { defineNuxtPlugin } from '#imports';
+                    ${configPathExists ? "import defu from 'defu';" : ''}
+                    ${configPathExists ? `import sanctumConfig from '${configPath}';` : ''}
+
+                    export default defineNuxtPlugin((nuxtApp) => {
+                        const defaultConfig = ${JSON.stringify(defu(nuxt.options.runtimeConfig.public.sanctum, options))};
+                        const config = ${configPathExists ? `defu(typeof sanctumConfig === 'function' ? sanctumConfig() : sanctumConfig, defaultConfig)` : `defaultConfig`};
+                        nuxtApp.provide('sanctumConfig', config);
+                    });
+                `;
+            },
+        });
 
         addImportsDir(resolver.resolve('./runtime/composables'));
 
@@ -63,7 +81,5 @@ export default defineNuxtModule<Partial<SanctumModuleOptions>>({
             name: 'sanctum:guest',
             path: resolver.resolve('./runtime/middleware/sanctum.guest'),
         });
-
-        addPlugin(resolver.resolve('./runtime/plugin'));
     },
 });
