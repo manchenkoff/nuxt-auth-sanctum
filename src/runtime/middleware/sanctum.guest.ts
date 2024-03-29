@@ -1,15 +1,10 @@
-import {
-    defineNuxtRouteMiddleware,
-    navigateTo,
-    useRuntimeConfig,
-    createError,
-} from '#app';
-import type { SanctumModuleOptions } from '../../types';
+import { defineNuxtRouteMiddleware, navigateTo, createError } from '#app';
+import { useSanctumConfig } from '../composables/useSanctumConfig';
 import { useSanctumUser } from '../composables/useSanctumUser';
 
 export default defineNuxtRouteMiddleware(() => {
     const user = useSanctumUser();
-    const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
+    const options = useSanctumConfig();
 
     const isAuthenticated = user.value !== null;
 
