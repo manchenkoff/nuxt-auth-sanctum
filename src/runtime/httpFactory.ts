@@ -122,7 +122,8 @@ export function createHttpClient(): $Fetch {
 
                 if (
                     options.redirect.onLogout === false ||
-                    options.redirect.onLogout === currentRoute.path
+                    options.redirect.onLogout === currentRoute.path ||
+                    options.redirect.onAuthOnly === currentRoute.path
                 ) {
                     return;
                 }
