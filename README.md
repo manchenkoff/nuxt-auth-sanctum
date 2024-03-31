@@ -10,7 +10,6 @@ This module provides a simple way to use Laravel Sanctum with Nuxt by leveraging
 -   [Documentation](https://manchenkoff.gitbook.io/nuxt-auth-sanctum/)
 -   [Features](#features)
 -   [Quick Setup](#quick-setup)
--   [Development](#development)
 
 ## Features
 
@@ -58,38 +57,6 @@ export default defineNuxtConfig({
 That's it! You can now use Nuxt Auth Sanctum in your Nuxt app ✨
 
 For more details, check the documentation [here](https://manchenkoff.gitbook.io/nuxt-auth-sanctum/).
-
-## Development
-
-```bash
-# Install dependencies
-yarn install
-
-# Generate type stubs
-yarn dev:prepare
-
-# Develop with the playground
-yarn dev
-
-# Build the playground
-yarn dev:build
-
-# Run Prettier
-yarn fmt
-
-# Run ESLint
-yarn lint
-
-# Run Nuxt type check
-yarn types
-
-# Run Vitest
-yarn test
-yarn test:watch
-
-# Release new version
-yarn release
-```
 
 <!-- Badges -->
 
