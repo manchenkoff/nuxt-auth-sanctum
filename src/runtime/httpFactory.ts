@@ -3,18 +3,17 @@ import {
     useCookie,
     useRequestEvent,
     useRequestHeaders,
-    useRuntimeConfig,
     navigateTo,
     useNuxtApp,
 } from '#app';
-import type { SanctumModuleOptions } from '../types';
 import { useSanctumUser } from './composables/useSanctumUser';
 import { useRequestURL } from 'nuxt/app';
+import { useSanctumConfig } from './composables/useSanctumConfig';
 
 export const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch']);
 
 export function createHttpClient(): $Fetch {
-    const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
+    const options = useSanctumConfig();
     const event = useRequestEvent();
     const user = useSanctumUser();
     const nuxtApp = useNuxtApp();
@@ -56,8 +55,8 @@ export function createHttpClient(): $Fetch {
 
         return {
             ...headers,
-            // use the origin from the request headers if not set
             Referer: origin,
+            Origin: origin,
             ...(clientCookies.cookie && clientCookies),
             ...(csrfToken && { [options.csrf.header]: csrfToken }),
         };
@@ -83,11 +82,11 @@ export function createHttpClient(): $Fetch {
                 options.body.append('_method', 'PUT');
             }
 
-            if (process.server) {
+            if (import.meta.server) {
                 options.headers = buildServerHeaders(options.headers);
             }
 
-            if (process.client) {
+            if (import.meta.client) {
                 if (!SECURE_METHODS.has(method)) {
                     return;
                 }
@@ -98,7 +97,7 @@ export function createHttpClient(): $Fetch {
 
         async onResponse({ response }): Promise<void> {
             // pass all cookies from the API to the client on SSR response
-            if (process.server) {
+            if (import.meta.server) {
                 const serverCookieName = 'set-cookie';
                 const cookie = response.headers.get(serverCookieName);
 

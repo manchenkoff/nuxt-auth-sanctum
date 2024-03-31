@@ -1,16 +1,11 @@
-import {
-    defineNuxtRouteMiddleware,
-    navigateTo,
-    useRuntimeConfig,
-    createError,
-} from '#app';
+import { defineNuxtRouteMiddleware, navigateTo, createError } from '#app';
 import type { RouteLocationRaw } from 'vue-router';
 import { useSanctumUser } from '../composables/useSanctumUser';
-import type { SanctumModuleOptions } from '../../types';
+import { useSanctumConfig } from '../composables/useSanctumConfig';
 
 export default defineNuxtRouteMiddleware((to) => {
     const user = useSanctumUser();
-    const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
+    const options = useSanctumConfig();
 
     const isAuthenticated = user.value !== null;
 

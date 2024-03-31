@@ -1,8 +1,8 @@
 import { type Ref, computed } from 'vue';
 import { useSanctumClient } from './useSanctumClient';
 import { useSanctumUser } from './useSanctumUser';
-import { navigateTo, useNuxtApp, useRoute, useRuntimeConfig } from '#app';
-import type { SanctumModuleOptions } from '../../types';
+import { navigateTo, useNuxtApp, useRoute } from '#app';
+import { useSanctumConfig } from './useSanctumConfig';
 
 export interface SanctumAuth<T> {
     user: Ref<T | null>;
@@ -22,7 +22,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
 
     const user = useSanctumUser<T>();
     const client = useSanctumClient();
-    const options = useRuntimeConfig().public.sanctum as SanctumModuleOptions;
+    const options = useSanctumConfig();
 
     const isAuthenticated = computed(() => {
         return user.value !== null;
