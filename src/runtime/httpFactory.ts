@@ -101,11 +101,11 @@ export function createHttpClient(): $Fetch {
                 const serverCookieName = 'set-cookie';
                 const cookie = response.headers.get(serverCookieName);
 
-                if (cookie === null) {
+                if (cookie === null || event === undefined) {
                     return;
                 }
 
-                event?.headers.append(serverCookieName, cookie);
+                event.headers.append(serverCookieName, cookie);
             }
 
             // follow redirects on client
@@ -114,21 +114,22 @@ export function createHttpClient(): $Fetch {
             }
         },
 
-        async onResponseError({ request, response }): Promise<void> {
+        async onResponseError({ response }): Promise<void> {
             if (response.status === 401) {
-                // do not redirect when requesting the user endpoint
-                // this prevents an infinite loop (ERR_TOO_MANY_REDIRECTS)
-                if (request.toString().endsWith(options.endpoints.user)) {
+                user.value = null;
+
+                const currentRoute = nuxtApp.$router.currentRoute;
+
+                if (
+                    options.redirect.onLogout === false ||
+                    options.redirect.onLogout === currentRoute.value.path
+                ) {
                     return;
                 }
 
-                user.value = null;
-
-                if (options.redirect.onLogout) {
-                    await nuxtApp.runWithContext(() =>
-                        navigateTo(options.redirect.onLogout as string)
-                    );
-                }
+                await nuxtApp.runWithContext(() =>
+                    navigateTo(options.redirect.onLogout as string)
+                );
             }
         },
     };

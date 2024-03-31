@@ -1,19 +1,15 @@
 export default defineNuxtConfig({
-    modules: ['../src/module'],
+    devtools: { enabled: true },
+    ssr: true,
     typescript: {
         strict: true,
         typeCheck: true,
     },
-    ssr: true,
-    runtimeConfig: {
-        public: {
-            sanctum: {
-                baseUrl: 'http://localhost:80',
-                userStateKey: 'sanctum.user.identity',
-            },
-        },
-    },
+
+    modules: ['../src/module'],
+
     sanctum: {
+        baseUrl: 'http://localhost:80',
         redirect: {
             keepRequestedRoute: true,
             onAuthOnly: '/login',
@@ -28,5 +24,4 @@ export default defineNuxtConfig({
             user: '/api/user',
         },
     },
-    devtools: { enabled: true },
 });

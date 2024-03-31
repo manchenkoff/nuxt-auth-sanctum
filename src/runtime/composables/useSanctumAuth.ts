@@ -38,18 +38,23 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
      * @param credentials Credentials to pass to the login endpoint
      */
     async function login(credentials: Record<string, any>) {
+        const currentRoute = useRoute();
+
         if (isAuthenticated.value === true) {
             if (options.redirectIfAuthenticated === false) {
                 throw new Error('User is already authenticated');
             }
 
-            if (options.redirect.onLogin === false) {
+            if (
+                options.redirect.onLogin === false ||
+                options.redirect.onLogin === currentRoute.path
+            ) {
                 return;
             }
 
-            const redirect = options.redirect.onLogin as string;
-
-            await nuxtApp.runWithContext(() => navigateTo(redirect));
+            await nuxtApp.runWithContext(() =>
+                navigateTo(options.redirect.onLogin as string)
+            );
         }
 
         await client(options.endpoints.login, {
@@ -60,18 +65,27 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
         await refreshIdentity();
 
         if (options.redirect.keepRequestedRoute) {
-            const route = useRoute();
-            const requestedRoute = route.query.redirect as string | undefined;
-            if (requestedRoute) {
-                await nuxtApp.runWithContext(() => navigateTo(requestedRoute));
+            const requestedRoute = currentRoute.query.redirect;
+
+            if (requestedRoute && requestedRoute !== currentRoute.path) {
+                await nuxtApp.runWithContext(() =>
+                    navigateTo(requestedRoute as string)
+                );
+
                 return;
             }
         }
 
-        if (options.redirect.onLogin) {
-            const redirect = options.redirect.onLogin as string;
-            await nuxtApp.runWithContext(() => navigateTo(redirect));
+        if (
+            options.redirect.onLogin === false ||
+            currentRoute.path === options.redirect.onLogin
+        ) {
+            return;
         }
+
+        await nuxtApp.runWithContext(() =>
+            navigateTo(options.redirect.onLogin as string)
+        );
     }
 
     /**
@@ -82,15 +96,22 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
             throw new Error('User is not authenticated');
         }
 
+        const currentRoute = useRoute();
+
         await client(options.endpoints.logout, { method: 'post' });
 
         user.value = null;
 
-        if (options.redirect.onLogout) {
-            const redirect = options.redirect.onLogout as string;
-
-            await nuxtApp.runWithContext(() => navigateTo(redirect));
+        if (
+            options.redirect.onLogout === false ||
+            currentRoute.path === options.redirect.onLogout
+        ) {
+            return;
         }
+
+        await nuxtApp.runWithContext(() =>
+            navigateTo(options.redirect.onLogout as string)
+        );
     }
 
     return {
