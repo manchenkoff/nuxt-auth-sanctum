@@ -118,11 +118,11 @@ export function createHttpClient(): $Fetch {
             if (response.status === 401) {
                 user.value = null;
 
-                const currentRoute = nuxtApp.$router.currentRoute;
+                const currentRoute = nuxtApp.$router.currentRoute.value;
 
                 if (
                     options.redirect.onLogout === false ||
-                    options.redirect.onLogout === currentRoute.value.path
+                    options.redirect.onLogout === currentRoute.path
                 ) {
                     return;
                 }
