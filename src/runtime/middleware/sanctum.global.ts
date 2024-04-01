@@ -1,0 +1,53 @@
+import { defineNuxtRouteMiddleware, navigateTo } from '#app';
+import type { RouteLocationRaw } from 'vue-router';
+import { useSanctumConfig } from '../composables/useSanctumConfig';
+import { useSanctumAuth } from '../composables/useSanctumAuth';
+
+export default defineNuxtRouteMiddleware((to) => {
+    const options = useSanctumConfig();
+    const { isAuthenticated } = useSanctumAuth();
+
+    const [homePage, loginPage] = [
+        options.redirect.onGuestOnly,
+        options.redirect.onAuthOnly,
+    ];
+
+    if (homePage === false) {
+        throw new Error(
+            'You must define onGuestOnly route when using global middleware.'
+        );
+    }
+
+    if (loginPage === false) {
+        throw new Error(
+            'You must define onAuthOnly route when using global middleware.'
+        );
+    }
+
+    if (isAuthenticated.value === true) {
+        if (to.path === loginPage) {
+            return navigateTo(homePage, { replace: true });
+        }
+
+        return;
+    }
+
+    if (to.path === loginPage || to.meta.excludeFromSanctum === true) {
+        return;
+    }
+
+    if (
+        options.globalMiddleware.allow404WithoutAuth &&
+        to.matched.length === 0
+    ) {
+        return;
+    }
+
+    const redirect: RouteLocationRaw = { path: loginPage };
+
+    if (options.redirect.keepRequestedRoute) {
+        redirect.query = { redirect: to.fullPath };
+    }
+
+    return navigateTo(redirect, { replace: true });
+});

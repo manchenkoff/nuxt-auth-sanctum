@@ -75,6 +75,20 @@ export interface RedirectOptions {
 }
 
 /**
+ * Configuration of the global application-wide middleware.
+ */
+export interface GlobalMiddlewareOptions {
+    /**
+     * Determines whether the global middleware is enabled.
+     */
+    enabled: boolean;
+    /**
+     * Determines whether to allow 404 pages without authentication.
+     */
+    allow404WithoutAuth: boolean;
+}
+
+/**
  * Options to be passed to the plugin.
  */
 export interface SanctumModuleOptions {
@@ -110,4 +124,8 @@ export interface SanctumModuleOptions {
      * Behavior of the plugin redirects when user is authenticated or not.
      */
     redirect: RedirectOptions;
+    /**
+     * Behavior of the global middleware.
+     */
+    globalMiddleware: GlobalMiddlewareOptions;
 }

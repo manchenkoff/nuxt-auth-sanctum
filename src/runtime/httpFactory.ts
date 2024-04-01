@@ -3,11 +3,11 @@ import {
     useCookie,
     useRequestEvent,
     useRequestHeaders,
+    useRequestURL,
     navigateTo,
     useNuxtApp,
 } from '#app';
 import { useSanctumUser } from './composables/useSanctumUser';
-import { useRequestURL } from 'nuxt/app';
 import { useSanctumConfig } from './composables/useSanctumConfig';
 
 type Headers = HeadersInit | undefined;
@@ -120,7 +120,8 @@ export function createHttpClient(): $Fetch {
                 if (
                     options.redirect.onLogout === false ||
                     options.redirect.onLogout === currentRoute.path ||
-                    options.redirect.onAuthOnly === currentRoute.path
+                    options.redirect.onAuthOnly === currentRoute.path ||
+                    options.globalMiddleware.enabled === true
                 ) {
                     return;
                 }
