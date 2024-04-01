@@ -1,6 +1,40 @@
 # Changelog
 
 
+## v0.2.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.1.2...v0.2.0)
+
+### 🚀 Enhancements
+
+- Add Origin header to the request ([6387379](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/6387379))
+- Added separate error page ([79ce7b2](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/79ce7b2))
+- Implemented global middleware ([6322fd3](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/6322fd3))
+
+### 🩹 Fixes
+
+- Opt in to `import.meta.*` properties ([99e98c9](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/99e98c9))
+- Prevent redirects to the same page ([01daa22](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/01daa22))
+- Prevent redirect on 401 response from login page ([380d4a6](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/380d4a6))
+- Removed mistaken command from contributing rules ([f4fbf82](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/f4fbf82))
+- Adjusted tsc directories to check ([de23cbb](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/de23cbb))
+
+### 📖 Documentation
+
+- Added separate gitbook as module docs ([f7c4edc](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/f7c4edc))
+- Added toc to readme ([497386b](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/497386b))
+
+### 🏡 Chore
+
+- **release:** V0.1.2 ([f23e51a](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/f23e51a))
+- Code style improvements ([32b0a64](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/32b0a64))
+- Simplified middleware checks ([1c186b9](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1c186b9))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+
 ## v0.1.2
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.1.1...v0.1.2)
