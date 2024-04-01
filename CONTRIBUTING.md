@@ -73,12 +73,6 @@ yarn lint
 yarn types
 ```
 
-To fix the issues automatically, you can run the following command:
-
-```bash
-yarn fix:fmt
-```
-
 # Releasing
 
 Once all the changes are merged into main branch, run the following command to release a new version:
