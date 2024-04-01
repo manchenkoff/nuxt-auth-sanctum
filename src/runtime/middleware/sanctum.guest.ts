@@ -1,14 +1,12 @@
 import { defineNuxtRouteMiddleware, navigateTo, createError } from '#app';
+import { useSanctumAuth } from '../composables/useSanctumAuth';
 import { useSanctumConfig } from '../composables/useSanctumConfig';
-import { useSanctumUser } from '../composables/useSanctumUser';
 
 export default defineNuxtRouteMiddleware(() => {
-    const user = useSanctumUser();
     const options = useSanctumConfig();
+    const { isAuthenticated } = useSanctumAuth();
 
-    const isAuthenticated = user.value !== null;
-
-    if (isAuthenticated === false) {
+    if (isAuthenticated.value === false) {
         return;
     }
 

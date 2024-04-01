@@ -3,14 +3,17 @@ import {
     useCookie,
     useRequestEvent,
     useRequestHeaders,
+    useRequestURL,
     navigateTo,
     useNuxtApp,
 } from '#app';
 import { useSanctumUser } from './composables/useSanctumUser';
-import { useRequestURL } from 'nuxt/app';
 import { useSanctumConfig } from './composables/useSanctumConfig';
 
-export const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch']);
+type Headers = HeadersInit | undefined;
+
+const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch']);
+const COOKIE_OPTIONS: { readonly: true } = { readonly: true };
 
 export function createHttpClient(): $Fetch {
     const options = useSanctumConfig();
@@ -23,17 +26,13 @@ export function createHttpClient(): $Fetch {
      * @param headers Headers collection to extend
      * @returns {HeadersInit}
      */
-    async function buildClientHeaders(
-        headers: HeadersInit | undefined
-    ): Promise<HeadersInit> {
+    async function buildClientHeaders(headers: Headers): Promise<HeadersInit> {
         await $fetch(options.endpoints.csrf, {
             baseURL: options.baseUrl,
             credentials: 'include',
         });
 
-        const csrfToken = useCookie(options.csrf.cookie, {
-            readonly: true,
-        }).value;
+        const csrfToken = useCookie(options.csrf.cookie, COOKIE_OPTIONS).value;
 
         return {
             ...headers,
@@ -46,10 +45,8 @@ export function createHttpClient(): $Fetch {
      * @param headers Headers collection to extend
      * @returns { HeadersInit }
      */
-    function buildServerHeaders(headers: HeadersInit | undefined): HeadersInit {
-        const csrfToken = useCookie(options.csrf.cookie, {
-            readonly: true,
-        }).value;
+    function buildServerHeaders(headers: Headers): HeadersInit {
+        const csrfToken = useCookie(options.csrf.cookie, COOKIE_OPTIONS).value;
         const clientCookies = useRequestHeaders(['cookie']);
         const origin = options.origin ?? useRequestURL().origin;
 
@@ -123,7 +120,8 @@ export function createHttpClient(): $Fetch {
                 if (
                     options.redirect.onLogout === false ||
                     options.redirect.onLogout === currentRoute.path ||
-                    options.redirect.onAuthOnly === currentRoute.path
+                    options.redirect.onAuthOnly === currentRoute.path ||
+                    options.globalMiddleware.enabled === true
                 ) {
                     return;
                 }

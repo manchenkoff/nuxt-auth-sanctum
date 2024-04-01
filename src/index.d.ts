@@ -5,3 +5,9 @@ declare module 'nuxt/schema' {
         sanctum: Partial<SanctumModuleOptions>;
     }
 }
+
+declare module '#app' {
+    interface PageMeta {
+        excludeFromSanctum?: boolean;
+    }
+}

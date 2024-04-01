@@ -8,7 +8,11 @@ import {
 import { defu } from 'defu';
 import type { SanctumModuleOptions } from './types';
 
-export default defineNuxtModule<Partial<SanctumModuleOptions>>({
+type DeepPartial<T> = {
+    [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
+
+export default defineNuxtModule<DeepPartial<SanctumModuleOptions>>({
     meta: {
         name: 'nuxt-auth-sanctum',
         configKey: 'sanctum',
@@ -40,30 +44,40 @@ export default defineNuxtModule<Partial<SanctumModuleOptions>>({
             onAuthOnly: '/login',
             onGuestOnly: '/',
         },
+        globalMiddleware: {
+            enabled: false,
+            allow404WithoutAuth: true,
+        },
     },
 
     setup(options, nuxt) {
         const resolver = createResolver(import.meta.url);
 
-        const publicConfig = nuxt.options.runtimeConfig.public;
-        const userModuleConfig = publicConfig.sanctum;
+        const runtimeConfigOverrides =
+            nuxt.options.runtimeConfig.public.sanctum;
 
-        nuxt.options.runtimeConfig.public.sanctum = defu(
-            userModuleConfig as any,
-            options
-        );
+        const sanctumConfig = defu(runtimeConfigOverrides as any, options);
 
-        addImportsDir(resolver.resolve('./runtime/composables'));
-
-        addRouteMiddleware({
-            name: 'sanctum:auth',
-            path: resolver.resolve('./runtime/middleware/sanctum.auth'),
-        });
-        addRouteMiddleware({
-            name: 'sanctum:guest',
-            path: resolver.resolve('./runtime/middleware/sanctum.guest'),
-        });
+        nuxt.options.runtimeConfig.public.sanctum = sanctumConfig;
 
         addPlugin(resolver.resolve('./runtime/plugin'));
+        addImportsDir(resolver.resolve('./runtime/composables'));
+
+        if (sanctumConfig.globalMiddleware.enabled) {
+            addRouteMiddleware({
+                name: 'sanctum:auth:global',
+                path: resolver.resolve('./runtime/middleware/sanctum.global'),
+                global: true,
+            });
+        } else {
+            addRouteMiddleware({
+                name: 'sanctum:auth',
+                path: resolver.resolve('./runtime/middleware/sanctum.auth'),
+            });
+            addRouteMiddleware({
+                name: 'sanctum:guest',
+                path: resolver.resolve('./runtime/middleware/sanctum.guest'),
+            });
+        }
     },
 });
