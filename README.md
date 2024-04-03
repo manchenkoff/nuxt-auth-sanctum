@@ -30,14 +30,7 @@ Complete documentation - [Nuxt Auth Sanctum docs](https://manchenkoff.gitbook.io
 1. Add `nuxt-auth-sanctum` dependency to your project
 
 ```bash
-# Using pnpm
-pnpm add -D nuxt-auth-sanctum
-
-# Using yarn
-yarn add --dev nuxt-auth-sanctum
-
-# Using npm
-npm install --save-dev nuxt-auth-sanctum
+npx nuxi@latest module add nuxt-auth-sanctum
 ```
 
 2. Add `nuxt-auth-sanctum` to the `modules` section of `nuxt.config.ts`
