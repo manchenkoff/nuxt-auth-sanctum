@@ -33,16 +33,14 @@ Complete documentation - [Nuxt Auth Sanctum docs](https://manchenkoff.gitbook.io
 npx nuxi@latest module add nuxt-auth-sanctum
 ```
 
-2. Add `nuxt-auth-sanctum` to the `modules` section of `nuxt.config.ts`
+2. Add any required configuration in your `nuxt.config.ts` file
 
 ```js
 export default defineNuxtConfig({
     modules: ['nuxt-auth-sanctum'],
 
-    // nuxt-auth-sanctum options (also configurable via environment variables)
     sanctum: {
         baseUrl: 'http://localhost:80', // Laravel API
-        origin: 'http://localhost:3000', // Nuxt app, by default will be used 'useRequestURL().origin'
     },
 });
 ```
