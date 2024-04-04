@@ -114,21 +114,6 @@ export function createHttpClient(): $Fetch {
         async onResponseError({ response }): Promise<void> {
             if (response.status === 401) {
                 user.value = null;
-
-                const currentRoute = nuxtApp.$router.currentRoute.value;
-
-                if (
-                    options.redirect.onLogout === false ||
-                    options.redirect.onLogout === currentRoute.path ||
-                    options.redirect.onAuthOnly === currentRoute.path ||
-                    options.globalMiddleware.enabled === true
-                ) {
-                    return;
-                }
-
-                await nuxtApp.runWithContext(() =>
-                    navigateTo(options.redirect.onLogout as string)
-                );
             }
         },
     };
