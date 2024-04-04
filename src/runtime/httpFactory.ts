@@ -111,24 +111,12 @@ export function createHttpClient(): $Fetch {
             }
         },
 
-        async onResponseError({ response }): Promise<void> {
-            if (response.status === 401) {
+        async onResponseError({ request, response }): Promise<void> {
+            if (
+                response.status === 401 &&
+                request.toString().endsWith(options.endpoints.user)
+            ) {
                 user.value = null;
-
-                const currentRoute = nuxtApp.$router.currentRoute.value;
-
-                if (
-                    options.redirect.onLogout === false ||
-                    options.redirect.onLogout === currentRoute.path ||
-                    options.redirect.onAuthOnly === currentRoute.path ||
-                    options.globalMiddleware.enabled === true
-                ) {
-                    return;
-                }
-
-                await nuxtApp.runWithContext(() =>
-                    navigateTo(options.redirect.onLogout as string)
-                );
             }
         },
     };
