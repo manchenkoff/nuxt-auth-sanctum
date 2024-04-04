@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.2.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.2.0...v0.2.1)
+
+### 🩹 Fixes
+
+- Remove git push with tags ([03b28d4](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/03b28d4))
+- Prevent infinite redirect for guests ([20e7cc9](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/20e7cc9))
+
+### 📖 Documentation
+
+- Use new `nuxi module add` command in installation ([d74c007](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/d74c007))
+- Update second step ([93e365d](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/93e365d))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+
 ## v0.2.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.1.2...v0.2.0)
