@@ -48,6 +48,37 @@ export default defineNuxtConfig({
 -   Version: [e.g. 11.0.0]
 -   Sanctum installed via Breeze: [ ]
 -   [Checklist](https://manchenkoff.gitbook.io/nuxt-auth-sanctum/other/laravel-api) completed: [ ]
+-   Session domain from your `config/session.php`: [e.g. `domain.test`]
+-   List of stateful domains from your `config/sanctum.php`
+
+```php
+return [
+    'stateful' => explode(
+        ',',
+        env(
+            'SANCTUM_STATEFUL_DOMAINS',
+            sprintf('%s','localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1')
+        )
+    ),
+];
+```
+
+-   CORS settings from your `config/cors.php`
+
+```php
+return [
+    'paths' => ['*'],
+    'allowed_methods' => ['*'],
+    'allowed_origins' => [
+        env('FRONTEND_URL', 'http://localhost:3000'),
+    ],
+    'allowed_origins_patterns' => [],
+    'allowed_headers' => ['*'],
+    'exposed_headers' => [],
+    'max_age' => 0,
+    'supports_credentials' => true,
+];
+```
 
 **Additional context**
 Add any other context about the problem here. For instance, you can attach the details about the request/response of the application or logs from the backend to make this problem easier to understand.
