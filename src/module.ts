@@ -4,9 +4,11 @@ import {
     createResolver,
     addImportsDir,
     addRouteMiddleware,
+    useLogger,
 } from '@nuxt/kit';
 import { defu } from 'defu';
 import type { SanctumModuleOptions } from './types';
+import { LOGGER_NAME } from './constants';
 
 type DeepPartial<T> = {
     [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
@@ -48,6 +50,7 @@ export default defineNuxtModule<DeepPartial<SanctumModuleOptions>>({
             enabled: false,
             allow404WithoutAuth: true,
         },
+        logLevel: 3,
     },
 
     setup(options, nuxt) {
@@ -60,6 +63,10 @@ export default defineNuxtModule<DeepPartial<SanctumModuleOptions>>({
 
         nuxt.options.runtimeConfig.public.sanctum = sanctumConfig;
 
+        const logger = useLogger(LOGGER_NAME, {
+            level: sanctumConfig.logLevel,
+        });
+
         addPlugin(resolver.resolve('./runtime/plugin'));
         addImportsDir(resolver.resolve('./runtime/composables'));
 
@@ -69,6 +76,8 @@ export default defineNuxtModule<DeepPartial<SanctumModuleOptions>>({
                 path: resolver.resolve('./runtime/middleware/sanctum.global'),
                 global: true,
             });
+
+            logger.info('Sanctum module initialized with global middleware');
         } else {
             addRouteMiddleware({
                 name: 'sanctum:auth',
@@ -78,6 +87,8 @@ export default defineNuxtModule<DeepPartial<SanctumModuleOptions>>({
                 name: 'sanctum:guest',
                 path: resolver.resolve('./runtime/middleware/sanctum.guest'),
             });
+
+            logger.info('Sanctum module initialized w/o global middleware');
         }
     },
 });
