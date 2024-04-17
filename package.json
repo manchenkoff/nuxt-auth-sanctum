@@ -34,7 +34,7 @@
     "test": "vitest run",
     "test:watch": "vitest watch",
     "validate": "npm run fmt:check && npm run lint && npm run types && npm run test",
-    "release": "npm run validate && npm run prepack && changelogen --release && npm publish"
+    "release": "npm run validate && npm run prepack && changelogen --release && npm publish && git push"
   },
   "dependencies": {
     "@nuxt/kit": "^3.9.0",

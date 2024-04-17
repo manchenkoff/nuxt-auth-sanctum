@@ -1,5 +1,5 @@
 import { FetchError } from 'ofetch';
-import { defineNuxtPlugin } from '#app';
+import { defineNuxtPlugin, useState } from '#app';
 import { createHttpClient } from './httpFactory';
 import { useSanctumUser } from './composables/useSanctumUser';
 import { useSanctumConfig } from './composables/useSanctumConfig';
@@ -34,7 +34,14 @@ export default defineNuxtPlugin(async () => {
     const logger = createSanctumLogger(options.logLevel);
     const client = createHttpClient(logger);
 
-    if (user.value === null) {
+    const identityFetchedOnInit = useState<boolean>(
+        'sanctum.user.loaded',
+        () => false
+    );
+
+    if (user.value === null && identityFetchedOnInit.value === false) {
+        identityFetchedOnInit.value = true;
+
         try {
             user.value = await client(options.endpoints.user);
         } catch (error) {

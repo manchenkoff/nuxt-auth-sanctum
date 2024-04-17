@@ -147,7 +147,8 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
 
             if (
                 response.status === 401 &&
-                request.toString().endsWith(options.endpoints.user)
+                request.toString().endsWith(options.endpoints.user) &&
+                user.value !== null
             ) {
                 logger.warn(
                     'User session is not set in API or expired, resetting identity'
