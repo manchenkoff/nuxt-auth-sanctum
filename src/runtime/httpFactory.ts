@@ -9,13 +9,14 @@ import {
 } from '#app';
 import { useSanctumUser } from './composables/useSanctumUser';
 import { useSanctumConfig } from './composables/useSanctumConfig';
+import { type ConsolaInstance } from 'consola';
 
 type Headers = HeadersInit | undefined;
 
 const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch']);
 const COOKIE_OPTIONS: { readonly: true } = { readonly: true };
 
-export function createHttpClient(): $Fetch {
+export function createHttpClient(logger: ConsolaInstance): $Fetch {
     const options = useSanctumConfig();
     const event = useRequestEvent();
     const user = useSanctumUser();
@@ -34,6 +35,12 @@ export function createHttpClient(): $Fetch {
 
         const csrfToken = useCookie(options.csrf.cookie, COOKIE_OPTIONS).value;
 
+        if (!csrfToken) {
+            logger.warn(
+                'CSRF cookie is missing in response, check your API configuration'
+            );
+        }
+
         return {
             ...headers,
             ...(csrfToken && { [options.csrf.header]: csrfToken }),
@@ -50,6 +57,12 @@ export function createHttpClient(): $Fetch {
         const clientCookies = useRequestHeaders(['cookie']);
         const origin = options.origin ?? useRequestURL().origin;
 
+        if (!csrfToken) {
+            logger.warn(
+                `Unable to set ${options.csrf.header} header, CSRF cookie is missing`
+            );
+        }
+
         return {
             ...headers,
             Referer: origin,
@@ -65,7 +78,7 @@ export function createHttpClient(): $Fetch {
         redirect: 'manual',
         retry: options.client.retry,
 
-        async onRequest({ options }): Promise<void> {
+        async onRequest({ request, options }): Promise<void> {
             const method = options.method?.toLowerCase() ?? 'get';
 
             options.headers = {
@@ -85,6 +98,10 @@ export function createHttpClient(): $Fetch {
 
             if (import.meta.client) {
                 if (!SECURE_METHODS.has(method)) {
+                    logger.debug(
+                        `Skipping CSRF token header for safe method [${request}]`
+                    );
+
                     return;
                 }
 
@@ -92,15 +109,23 @@ export function createHttpClient(): $Fetch {
             }
         },
 
-        async onResponse({ response }): Promise<void> {
+        async onResponse({ request, response }): Promise<void> {
             // pass all cookies from the API to the client on SSR response
             if (import.meta.server) {
                 const serverCookieName = 'set-cookie';
                 const cookie = response.headers.get(serverCookieName);
 
                 if (cookie === null || event === undefined) {
+                    logger.debug(
+                        `No cookies to pass to the client [${request}]`
+                    );
                     return;
                 }
+
+                logger.debug(
+                    `Passing API cookies from Nuxt server to the client response [${request}]`,
+                    cookie
+                );
 
                 event.headers.append(serverCookieName, cookie);
             }
@@ -112,10 +137,21 @@ export function createHttpClient(): $Fetch {
         },
 
         async onResponseError({ request, response }): Promise<void> {
+            if (response.status === 419) {
+                logger.warn(
+                    'CSRF token mismatch, check your API configuration'
+                );
+
+                return;
+            }
+
             if (
                 response.status === 401 &&
                 request.toString().endsWith(options.endpoints.user)
             ) {
+                logger.warn(
+                    'User session is not set in API or expired, resetting identity'
+                );
                 user.value = null;
             }
         },

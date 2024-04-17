@@ -8,7 +8,6 @@ import { useSanctumConfig } from './useSanctumConfig';
  */
 export const useSanctumUser = <T>(): Ref<T | null> => {
     const options = useSanctumConfig();
-
     const user = useState<T | null>(options.userStateKey, () => null);
 
     return user;
