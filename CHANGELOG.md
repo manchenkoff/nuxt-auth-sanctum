@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.3
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.2.2...v0.2.3)
+
+### 🩹 Fixes
+
+- Resolved constant visibility issue ([5cbd7a3](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5cbd7a3))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.2.2
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.2.0...v0.2.2)
