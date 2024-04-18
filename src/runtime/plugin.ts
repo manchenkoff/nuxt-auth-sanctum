@@ -4,7 +4,8 @@ import { createHttpClient } from './httpFactory';
 import { useSanctumUser } from './composables/useSanctumUser';
 import { useSanctumConfig } from './composables/useSanctumConfig';
 import { createConsola, type ConsolaInstance } from 'consola';
-import { LOGGER_NAME } from '../constants';
+
+const LOGGER_NAME = 'nuxt-auth-sanctum';
 
 function createSanctumLogger(logLevel: number) {
     const envSuffix = import.meta.env.SSR ? 'ssr' : 'csr';
