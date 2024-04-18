@@ -1,6 +1,38 @@
 # Changelog
 
 
+## v0.2.2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.2.0...v0.2.2)
+
+### 🚀 Enhancements
+
+- Added logger support ([9a62a8f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/9a62a8f))
+- Added logs into plugin ([79e2558](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/79e2558))
+
+### 🩹 Fixes
+
+- Remove git push with tags ([03b28d4](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/03b28d4))
+- Prevent infinite redirect for guests ([20e7cc9](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/20e7cc9))
+- Removed redundant empty line ([6426309](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/6426309))
+- Reset user only when it expires ([d314b86](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/d314b86))
+- Request identity once on plugin init ([c88fbdf](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c88fbdf))
+- Push main branch after bumping release version ([cc76b0e](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/cc76b0e))
+
+### 📖 Documentation
+
+- Use new `nuxi module add` command in installation ([d74c007](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/d74c007))
+- Update second step ([93e365d](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/93e365d))
+
+### 🏡 Chore
+
+- **release:** V0.2.1 ([cf80175](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/cf80175))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+
 ## v0.2.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.2.0...v0.2.1)
