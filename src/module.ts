@@ -8,11 +8,12 @@ import {
 } from '@nuxt/kit';
 import { defu } from 'defu';
 import type { SanctumModuleOptions } from './types';
-import { LOGGER_NAME } from './constants';
 
 type DeepPartial<T> = {
     [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
+
+const LOGGER_NAME = 'nuxt-auth-sanctum';
 
 export default defineNuxtModule<DeepPartial<SanctumModuleOptions>>({
     meta: {
