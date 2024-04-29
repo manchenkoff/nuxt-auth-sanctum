@@ -25,6 +25,13 @@ export default defineNuxtRouteMiddleware((to) => {
     }
 
     if (
+        options.globalMiddleware.allow404WithoutAuth &&
+        to.matched.length === 0
+    ) {
+        return;
+    }
+
+    if (
         to.meta.excludeFromSanctum === true ||
         to.meta.sanctum?.excluded === true
     ) {
@@ -42,10 +49,7 @@ export default defineNuxtRouteMiddleware((to) => {
         return;
     }
 
-    if (
-        options.globalMiddleware.allow404WithoutAuth &&
-        to.matched.length === 0
-    ) {
+    if (isPageForGuestsOnly) {
         return;
     }
 
