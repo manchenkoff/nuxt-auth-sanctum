@@ -1,21 +1,39 @@
 /**
+ * Page meta information to be used by the global middleware.
+ */
+export interface SanctumGlobalMiddlewarePageMeta {
+    /**
+     * Determines whether the page should be excluded from middleware checks.
+     */
+    excluded?: boolean;
+    /**
+     * Determines whether the page should be accessible only by unauthenticated users.
+     */
+    guestOnly?: boolean;
+}
+
+/**
  * Definition of Laravel Sanctum endpoints to be used by the client.
  */
 export interface SanctumEndpoints {
     /**
      * The endpoint to request a new CSRF token.
+     * @default '/sanctum/csrf-cookie'
      */
     csrf: string;
     /**
      * The endpoint to send user credentials to authenticate.
+     * @default '/login'
      */
     login: string;
     /**
      * The endpoint to destroy current user session.
+     * @default '/logout'
      */
     logout: string;
     /**
      * The endpoint to fetch current user data.
+     * @default '/api/user'
      */
     user: string;
 }
@@ -26,10 +44,12 @@ export interface SanctumEndpoints {
 export interface CsrfOptions {
     /**
      * Name of the CSRF cookie to extract from server response.
+     * @default 'XSRF-TOKEN'
      */
     cookie: string;
     /**
      * Name of the CSRF header to pass from client to server.
+     * @default 'X-XSRF-TOKEN'
      */
     header: string;
 }
@@ -40,6 +60,7 @@ export interface CsrfOptions {
 export interface ClientOptions {
     /**
      * The number of times to retry a request when it fails.
+     * @default false
      */
     retry: number | false;
 }
@@ -50,26 +71,31 @@ export interface ClientOptions {
 export interface RedirectOptions {
     /**
      * Determines whether to keep the requested route when redirecting after login.
+     * @default false
      */
     keepRequestedRoute: boolean;
     /**
      * Route to redirect to when user is authenticated.
      * If set to false, do nothing.
+     * @default '/'
      */
     onLogin: string | false;
     /**
      * Route to redirect to when user is not authenticated.
      * If set to false, do nothing.
+     * @default '/'
      */
     onLogout: string | false;
     /**
      * Route to redirect to when user has to be authenticated.
      * If set to false, the plugin will throw an 403 error.
+     * @default '/login'
      */
     onAuthOnly: string | false;
     /**
      * Route to redirect to when user has to be a guest.
      * If set to false, the plugin will throw an 403 error.
+     * @default '/'
      */
     onGuestOnly: string | false;
 }
@@ -80,10 +106,12 @@ export interface RedirectOptions {
 export interface GlobalMiddlewareOptions {
     /**
      * Determines whether the global middleware is enabled.
+     * @default false
      */
     enabled: boolean;
     /**
      * Determines whether to allow 404 pages without authentication.
+     * @default true
      */
     allow404WithoutAuth: boolean;
 }
@@ -102,10 +130,12 @@ export interface SanctumModuleOptions {
     origin?: string;
     /**
      * The key to use to store the user identity in the `useState` variable.
+     * @default 'sanctum.user.identity'
      */
     userStateKey: string;
     /**
      * Determine to redirect when user is authenticated.
+     * @default false
      */
     redirectIfAuthenticated: boolean;
     /**
@@ -139,6 +169,7 @@ export interface SanctumModuleOptions {
      * 5: Trace logs
      *
      * More details at https://github.com/unjs/consola?tab=readme-ov-file#log-level
+     * @default 3
      */
     logLevel: number;
 }

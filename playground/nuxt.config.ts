@@ -24,5 +24,9 @@ export default defineNuxtConfig({
             logout: '/api/logout',
             user: '/api/user',
         },
+        globalMiddleware: {
+            allow404WithoutAuth: true,
+            enabled: false,
+        },
     },
 });

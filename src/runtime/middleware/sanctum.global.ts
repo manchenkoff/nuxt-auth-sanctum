@@ -24,15 +24,21 @@ export default defineNuxtRouteMiddleware((to) => {
         );
     }
 
-    if (isAuthenticated.value === true) {
-        if (to.path === loginPage) {
-            return navigateTo(homePage, { replace: true });
-        }
-
+    if (
+        to.meta.excludeFromSanctum === true ||
+        to.meta.sanctum?.excluded === true
+    ) {
         return;
     }
 
-    if (to.path === loginPage || to.meta.excludeFromSanctum === true) {
+    const isPageForGuestsOnly =
+        to.path === loginPage || to.meta.sanctum?.guestOnly === true;
+
+    if (isAuthenticated.value === true) {
+        if (isPageForGuestsOnly) {
+            return navigateTo(homePage, { replace: true });
+        }
+
         return;
     }
 
