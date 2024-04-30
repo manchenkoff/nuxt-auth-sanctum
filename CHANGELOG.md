@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v0.3.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.2.3...v0.3.0)
+
+### 🚀 Enhancements
+
+- Added publish workflow ([3c8baef](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/3c8baef))
+- ⚠️  Added guest mode for global middleware ([50f2a10](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/50f2a10))
+
+### 🩹 Fixes
+
+- Include history and write permissions in release pipeline ([220e16b](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/220e16b))
+
+### 🏡 Chore
+
+- **release:** V0.2.3 ([0397aa5](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/0397aa5))
+- Dropped support of old versions ([8366255](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/8366255))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Added guest mode for global middleware ([50f2a10](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/50f2a10))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.2.3
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.2.2...v0.2.3)
