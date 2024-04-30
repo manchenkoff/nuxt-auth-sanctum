@@ -24,22 +24,32 @@ export default defineNuxtRouteMiddleware((to) => {
         );
     }
 
+    if (
+        options.globalMiddleware.allow404WithoutAuth &&
+        to.matched.length === 0
+    ) {
+        return;
+    }
+
+    if (
+        to.meta.excludeFromSanctum === true ||
+        to.meta.sanctum?.excluded === true
+    ) {
+        return;
+    }
+
+    const isPageForGuestsOnly =
+        to.path === loginPage || to.meta.sanctum?.guestOnly === true;
+
     if (isAuthenticated.value === true) {
-        if (to.path === loginPage) {
+        if (isPageForGuestsOnly) {
             return navigateTo(homePage, { replace: true });
         }
 
         return;
     }
 
-    if (to.path === loginPage || to.meta.excludeFromSanctum === true) {
-        return;
-    }
-
-    if (
-        options.globalMiddleware.allow404WithoutAuth &&
-        to.matched.length === 0
-    ) {
+    if (isPageForGuestsOnly) {
         return;
     }
 

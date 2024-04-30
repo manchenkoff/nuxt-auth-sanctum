@@ -1,4 +1,7 @@
-import { SanctumModuleOptions } from './types';
+import type {
+    SanctumModuleOptions,
+    SanctumGlobalMiddlewarePageMeta,
+} from './types';
 
 declare module 'nuxt/schema' {
     interface PublicRuntimeConfig {
@@ -8,6 +11,15 @@ declare module 'nuxt/schema' {
 
 declare module '#app' {
     interface PageMeta {
+        /**
+         * @deprecated Use `sanctum.excluded` instead.
+         */
         excludeFromSanctum?: boolean;
+        /**
+         * Sanctum global middleware page configuration.
+         */
+        sanctum?: Partial<SanctumGlobalMiddlewarePageMeta>;
     }
 }
+
+export {};
