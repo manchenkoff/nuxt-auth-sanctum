@@ -1,4 +1,4 @@
-name: Publish new version to NPM
+name: Publish latest release to NPM
 
 env:
     node_version: 20.x
@@ -10,9 +10,6 @@ env:
 
 on:
     workflow_dispatch: # manual trigger
-
-permissions:
-    contents: write
 
 jobs:
     build:
@@ -39,8 +36,6 @@ jobs:
             - name: Build package
               run: ${{ env.script_command }} prepack
 
-            - name: Generate changelog and publish package
+            - name: Publish package
               run: |
-                  git config --global user.name "changelog_action"
-                  git config --global user.email "artem@manchenkoff.me"
-                  ${{ env.script_command }} changelogen --release --push --publish
+                  ${{ env.script_command }} changelogen --publish
