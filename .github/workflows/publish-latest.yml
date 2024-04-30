@@ -11,6 +11,10 @@ env:
 on:
     workflow_dispatch: # manual trigger
 
+permissions:
+    contents: read
+    id-token: write
+
 jobs:
     build:
         runs-on: ubuntu-latest
