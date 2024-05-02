@@ -1,7 +1,7 @@
 import type {
     SanctumModuleOptions,
     SanctumGlobalMiddlewarePageMeta,
-} from './types';
+} from './runtime/types';
 
 declare module 'nuxt/schema' {
     interface PublicRuntimeConfig {
