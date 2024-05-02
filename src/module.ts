@@ -7,7 +7,7 @@ import {
     useLogger,
 } from '@nuxt/kit';
 import { defu } from 'defu';
-import type { SanctumModuleOptions } from './types';
+import type { SanctumModuleOptions } from './runtime/types';
 
 type DeepPartial<T> = {
     [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
