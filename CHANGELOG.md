@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.3.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.0...v0.3.1)
+
+### 🩹 Fixes
+
+- Added npm credentials config ([51d76ef](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/51d76ef))
+- Added id-token permission for pipeline ([72b08ea](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/72b08ea))
+- Keep config type exported in composable ([3862bfb](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/3862bfb))
+
+### 🏡 Chore
+
+- Upgraded setup-node to v4 ([3f6226d](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/3f6226d))
+- Removed temp pipeline for publishing ([3bd6027](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/3bd6027))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.2.3...v0.3.0)
