@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.4
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.3...v0.3.4)
+
+### 🩹 Fixes
+
+- Dropped extenal cookie parser to use h3 ([1410179](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1410179))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.3
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.2...v0.3.3)
