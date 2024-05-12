@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.3.2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.1...v0.3.2)
+
+### 🩹 Fixes
+
+- Added github token for automatic release creation ([84fac56](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/84fac56))
+- Request csrf only when not set ([569dbdc](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/569dbdc))
+- Added csrf cookie for secure ssr calls ([8b45e06](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/8b45e06))
+
+### 🏡 Chore
+
+- Added debug log for user initial request ([409b3ae](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/409b3ae))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.0...v0.3.1)
