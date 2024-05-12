@@ -1,6 +1,9 @@
 import type { $Fetch, FetchOptions } from 'ofetch';
 import { appendResponseHeader } from 'h3';
-import { splitCookiesString } from 'set-cookie-parser';
+import {
+    splitCookiesString,
+    parseString as parseCookieString,
+} from 'set-cookie-parser';
 import {
     useCookie,
     useRequestEvent,
@@ -55,6 +58,8 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
             logger.warn(
                 `${options.csrf.cookie} cookie is missing, unable to set ${options.csrf.header} header`
             );
+
+            return headers as HeadersInit;
         }
 
         logger.debug(`Added ${options.csrf.header} header to pass to the API`);
@@ -106,7 +111,7 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
                 options.headers = buildServerHeaders(options.headers);
             }
 
-            if (import.meta.client && SECURE_METHODS.has(method)) {
+            if (SECURE_METHODS.has(method)) {
                 options.headers = await useCsrfHeader(options.headers);
             }
         },
@@ -126,14 +131,18 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
                 }
 
                 const cookies = splitCookiesString(cookieHeader);
+                const cookieNameList = [];
 
                 for (const cookie of cookies) {
                     appendResponseHeader(event, serverCookieName, cookie);
 
-                    logger.debug(
-                        `Append API cookie from SSR to CSR response [${cookie}]`
-                    );
+                    const metadata = parseCookieString(cookie);
+                    cookieNameList.push(metadata.name);
                 }
+
+                logger.debug(
+                    `Append API cookies from SSR to CSR response [${cookieNameList.join(', ')}]`
+                );
             }
 
             // follow redirects on client
