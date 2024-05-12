@@ -1,9 +1,5 @@
 import type { $Fetch, FetchOptions } from 'ofetch';
-import { appendResponseHeader } from 'h3';
-import {
-    splitCookiesString,
-    parseString as parseCookieString,
-} from 'set-cookie-parser';
+import { appendResponseHeader, splitCookiesString } from 'h3';
 import {
     useCookie,
     useRequestEvent,
@@ -136,8 +132,8 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
                 for (const cookie of cookies) {
                     appendResponseHeader(event, serverCookieName, cookie);
 
-                    const metadata = parseCookieString(cookie);
-                    cookieNameList.push(metadata.name);
+                    const cookieName = cookie.split('=')[0];
+                    cookieNameList.push(cookieName);
                 }
 
                 logger.debug(
