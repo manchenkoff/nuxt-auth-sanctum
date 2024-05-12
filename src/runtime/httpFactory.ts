@@ -1,4 +1,6 @@
 import type { $Fetch, FetchOptions } from 'ofetch';
+import { appendResponseHeader } from 'h3';
+import { splitCookiesString } from 'set-cookie-parser';
 import {
     useCookie,
     useRequestEvent,
@@ -18,57 +20,65 @@ const COOKIE_OPTIONS: { readonly: true } = { readonly: true };
 
 export function createHttpClient(logger: ConsolaInstance): $Fetch {
     const options = useSanctumConfig();
-    const event = useRequestEvent();
     const user = useSanctumUser();
     const nuxtApp = useNuxtApp();
+    const event = useRequestEvent(nuxtApp);
 
     /**
-     * Request a new CSRF cookie from the API and pass it to the headers collection
-     * @param headers Headers collection to extend
-     * @returns {HeadersInit}
+     * Request a new CSRF cookie from the API
+     * @returns {Promise<void>}
      */
-    async function buildClientHeaders(headers: Headers): Promise<HeadersInit> {
+    async function initCsrfCookie(): Promise<void> {
         await $fetch(options.endpoints.csrf, {
             baseURL: options.baseUrl,
             credentials: 'include',
         });
 
-        const csrfToken = useCookie(options.csrf.cookie, COOKIE_OPTIONS).value;
+        logger.debug('CSRF cookie has been initialized');
+    }
 
-        if (!csrfToken) {
+    /**
+     * Add CSRF token to the headers collection to pass from the client to the API
+     * @param headers Headers collection to extend
+     * @returns {Promise<HeadersInit>}
+     */
+    async function useCsrfHeader(headers: Headers): Promise<HeadersInit> {
+        let csrfToken = useCookie(options.csrf.cookie, COOKIE_OPTIONS);
+
+        if (!csrfToken.value) {
+            await initCsrfCookie();
+
+            csrfToken = useCookie(options.csrf.cookie, COOKIE_OPTIONS);
+        }
+
+        if (!csrfToken.value) {
             logger.warn(
-                'CSRF cookie is missing in response, check your API configuration'
+                `${options.csrf.cookie} cookie is missing, unable to set ${options.csrf.header} header`
             );
         }
 
+        logger.debug(`Added ${options.csrf.header} header to pass to the API`);
+
         return {
             ...headers,
-            ...(csrfToken && { [options.csrf.header]: csrfToken }),
+            ...(csrfToken.value && { [options.csrf.header]: csrfToken.value }),
         };
     }
 
     /**
      * Pass all cookies, headers and referrer from the client to the API
      * @param headers Headers collection to extend
-     * @returns { HeadersInit }
+     * @returns {HeadersInit}
      */
     function buildServerHeaders(headers: Headers): HeadersInit {
-        const csrfToken = useCookie(options.csrf.cookie, COOKIE_OPTIONS).value;
         const clientCookies = useRequestHeaders(['cookie']);
         const origin = options.origin ?? useRequestURL().origin;
-
-        if (!csrfToken) {
-            logger.warn(
-                `Unable to set ${options.csrf.header} header, CSRF cookie is missing`
-            );
-        }
 
         return {
             ...headers,
             Referer: origin,
             Origin: origin,
             ...(clientCookies.cookie && clientCookies),
-            ...(csrfToken && { [options.csrf.header]: csrfToken }),
         };
     }
 
@@ -78,7 +88,7 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
         redirect: 'manual',
         retry: options.client.retry,
 
-        async onRequest({ request, options }): Promise<void> {
+        async onRequest({ options }): Promise<void> {
             const method = options.method?.toLowerCase() ?? 'get';
 
             options.headers = {
@@ -87,7 +97,7 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
             };
 
             // https://laravel.com/docs/10.x/routing#form-method-spoofing
-            if (options.body instanceof FormData && method === 'put') {
+            if (method === 'put' && options.body instanceof FormData) {
                 options.method = 'POST';
                 options.body.append('_method', 'PUT');
             }
@@ -96,16 +106,8 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
                 options.headers = buildServerHeaders(options.headers);
             }
 
-            if (import.meta.client) {
-                if (!SECURE_METHODS.has(method)) {
-                    logger.debug(
-                        `Skipping CSRF token header for safe method [${request}]`
-                    );
-
-                    return;
-                }
-
-                options.headers = await buildClientHeaders(options.headers);
+            if (import.meta.client && SECURE_METHODS.has(method)) {
+                options.headers = await useCsrfHeader(options.headers);
             }
         },
 
@@ -113,21 +115,25 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
             // pass all cookies from the API to the client on SSR response
             if (import.meta.server) {
                 const serverCookieName = 'set-cookie';
-                const cookie = response.headers.get(serverCookieName);
+                const cookieHeader = response.headers.get(serverCookieName);
 
-                if (cookie === null || event === undefined) {
+                if (cookieHeader === null || event === undefined) {
                     logger.debug(
                         `No cookies to pass to the client [${request}]`
                     );
+
                     return;
                 }
 
-                logger.debug(
-                    `Passing API cookies from Nuxt server to the client response [${request}]`,
-                    cookie
-                );
+                const cookies = splitCookiesString(cookieHeader);
 
-                event.headers.append(serverCookieName, cookie);
+                for (const cookie of cookies) {
+                    appendResponseHeader(event, serverCookieName, cookie);
+
+                    logger.debug(
+                        `Append API cookie from SSR to CSR response [${cookie}]`
+                    );
+                }
             }
 
             // follow redirects on client
