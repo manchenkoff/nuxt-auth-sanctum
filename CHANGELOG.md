@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.3.3
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.2...v0.3.3)
+
+### 🩹 Fixes
+
+- Fixed cookie parses dependency ([bd6ef34](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/bd6ef34))
+
+### 🏡 Chore
+
+- Upgraded yarn to 4.2.2 ([007a7e4](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/007a7e4))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.2
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.1...v0.3.2)
