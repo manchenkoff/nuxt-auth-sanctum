@@ -55,7 +55,7 @@ export default defineNuxtRouteMiddleware((to) => {
 
     const redirect: RouteLocationRaw = { path: loginPage };
 
-    if (options.redirect.keepRequestedRoute) {
+    if (options.redirect.keepRequestedRoute.afterLogin) {
         redirect.query = { redirect: to.fullPath };
     }
 

@@ -32,6 +32,7 @@ export default defineNuxtModule<DeepPartial<SanctumModuleOptions>>({
             login: '/login',
             logout: '/logout',
             user: '/api/user',
+            register: '/register',
         },
         csrf: {
             cookie: 'XSRF-TOKEN',
@@ -41,11 +42,15 @@ export default defineNuxtModule<DeepPartial<SanctumModuleOptions>>({
             retry: false,
         },
         redirect: {
-            keepRequestedRoute: false,
+            keepRequestedRoute: {
+                afterLogin: false,
+                afterRegistration: false,
+            },
             onLogin: '/',
             onLogout: '/',
             onAuthOnly: '/login',
             onGuestOnly: '/',
+            onRegister: '/verify-email',
         },
         globalMiddleware: {
             enabled: false,

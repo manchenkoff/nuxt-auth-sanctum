@@ -12,17 +12,22 @@ export default defineNuxtConfig({
         baseUrl: 'http://localhost:80',
         logLevel: 5,
         redirect: {
-            keepRequestedRoute: true,
+            keepRequestedRoute: {
+                afterLogin: true,
+                afterRegistration: true,
+            },
             onAuthOnly: '/login',
             onGuestOnly: '/profile',
             onLogin: '/welcome',
             onLogout: '/logout',
+            onRegister: '/verify-email',
         },
         endpoints: {
             csrf: '/sanctum/csrf-cookie',
             login: '/api/login',
             logout: '/api/logout',
             user: '/api/user',
+            register: '/register',
         },
         globalMiddleware: {
             allow404WithoutAuth: true,

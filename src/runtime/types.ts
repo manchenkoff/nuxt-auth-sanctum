@@ -22,6 +22,11 @@ export interface SanctumEndpoints {
      */
     csrf: string;
     /**
+     * The endpoint to send user credentials to register.
+     * @default '/register'
+     */
+    register: string;
+    /**
      * The endpoint to send user credentials to authenticate.
      * @default '/login'
      */
@@ -70,10 +75,13 @@ export interface ClientOptions {
  */
 export interface RedirectOptions {
     /**
-     * Determines whether to keep the requested route when redirecting after login.
+     * Determines whether to keep the requested route when redirecting after login/registration.
      * @default false
      */
-    keepRequestedRoute: boolean;
+    keepRequestedRoute: {
+        afterLogin: boolean;
+        afterRegistration: boolean;
+    };
     /**
      * Route to redirect to when user is authenticated.
      * If set to false, do nothing.
@@ -86,6 +94,13 @@ export interface RedirectOptions {
      * @default '/'
      */
     onLogout: string | false;
+
+    /**
+     * Route to redirect after user registered
+     * If set to false, the plugin won't do anything
+     * @default '/verify-email'
+     */
+    onRegister: string | false;
     /**
      * Route to redirect to when user has to be authenticated.
      * If set to false, the plugin will throw an 403 error.

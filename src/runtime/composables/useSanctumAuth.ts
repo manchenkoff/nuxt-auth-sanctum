@@ -8,6 +8,7 @@ export interface SanctumAuth<T> {
     user: Ref<T | null>;
     isAuthenticated: Ref<boolean>;
     login: (credentials: Record<string, any>) => Promise<void>;
+    register: (credentials: Record<string, any>) => Promise<void>;
     logout: () => Promise<void>;
     refreshIdentity: () => Promise<void>;
 }
@@ -64,7 +65,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
 
         await refreshIdentity();
 
-        if (options.redirect.keepRequestedRoute) {
+        if (options.redirect.keepRequestedRoute.afterLogin) {
             const requestedRoute = currentRoute.query.redirect;
 
             if (requestedRoute && requestedRoute !== currentRoute.path) {
@@ -114,11 +115,61 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
         );
     }
 
+    async function register(credentials: Record<string, any>) {
+        const currentRoute = useRoute();
+
+        if (isAuthenticated.value === true) {
+            if (options.redirectIfAuthenticated === false) {
+                throw new Error('User is already registered');
+            }
+
+            if (
+                options.redirect.onRegister === false ||
+                options.redirect.onRegister === currentRoute.path
+            ) {
+                return;
+            }
+
+            await nuxtApp.runWithContext(() =>
+                navigateTo(options.redirect.onRegister as string)
+            );
+        }
+
+        await client(options.endpoints.register, {
+            method: 'post',
+            body: credentials,
+        });
+
+        await refreshIdentity();
+
+        if (options.redirect.keepRequestedRoute.afterRegistration) {
+            const requestedRoute = currentRoute.query.redirect;
+
+            if (requestedRoute && requestedRoute !== currentRoute.path) {
+                await nuxtApp.runWithContext(() =>
+                    navigateTo(requestedRoute as string)
+                );
+
+                return;
+            }
+        }
+
+        if (
+            options.redirect.onLogin &&
+            currentRoute.path !== options.redirect.onLogin
+        ) {
+            await nuxtApp.runWithContext(() =>
+                navigateTo(options.redirect.onLogin as string)
+            );
+        }
+    }
+
     return {
         user,
         isAuthenticated,
         login,
         logout,
+        register,
         refreshIdentity,
     } as SanctumAuth<T>;
 };
