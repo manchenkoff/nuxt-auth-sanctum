@@ -2108,15 +2108,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/set-cookie-parser@npm:^2.4.7":
-  version: 2.4.7
-  resolution: "@types/set-cookie-parser@npm:2.4.7"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10/01ef803e24b8cd33e49fe7463f32a562da45ce3f960381b90cccf67ea71b1830d2273df044255b040069c0a92ea25b4bf21c39ac2f85b50c01818ded5e918554
-  languageName: node
-  linkType: hard
-
 "@typescript-eslint/eslint-plugin@npm:^6.5.0":
   version: 6.20.0
   resolution: "@typescript-eslint/eslint-plugin@npm:6.20.0"
@@ -6513,7 +6504,6 @@ __metadata:
     "@nuxt/schema": "npm:^3.9.0"
     "@nuxt/test-utils": "npm:^3.9.0"
     "@types/node": "npm:^20.11.13"
-    "@types/set-cookie-parser": "npm:^2.4.7"
     changelogen: "npm:^0.5.5"
     defu: "npm:^6.1.4"
     eslint: "npm:^8.56.0"
@@ -6523,7 +6513,6 @@ __metadata:
     nuxi: "npm:^3.10.0"
     nuxt: "npm:^3.10.0"
     prettier: "npm:^3.0.3"
-    set-cookie-parser: "npm:^2.6.0"
     typescript: "npm:^5.2.2"
     vite: "npm:^4.4.9"
     vitest: "npm:^1.2.2"
@@ -7848,13 +7837,6 @@ __metadata:
   version: 2.0.0
   resolution: "set-blocking@npm:2.0.0"
   checksum: 10/8980ebf7ae9eb945bb036b6e283c547ee783a1ad557a82babf758a065e2fb6ea337fd82cac30dd565c1e606e423f30024a19fff7afbf4977d784720c4026a8ef
-  languageName: node
-  linkType: hard
-
-"set-cookie-parser@npm:^2.6.0":
-  version: 2.6.0
-  resolution: "set-cookie-parser@npm:2.6.0"
-  checksum: 10/8d451ebadb760989f93b634942c79de3c925ca7a986d133d08a80c40b5ae713ce12e354f0d5245c49f288c52daa7bd6554d5dc52f8a4eecaaf5e192881cf2b1f
   languageName: node
   linkType: hard
 
