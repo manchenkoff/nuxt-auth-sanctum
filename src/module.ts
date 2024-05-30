@@ -14,11 +14,11 @@ type DeepPartial<T> = {
     [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
-const LOGGER_NAME = 'nuxt-auth-sanctum';
+const MODULE_NAME = 'nuxt-auth-sanctum';
 
 export default defineNuxtModule<DeepPartial<SanctumModuleOptions>>({
     meta: {
-        name: 'nuxt-auth-sanctum',
+        name: MODULE_NAME,
         configKey: 'sanctum',
         compatibility: {
             nuxt: '^3.9.0',
@@ -30,14 +30,14 @@ export default defineNuxtModule<DeepPartial<SanctumModuleOptions>>({
     setup(options, nuxt) {
         const resolver = createResolver(import.meta.url);
 
-        const runtimeConfigOverrides =
-            nuxt.options.runtimeConfig.public.sanctum;
-
-        const sanctumConfig = defu(runtimeConfigOverrides as any, options);
+        const sanctumConfig = defu(
+            nuxt.options.runtimeConfig.public.sanctum as any,
+            options
+        );
 
         nuxt.options.runtimeConfig.public.sanctum = sanctumConfig;
 
-        const logger = useLogger(LOGGER_NAME, {
+        const logger = useLogger(MODULE_NAME, {
             level: sanctumConfig.logLevel,
         });
 
