@@ -8,6 +8,7 @@ import {
 } from '@nuxt/kit';
 import { defu } from 'defu';
 import type { SanctumModuleOptions } from './runtime/types';
+import { defaultModuleOptions } from './config';
 
 type DeepPartial<T> = {
     [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
@@ -24,35 +25,7 @@ export default defineNuxtModule<DeepPartial<SanctumModuleOptions>>({
         },
     },
 
-    defaults: {
-        userStateKey: 'sanctum.user.identity',
-        redirectIfAuthenticated: false,
-        endpoints: {
-            csrf: '/sanctum/csrf-cookie',
-            login: '/login',
-            logout: '/logout',
-            user: '/api/user',
-        },
-        csrf: {
-            cookie: 'XSRF-TOKEN',
-            header: 'X-XSRF-TOKEN',
-        },
-        client: {
-            retry: false,
-        },
-        redirect: {
-            keepRequestedRoute: false,
-            onLogin: '/',
-            onLogout: '/',
-            onAuthOnly: '/login',
-            onGuestOnly: '/',
-        },
-        globalMiddleware: {
-            enabled: false,
-            allow404WithoutAuth: true,
-        },
-        logLevel: 3,
-    },
+    defaults: defaultModuleOptions,
 
     setup(options, nuxt) {
         const resolver = createResolver(import.meta.url);
