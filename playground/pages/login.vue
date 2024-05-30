@@ -48,6 +48,7 @@ async function onFormSubmit() {
             <input
                 id="email"
                 v-model="credentials.email"
+                autocomplete="username"
                 type="text"
                 name="email"
             />

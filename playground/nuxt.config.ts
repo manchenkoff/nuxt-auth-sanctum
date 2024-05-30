@@ -3,7 +3,7 @@ export default defineNuxtConfig({
     ssr: true,
     typescript: {
         strict: true,
-        typeCheck: true,
+        typeCheck: false, // disabled due to https://github.com/vuejs/language-tools/issues/3969
     },
 
     modules: ['../src/module'],
