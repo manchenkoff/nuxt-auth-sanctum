@@ -1,11 +1,16 @@
 import type {
     SanctumModuleOptions,
     SanctumGlobalMiddlewarePageMeta,
+    SanctumAppConfig,
 } from './runtime/types';
 
 declare module 'nuxt/schema' {
     interface PublicRuntimeConfig {
         sanctum: Partial<SanctumModuleOptions>;
+    }
+
+    interface AppConfig {
+        sanctum: SanctumAppConfig;
     }
 }
 

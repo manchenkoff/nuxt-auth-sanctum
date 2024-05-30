@@ -1,3 +1,39 @@
+import type { FetchContext } from 'ofetch';
+import type { ConsolaInstance } from 'consola';
+import type { NuxtApp } from '#app';
+
+/**
+ * Interceptors to be used by the ofetch client.
+ */
+export interface SanctumInterceptors {
+    /**
+     * Function to execute before sending a request.
+     */
+    onRequest?: (
+        app: NuxtApp,
+        ctx: FetchContext,
+        logger: ConsolaInstance
+    ) => Promise<void>;
+    /**
+     * Function to execute after receiving a response.
+     */
+    onResponse?: (
+        app: NuxtApp,
+        ctx: FetchContext,
+        logger: ConsolaInstance
+    ) => Promise<void>;
+}
+
+/**
+ * Sanctum configuration for the application side with user-defined handlers.
+ */
+export interface SanctumAppConfig {
+    /**
+     * Interceptors to be used by the client.
+     */
+    interceptors?: SanctumInterceptors;
+}
+
 /**
  * Page meta information to be used by the global middleware.
  */
