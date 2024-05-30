@@ -52,7 +52,7 @@ jobs:
 
             - name: Run TypeCheck
               run: |
-                  ${{ env.script_command }} types
+                  ${{ env.script_command }} test:types
 
             - name: Run tests
               run: |
