@@ -10,7 +10,7 @@ declare module 'nuxt/schema' {
     }
 
     interface AppConfig {
-        sanctum: SanctumAppConfig;
+        sanctum?: SanctumAppConfig;
     }
 }
 
