@@ -18,12 +18,22 @@ type DeepPartial<T> = {
     [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
+declare module 'nuxt/schema' {
+    interface PublicRuntimeConfig {
+        sanctum: Partial<SanctumModuleOptions>;
+    }
+
+    interface AppConfigInput {
+        sanctum?: SanctumAppConfig;
+    }
+}
+
 declare module '@nuxt/schema' {
     interface PublicRuntimeConfig {
         sanctum: Partial<SanctumModuleOptions>;
     }
 
-    interface AppConfig {
+    interface AppConfigInput {
         sanctum?: SanctumAppConfig;
     }
 }
@@ -58,6 +68,9 @@ export default defineNuxtModule<ModuleOptions>({
 
     setup(options, nuxt) {
         const resolver = createResolver(import.meta.url);
+
+        const runtimeDir = resolver.resolve('./runtime');
+        nuxt.options.build.transpile.push(runtimeDir);
 
         const sanctumConfig = defu(
             nuxt.options.runtimeConfig.public.sanctum as any,
