@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v0.3.5
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.4...v0.3.5)
+
+### 🚀 Enhancements
+
+- Added support for custom interceptors ([2795998](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/2795998))
+
+### 🩹 Fixes
+
+- Disabled typecheck in the playground ([cd77036](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/cd77036))
+
+### 🏡 Chore
+
+- Upgraded module build dependencies ([16cdde6](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/16cdde6))
+- Extracted default module options ([e0f2c7a](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e0f2c7a))
+- Applied formatting to system files ([ae7918f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/ae7918f))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.4
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.3...v0.3.4)
