@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.8
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.7...v0.3.8)
+
+### 🩹 Fixes
+
+- Updated exporting nuxt schemas ([fa608f6](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/fa608f6))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.7
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.6...v0.3.7)
