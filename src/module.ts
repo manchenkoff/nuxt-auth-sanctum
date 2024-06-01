@@ -7,12 +7,39 @@ import {
     useLogger,
 } from '@nuxt/kit';
 import { defu } from 'defu';
-import type { SanctumModuleOptions } from './runtime/types';
+import type {
+    SanctumAppConfig,
+    SanctumGlobalMiddlewarePageMeta,
+    SanctumModuleOptions,
+} from './runtime/types';
 import { defaultModuleOptions } from './config';
 
 type DeepPartial<T> = {
     [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
+
+declare module '@nuxt/schema' {
+    interface PublicRuntimeConfig {
+        sanctum: Partial<SanctumModuleOptions>;
+    }
+
+    interface AppConfig {
+        sanctum?: SanctumAppConfig;
+    }
+}
+
+declare module '#app' {
+    interface PageMeta {
+        /**
+         * @deprecated Use `sanctum.excluded` instead.
+         */
+        excludeFromSanctum?: boolean;
+        /**
+         * Sanctum global middleware page configuration.
+         */
+        sanctum?: Partial<SanctumGlobalMiddlewarePageMeta>;
+    }
+}
 
 const MODULE_NAME = 'nuxt-auth-sanctum';
 
