@@ -3,25 +3,26 @@ import type { ConsolaInstance } from 'consola';
 import type { NuxtApp } from '#app';
 
 /**
+ * Interceptor definition type.
+ */
+export type SanctumInterceptor = (
+    app: NuxtApp,
+    ctx: FetchContext,
+    logger: ConsolaInstance
+) => Promise<void>;
+
+/**
  * Interceptors to be used by the ofetch client.
  */
 export interface SanctumInterceptors {
     /**
      * Function to execute before sending a request.
      */
-    onRequest?: (
-        app: NuxtApp,
-        ctx: FetchContext,
-        logger: ConsolaInstance
-    ) => Promise<void>;
+    onRequest?: SanctumInterceptor;
     /**
      * Function to execute after receiving a response.
      */
-    onResponse?: (
-        app: NuxtApp,
-        ctx: FetchContext,
-        logger: ConsolaInstance
-    ) => Promise<void>;
+    onResponse?: SanctumInterceptor;
 }
 
 /**
