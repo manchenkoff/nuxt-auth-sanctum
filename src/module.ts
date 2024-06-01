@@ -16,7 +16,9 @@ type DeepPartial<T> = {
 
 const MODULE_NAME = 'nuxt-auth-sanctum';
 
-export default defineNuxtModule<DeepPartial<SanctumModuleOptions>>({
+export type ModuleOptions = DeepPartial<SanctumModuleOptions>;
+
+export default defineNuxtModule<ModuleOptions>({
     meta: {
         name: MODULE_NAME,
         configKey: 'sanctum',
