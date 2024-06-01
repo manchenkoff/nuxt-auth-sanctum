@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.7
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.6...v0.3.7)
+
+### 🩹 Fixes
+
+- Use common request header ([2536f21](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/2536f21))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.6
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.5...v0.3.6)
