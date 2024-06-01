@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.6
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.5...v0.3.6)
+
+### 🩹 Fixes
+
+- Export module types ([b1a513b](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b1a513b))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.5
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.4...v0.3.5)
