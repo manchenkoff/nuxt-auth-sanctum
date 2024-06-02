@@ -7,6 +7,7 @@ import { useSanctumAppConfig } from './composables/useSanctumAppConfig';
 import handleRequestCookies from './interceptors/cookie/request';
 import handleResponseHeaders from './interceptors/cookie/response';
 import handleRequestHeaders from './interceptors/common/request';
+import type { SanctumInterceptor } from './types';
 
 export function createHttpClient(logger: ConsolaInstance): $Fetch {
     const options = useSanctumConfig();
@@ -14,8 +15,11 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
     const appConfig = useSanctumAppConfig();
     const nuxtApp = useNuxtApp();
 
-    const requestInterceptors = [handleRequestHeaders, handleRequestCookies];
-    const responseInterceptors = [handleResponseHeaders];
+    const requestInterceptors: SanctumInterceptor[] = [
+        handleRequestHeaders,
+        handleRequestCookies,
+    ];
+    const responseInterceptors: SanctumInterceptor[] = [handleResponseHeaders];
 
     if (appConfig.interceptors?.onRequest) {
         requestInterceptors.push(appConfig.interceptors.onRequest);

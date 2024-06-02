@@ -38,7 +38,8 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.9.0",
-    "defu": "^6.1.4"
+    "defu": "^6.1.4",
+    "nuxt-auth-sanctum": "workspace:*"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
