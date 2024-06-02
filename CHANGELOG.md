@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.12
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.11...v0.3.12)
+
+### 🩹 Fixes
+
+- Adjusted path for page meta type ([c0ddc35](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c0ddc35))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.11
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.10...v0.3.11)
