@@ -97,18 +97,24 @@ import type {
 } from '${resolver.resolve('./runtime/types.ts')}';
 
 declare module 'nuxt/schema' {
+    interface AppConfig {
+        sanctum?: SanctumAppConfig;
+    }
     interface AppConfigInput {
         sanctum?: SanctumAppConfig;
     }
 }
 
 declare module '@nuxt/schema' {
+    interface AppConfig {
+        sanctum?: SanctumAppConfig;
+    }
     interface AppConfigInput {
         sanctum?: SanctumAppConfig;
     }
 }
 
-declare module 'nuxt/dist/pages/runtime' {
+declare module '${resolver.resolve('./../node_modules/nuxt/dist/pages/runtime/composables')}' {
     interface PageMeta {
         /**
          * @deprecated Use \`sanctum.excluded\` instead.
