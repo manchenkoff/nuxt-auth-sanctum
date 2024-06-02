@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.10
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.9...v0.3.10)
+
+### 🩹 Fixes
+
+- Removed workspace from dependencies ([a648ae9](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/a648ae9))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.9
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.8...v0.3.9)
