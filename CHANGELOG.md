@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.13
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.12...v0.3.13)
+
+### 🩹 Fixes
+
+- Hardcode absolute path to node_modules for page meta ([eb0d555](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/eb0d555))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.12
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.11...v0.3.12)
