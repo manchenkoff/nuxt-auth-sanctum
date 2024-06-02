@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.3.9
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.8...v0.3.9)
+
+### 🩹 Fixes
+
+- Expose type via templates ([d1ed3a4](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/d1ed3a4))
+- Export public runtime config as part of module ([43fd15c](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/43fd15c))
+
+### 🏡 Chore
+
+- Added typing for interceptors ([8446f6a](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/8446f6a))
+- Added transpile build option ([40fe0b2](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/40fe0b2))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.8
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.7...v0.3.8)
