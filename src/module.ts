@@ -114,7 +114,7 @@ declare module '@nuxt/schema' {
     }
 }
 
-declare module '${resolver.resolve('./../node_modules/nuxt/dist/pages/runtime/composables')}' {
+declare module '${resolver.resolve('./../nuxt/dist/pages/runtime/composables')}' {
     interface PageMeta {
         /**
          * @deprecated Use \`sanctum.excluded\` instead.
