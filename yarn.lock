@@ -7506,7 +7506,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt-auth-sanctum@workspace:.":
+"nuxt-auth-sanctum@workspace:*, nuxt-auth-sanctum@workspace:.":
   version: 0.0.0-use.local
   resolution: "nuxt-auth-sanctum@workspace:."
   dependencies:
@@ -7526,6 +7526,7 @@ __metadata:
     nitropack: "npm:^2.9.6"
     nuxi: "npm:^3.10.0"
     nuxt: "npm:^3.11.2"
+    nuxt-auth-sanctum: "workspace:*"
     prettier: "npm:^3.0.3"
     typescript: "npm:^5.4.5"
     vite: "npm:^4.4.9"
