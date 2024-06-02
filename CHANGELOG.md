@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.14
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.13...v0.3.14)
+
+### 🩹 Fixes
+
+- Changed path with typo ([1c9c963](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1c9c963))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.13
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.12...v0.3.13)
