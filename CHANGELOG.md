@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.11
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.10...v0.3.11)
+
+### 🩹 Fixes
+
+- Expose page meta augmented type ([b49fdfb](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b49fdfb))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.10
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.9...v0.3.10)
