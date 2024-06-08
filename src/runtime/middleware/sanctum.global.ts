@@ -31,10 +31,7 @@ export default defineNuxtRouteMiddleware((to) => {
         return;
     }
 
-    if (
-        to.meta.excludeFromSanctum === true ||
-        to.meta.sanctum?.excluded === true
-    ) {
+    if (to.meta.sanctum?.excluded === true) {
         return;
     }
 
