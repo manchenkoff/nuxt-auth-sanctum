@@ -1,6 +1,7 @@
-import type { SanctumModuleOptions } from './runtime/types';
+import type { SanctumModuleOptions } from './runtime/types/options';
 
 export const defaultModuleOptions: Partial<SanctumModuleOptions> = {
+    mode: 'cookie',
     userStateKey: 'sanctum.user.identity',
     redirectIfAuthenticated: false,
     endpoints: {

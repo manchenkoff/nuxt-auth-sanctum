@@ -1,54 +1,3 @@
-import type { FetchContext } from 'ofetch';
-import type { ConsolaInstance } from 'consola';
-import type { NuxtApp } from '#app';
-
-/**
- * Interceptor definition type.
- */
-export type SanctumInterceptor = (
-    app: NuxtApp,
-    ctx: FetchContext,
-    logger: ConsolaInstance
-) => Promise<void>;
-
-/**
- * Interceptors to be used by the ofetch client.
- */
-export interface SanctumInterceptors {
-    /**
-     * Function to execute before sending a request.
-     */
-    onRequest?: SanctumInterceptor;
-    /**
-     * Function to execute after receiving a response.
-     */
-    onResponse?: SanctumInterceptor;
-}
-
-/**
- * Sanctum configuration for the application side with user-defined handlers.
- */
-export interface SanctumAppConfig {
-    /**
-     * Interceptors to be used by the client.
-     */
-    interceptors?: SanctumInterceptors;
-}
-
-/**
- * Page meta information to be used by the global middleware.
- */
-export interface SanctumGlobalMiddlewarePageMeta {
-    /**
-     * Determines whether the page should be excluded from middleware checks.
-     */
-    excluded?: boolean;
-    /**
-     * Determines whether the page should be accessible only by unauthenticated users.
-     */
-    guestOnly?: boolean;
-}
-
 /**
  * Definition of Laravel Sanctum endpoints to be used by the client.
  */
@@ -161,6 +110,10 @@ export interface SanctumModuleOptions {
      * The base URL of the Laravel API.
      */
     baseUrl: string;
+    /**
+     * The mode to use for authentication.
+     */
+    mode: 'cookie' | 'token';
     /**
      * The URL of the current application to use in Referrer header. (Optional)
      */

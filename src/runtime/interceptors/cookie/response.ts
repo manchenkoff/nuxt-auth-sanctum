@@ -3,6 +3,12 @@ import type { FetchContext } from 'ofetch';
 import type { ConsolaInstance } from 'consola';
 import { navigateTo, useRequestEvent, type NuxtApp } from '#app';
 
+/**
+ * Pass all cookies from the API to the client on SSR response
+ * @param app Nuxt application instance
+ * @param ctx Fetch context
+ * @param logger Module logger instance
+ */
 export default async function handleResponseHeaders(
     app: NuxtApp,
     ctx: FetchContext,
@@ -14,7 +20,6 @@ export default async function handleResponseHeaders(
         return;
     }
 
-    // pass all cookies from the API to the client on SSR response
     if (import.meta.server) {
         const event = useRequestEvent(app);
         const serverCookieName = 'set-cookie';

@@ -1,7 +1,7 @@
 import type { FetchContext } from 'ofetch';
 import type { ConsolaInstance } from 'consola';
 import { useSanctumConfig } from '../../composables/useSanctumConfig';
-import type { SanctumModuleOptions } from '../../types';
+import type { SanctumModuleOptions } from '../../types/options';
 import {
     useCookie,
     useRequestHeaders,

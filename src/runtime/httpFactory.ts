@@ -7,19 +7,24 @@ import { useSanctumAppConfig } from './composables/useSanctumAppConfig';
 import handleRequestCookies from './interceptors/cookie/request';
 import handleResponseHeaders from './interceptors/cookie/response';
 import handleRequestHeaders from './interceptors/common/request';
-import type { SanctumInterceptor } from './types';
+import handleRequestTokenHeader from './interceptors/token/request';
+import type { SanctumAppConfig, SanctumInterceptor } from './types/config';
+import type { SanctumModuleOptions } from './types/options';
 
-export function createHttpClient(logger: ConsolaInstance): $Fetch {
-    const options = useSanctumConfig();
-    const user = useSanctumUser();
-    const appConfig = useSanctumAppConfig();
-    const nuxtApp = useNuxtApp();
+function configureClientInterceptors(
+    requestInterceptors: SanctumInterceptor[],
+    responseInterceptors: SanctumInterceptor[],
+    options: SanctumModuleOptions,
+    appConfig: SanctumAppConfig
+) {
+    if (options.mode === 'cookie') {
+        requestInterceptors.push(handleRequestCookies);
+        responseInterceptors.push(handleResponseHeaders);
+    }
 
-    const requestInterceptors: SanctumInterceptor[] = [
-        handleRequestHeaders,
-        handleRequestCookies,
-    ];
-    const responseInterceptors: SanctumInterceptor[] = [handleResponseHeaders];
+    if (options.mode === 'token') {
+        requestInterceptors.push(handleRequestTokenHeader);
+    }
 
     if (appConfig.interceptors?.onRequest) {
         requestInterceptors.push(appConfig.interceptors.onRequest);
@@ -28,6 +33,23 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
     if (appConfig.interceptors?.onResponse) {
         responseInterceptors.push(appConfig.interceptors.onResponse);
     }
+}
+
+export function createHttpClient(logger: ConsolaInstance): $Fetch {
+    const options = useSanctumConfig();
+    const user = useSanctumUser();
+    const appConfig = useSanctumAppConfig();
+    const nuxtApp = useNuxtApp();
+
+    const requestInterceptors: SanctumInterceptor[] = [handleRequestHeaders];
+    const responseInterceptors: SanctumInterceptor[] = [];
+
+    configureClientInterceptors(
+        requestInterceptors,
+        responseInterceptors,
+        options,
+        appConfig
+    );
 
     const httpOptions: FetchOptions = {
         baseURL: options.baseUrl,
