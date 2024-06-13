@@ -1,9 +1,10 @@
 import { FetchError } from 'ofetch';
-import { defineNuxtPlugin, useState } from '#app';
+import { defineNuxtPlugin, updateAppConfig, useState } from '#app';
 import { createHttpClient } from './httpFactory';
 import { useSanctumUser } from './composables/useSanctumUser';
 import { useSanctumConfig } from './composables/useSanctumConfig';
 import { createConsola, type ConsolaInstance } from 'consola';
+import { useSanctumAppConfig } from './composables/useSanctumAppConfig';
 
 const LOGGER_NAME = 'nuxt-auth-sanctum';
 
@@ -32,8 +33,23 @@ function handleIdentityLoadError(error: Error, logger: ConsolaInstance) {
 export default defineNuxtPlugin(async () => {
     const user = useSanctumUser();
     const options = useSanctumConfig();
+    const appConfig = useSanctumAppConfig();
     const logger = createSanctumLogger(options.logLevel);
     const client = createHttpClient(logger);
+
+    if (options.mode === 'token' && !appConfig.tokenStorage) {
+        logger.debug(
+            'Token storage is not defined, switch to default cookie storage'
+        );
+
+        const defaultStorage = await import('./storages/cookieTokenStorage');
+
+        updateAppConfig({
+            sanctum: {
+                tokenStorage: defaultStorage.cookieTokenStorage,
+            },
+        });
+    }
 
     const identityFetchedOnInit = useState<boolean>(
         'sanctum.user.loaded',

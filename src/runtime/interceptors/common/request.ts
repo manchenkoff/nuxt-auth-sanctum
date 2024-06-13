@@ -1,6 +1,11 @@
 import type { FetchContext } from 'ofetch';
 import { type NuxtApp } from '#app';
 
+/**
+ * Modify request before sending it to the Laravel API
+ * @param app Nuxt application instance
+ * @param ctx Fetch context
+ */
 export default async function handleRequestHeaders(
     app: NuxtApp,
     ctx: FetchContext

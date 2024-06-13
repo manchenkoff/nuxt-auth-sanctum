@@ -3,6 +3,7 @@ import { useSanctumClient } from './useSanctumClient';
 import { useSanctumUser } from './useSanctumUser';
 import { navigateTo, useNuxtApp, useRoute } from '#app';
 import { useSanctumConfig } from './useSanctumConfig';
+import { useSanctumAppConfig } from './useSanctumAppConfig';
 
 export interface SanctumAuth<T> {
     user: Ref<T | null>;
@@ -11,6 +12,10 @@ export interface SanctumAuth<T> {
     logout: () => Promise<void>;
     refreshIdentity: () => Promise<void>;
 }
+
+export type TokenResponse = {
+    token: string;
+};
 
 /**
  * Provides authentication methods for Laravel Sanctum
@@ -23,6 +28,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     const user = useSanctumUser<T>();
     const client = useSanctumClient();
     const options = useSanctumConfig();
+    const appConfig = useSanctumAppConfig();
 
     const isAuthenticated = computed(() => {
         return user.value !== null;
@@ -57,10 +63,14 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
             );
         }
 
-        await client(options.endpoints.login, {
+        const response = await client<TokenResponse>(options.endpoints.login, {
             method: 'post',
             body: credentials,
         });
+
+        if (options.mode === 'token') {
+            await appConfig.tokenStorage!.set(nuxtApp, response.token);
+        }
 
         await refreshIdentity();
 
@@ -101,6 +111,10 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
         await client(options.endpoints.logout, { method: 'post' });
 
         user.value = null;
+
+        if (options.mode === 'token') {
+            await appConfig.tokenStorage!.set(nuxtApp, undefined);
+        }
 
         if (
             options.redirect.onLogout === false ||
