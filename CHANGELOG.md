@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v0.4.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.14...v0.4.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Dropped support for excludeFromSanctum page meta ([5d09e71](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5d09e71))
+- Added token storage support ([2ebcfbf](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/2ebcfbf))
+
+### 🏡 Chore
+
+- Updated playgorund config to breeze-api ([5644023](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5644023))
+- Indicate compatibility with new v4 major ([54869f7](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/54869f7))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Dropped support for excludeFromSanctum page meta ([5d09e71](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5d09e71))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.3.14
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.13...v0.3.14)
