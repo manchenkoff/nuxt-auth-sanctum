@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.4.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.0...v0.4.1)
+
+### 🩹 Fixes
+
+- Experimental support for cloudflare workers ([9146cba](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/9146cba))
+
+### 🏡 Chore
+
+- Updated github templates ([932fd0f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/932fd0f))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.3.14...v0.4.0)
