@@ -35,6 +35,17 @@ function configureClientInterceptors(
     }
 }
 
+function determineCredentialsMode() {
+    // Fix for Cloudflare workers - https://github.com/cloudflare/workers-sdk/issues/2514
+    const isCredentialsSupported = 'credentials' in Request.prototype;
+
+    if (!isCredentialsSupported) {
+        return undefined;
+    }
+
+    return 'include';
+}
+
 export function createHttpClient(logger: ConsolaInstance): $Fetch {
     const options = useSanctumConfig();
     const user = useSanctumUser();
@@ -53,7 +64,7 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
 
     const httpOptions: FetchOptions = {
         baseURL: options.baseUrl,
-        credentials: 'include',
+        credentials: determineCredentialsMode(),
         redirect: 'manual',
         retry: options.client.retry,
 
