@@ -35,17 +35,6 @@ function configureClientInterceptors(
     }
 }
 
-function determineCredentialsMode() {
-    // Fix for Cloudflare workers - https://github.com/cloudflare/workers-sdk/issues/2514
-    const isCredentialsSupported = 'credentials' in Request.prototype;
-
-    if (!isCredentialsSupported) {
-        return undefined;
-    }
-
-    return 'include';
-}
-
 export function createHttpClient(logger: ConsolaInstance): $Fetch {
     const options = useSanctumConfig();
     const user = useSanctumUser();
@@ -64,24 +53,24 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
 
     const httpOptions: FetchOptions = {
         baseURL: options.baseUrl,
-        credentials: determineCredentialsMode(),
+        credentials: 'include',
         redirect: 'manual',
         retry: options.client.retry,
 
         async onRequest(context: FetchContext): Promise<void> {
-            await nuxtApp.runWithContext(() => {
-                for (const interceptor of requestInterceptors) {
-                    interceptor(nuxtApp, context, logger);
-                }
-            });
+            for (const interceptor of requestInterceptors) {
+                await nuxtApp.runWithContext(async () => {
+                    await interceptor(nuxtApp, context, logger);
+                });
+            }
         },
 
         async onResponse(context: FetchContext): Promise<void> {
-            await nuxtApp.runWithContext(() => {
-                for (const interceptor of responseInterceptors) {
-                    interceptor(nuxtApp, context, logger);
-                }
-            });
+            for (const interceptor of responseInterceptors) {
+                await nuxtApp.runWithContext(async () => {
+                    await interceptor(nuxtApp, context, logger);
+                });
+            }
         },
 
         async onResponseError({ request, response }): Promise<void> {
