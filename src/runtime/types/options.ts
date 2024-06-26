@@ -124,7 +124,7 @@ export interface SanctumModuleOptions {
      */
     userStateKey: string;
     /**
-     * Determine whether to redirect when the user is authenticated when on login attempt.
+     * Determine whether to redirect the user if it is already authenticated on a login attempt.
      * @default false
      */
     redirectIfAuthenticated: boolean;
