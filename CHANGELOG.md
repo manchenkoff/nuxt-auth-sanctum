@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.4.2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.1...v0.4.2)
+
+### 🚀 Enhancements
+
+- Configure redirect if unauthenticated ([9574818](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/9574818))
+
+### 🩹 Fixes
+
+- Use updated csrf token on first login ([14f5c63](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/14f5c63))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.0...v0.4.1)
