@@ -124,10 +124,15 @@ export interface SanctumModuleOptions {
      */
     userStateKey: string;
     /**
-     * Determine to redirect when user is authenticated.
+     * Determine whether to redirect when the user is authenticated when on login attempt.
      * @default false
      */
     redirectIfAuthenticated: boolean;
+    /**
+     * Determine whether to redirect when the user got unauthenticated on any API request.
+     * @default false
+     */
+    redirectIfUnauthenticated: boolean;
     /**
      * Laravel Sanctum endpoints to be used by the client.
      */
