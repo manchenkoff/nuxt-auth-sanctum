@@ -69,19 +69,19 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
         retry: options.client.retry,
 
         async onRequest(context: FetchContext): Promise<void> {
-            await nuxtApp.runWithContext(() => {
-                for (const interceptor of requestInterceptors) {
-                    interceptor(nuxtApp, context, logger);
-                }
-            });
+            for (const interceptor of requestInterceptors) {
+                await nuxtApp.runWithContext(async () => {
+                    await interceptor(nuxtApp, context, logger);
+                });
+            }
         },
 
         async onResponse(context: FetchContext): Promise<void> {
-            await nuxtApp.runWithContext(() => {
-                for (const interceptor of responseInterceptors) {
-                    interceptor(nuxtApp, context, logger);
-                }
-            });
+            for (const interceptor of responseInterceptors) {
+                await nuxtApp.runWithContext(async () => {
+                    await interceptor(nuxtApp, context, logger);
+                });
+            }
         },
 
         async onResponseError({ request, response }): Promise<void> {
