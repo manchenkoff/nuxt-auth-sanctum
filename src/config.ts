@@ -4,6 +4,7 @@ export const defaultModuleOptions: Partial<SanctumModuleOptions> = {
     mode: 'cookie',
     userStateKey: 'sanctum.user.identity',
     redirectIfAuthenticated: false,
+    redirectIfUnauthenticated: false,
     endpoints: {
         csrf: '/sanctum/csrf-cookie',
         login: '/login',

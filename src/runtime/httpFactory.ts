@@ -1,5 +1,5 @@
 import type { $Fetch, FetchOptions, FetchContext } from 'ofetch';
-import { useNuxtApp } from '#app';
+import { navigateTo, useNuxtApp } from '#app';
 import { useSanctumUser } from './composables/useSanctumUser';
 import { useSanctumConfig } from './composables/useSanctumConfig';
 import { type ConsolaInstance } from 'consola';
@@ -84,7 +84,7 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
             }
         },
 
-        async onResponseError({ request, response }): Promise<void> {
+        async onResponseError({ response }): Promise<void> {
             if (response.status === 419) {
                 logger.warn(
                     'CSRF token mismatch, check your API configuration'
@@ -93,15 +93,24 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
                 return;
             }
 
-            if (
-                response.status === 401 &&
-                request.toString().endsWith(options.endpoints.user) &&
-                user.value !== null
-            ) {
-                logger.warn(
-                    'User session is not set in API or expired, resetting identity'
-                );
-                user.value = null;
+            if (response.status === 401) {
+                if (user.value !== null) {
+                    logger.warn(
+                        'User session is not set in API or expired, resetting identity'
+                    );
+
+                    user.value = null;
+                }
+
+                if (
+                    import.meta.client &&
+                    options.redirectIfUnauthenticated &&
+                    options.redirect.onAuthOnly
+                ) {
+                    await nuxtApp.runWithContext(() =>
+                        navigateTo(options.redirect.onAuthOnly as string)
+                    );
+                }
             }
         },
     };
