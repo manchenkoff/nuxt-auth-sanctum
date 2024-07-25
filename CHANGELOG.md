@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.4.3
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.2...v0.4.3)
+
+### 🩹 Fixes
+
+- Use resolved path for augmented types when using pnpm ([050c006](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/050c006))
+
+### 🏡 Chore
+
+- Upgraded nuxt version ([0cd2d51](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/0cd2d51))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.2
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.1...v0.4.2)
