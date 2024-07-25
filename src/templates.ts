@@ -25,7 +25,7 @@ declare module '@nuxt/schema' {
     }
 }
 
-declare module '../../node_modules/nuxt/dist/pages/runtime/composables' {
+declare module '${resolver.resolve('../node_modules/nuxt/dist/pages/runtime/composables')}' {
     interface PageMeta {
         /**
          * Sanctum global middleware page configuration.
