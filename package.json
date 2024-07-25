@@ -61,7 +61,7 @@
     "vitest": "^1.2.2",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5",
-    "vue-tsc": "^2.0.19"
+    "vue-tsc": "^2.0.29"
   },
   "packageManager": "yarn@4.2.2"
 }
