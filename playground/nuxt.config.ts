@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
     devtools: { enabled: true },
     ssr: true,
+
     typescript: {
         strict: true,
         typeCheck: false, // disabled due to https://github.com/vuejs/language-tools/issues/3969
@@ -30,4 +31,6 @@ export default defineNuxtConfig({
             enabled: false,
         },
     },
+
+    compatibilityDate: '2024-07-26',
 });
