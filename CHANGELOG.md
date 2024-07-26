@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.4
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.3...v0.4.4)
+
+### 🩹 Fixes
+
+- Fallback to #app augmented type for page meta ([cbf8a6c](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/cbf8a6c))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.3
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.2...v0.4.3)
