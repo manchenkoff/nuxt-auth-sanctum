@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.5
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.4...v0.4.5)
+
+### 🩹 Fixes
+
+- Trim trailing slash on redirects ([d24014d](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/d24014d))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.4
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.3...v0.4.4)
