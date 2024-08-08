@@ -107,8 +107,11 @@ export function createHttpClient(logger: ConsolaInstance): $Fetch {
                     options.redirectIfUnauthenticated &&
                     options.redirect.onAuthOnly
                 ) {
-                    await nuxtApp.runWithContext(() =>
-                        navigateTo(options.redirect.onAuthOnly as string)
+                    await nuxtApp.runWithContext(
+                        async () =>
+                            await navigateTo(
+                                options.redirect.onAuthOnly as string
+                            )
                     );
                 }
             }
