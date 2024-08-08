@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.6
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.5...v0.4.6)
+
+### 🩹 Fixes
+
+- Do not trim single slash in the url ([81c87d0](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/81c87d0))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.5
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.4...v0.4.5)
