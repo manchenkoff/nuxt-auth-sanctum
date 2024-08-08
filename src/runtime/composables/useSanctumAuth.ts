@@ -4,6 +4,7 @@ import { useSanctumUser } from './useSanctumUser';
 import { navigateTo, useNuxtApp, useRoute } from '#app';
 import { useSanctumConfig } from './useSanctumConfig';
 import { useSanctumAppConfig } from './useSanctumAppConfig';
+import { trimTrailingSlash } from '../utils/formatter';
 
 export interface SanctumAuth<T> {
     user: Ref<T | null>;
@@ -45,6 +46,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
      */
     async function login(credentials: Record<string, any>) {
         const currentRoute = useRoute();
+        const currentPath = trimTrailingSlash(currentRoute.path);
 
         if (isAuthenticated.value === true) {
             if (options.redirectIfAuthenticated === false) {
@@ -53,13 +55,13 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
 
             if (
                 options.redirect.onLogin === false ||
-                options.redirect.onLogin === currentRoute.path
+                options.redirect.onLogin === currentPath
             ) {
                 return;
             }
 
-            await nuxtApp.runWithContext(() =>
-                navigateTo(options.redirect.onLogin as string)
+            await nuxtApp.runWithContext(
+                async () => await navigateTo(options.redirect.onLogin as string)
             );
         }
 
@@ -77,9 +79,9 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
         if (options.redirect.keepRequestedRoute) {
             const requestedRoute = currentRoute.query.redirect;
 
-            if (requestedRoute && requestedRoute !== currentRoute.path) {
-                await nuxtApp.runWithContext(() =>
-                    navigateTo(requestedRoute as string)
+            if (requestedRoute && requestedRoute !== currentPath) {
+                await nuxtApp.runWithContext(
+                    async () => await navigateTo(requestedRoute as string)
                 );
 
                 return;
@@ -93,8 +95,8 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
             return;
         }
 
-        await nuxtApp.runWithContext(() =>
-            navigateTo(options.redirect.onLogin as string)
+        await nuxtApp.runWithContext(
+            async () => await navigateTo(options.redirect.onLogin as string)
         );
     }
 
@@ -107,6 +109,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
         }
 
         const currentRoute = useRoute();
+        const currentPath = trimTrailingSlash(currentRoute.path);
 
         await client(options.endpoints.logout, { method: 'post' });
 
@@ -118,13 +121,13 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
 
         if (
             options.redirect.onLogout === false ||
-            currentRoute.path === options.redirect.onLogout
+            currentPath === options.redirect.onLogout
         ) {
             return;
         }
 
-        await nuxtApp.runWithContext(() =>
-            navigateTo(options.redirect.onLogout as string)
+        await nuxtApp.runWithContext(
+            async () => await navigateTo(options.redirect.onLogout as string)
         );
     }
 

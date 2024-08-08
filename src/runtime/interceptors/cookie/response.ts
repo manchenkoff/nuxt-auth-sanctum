@@ -48,6 +48,8 @@ export default async function handleResponseHeaders(
 
     // follow redirects on client
     if (ctx.response.redirected) {
-        await app.runWithContext(() => navigateTo(ctx.response!.url));
+        await app.runWithContext(
+            async () => await navigateTo(ctx.response!.url)
+        );
     }
 }

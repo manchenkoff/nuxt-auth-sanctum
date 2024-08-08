@@ -2,6 +2,7 @@ import { defineNuxtRouteMiddleware, navigateTo, createError } from '#app';
 import type { RouteLocationRaw } from 'vue-router';
 import { useSanctumConfig } from '../composables/useSanctumConfig';
 import { useSanctumAuth } from '../composables/useSanctumAuth';
+import { trimTrailingSlash } from '../utils/formatter';
 
 export default defineNuxtRouteMiddleware((to) => {
     const options = useSanctumConfig();
@@ -20,7 +21,7 @@ export default defineNuxtRouteMiddleware((to) => {
     const redirect: RouteLocationRaw = { path: endpoint };
 
     if (options.redirect.keepRequestedRoute) {
-        redirect.query = { redirect: to.fullPath };
+        redirect.query = { redirect: trimTrailingSlash(to.fullPath) };
     }
 
     return navigateTo(redirect, { replace: true });
