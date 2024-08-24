@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.7
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.6...v0.4.7)
+
+### 🩹 Fixes
+
+- Use new augmented types from nuxt 3.13 ([197f1c3](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/197f1c3))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.6
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.5...v0.4.6)
