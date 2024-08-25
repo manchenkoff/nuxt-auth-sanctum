@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.8
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.7...v0.4.8)
+
+### 🩹 Fixes
+
+- Update to latest `@nuxt/module-builder` ([fdeae82](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/fdeae82))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+
 ## v0.4.7
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.6...v0.4.7)
