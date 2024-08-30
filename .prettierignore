@@ -1,9 +1,0 @@
-.vscode
-.nuxt
-dist
-node_modules
-package.json
-CHANGELOG.md
-playground/.nuxt
-playground/.output
-playground/node_modules

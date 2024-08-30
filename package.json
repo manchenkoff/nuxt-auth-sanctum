@@ -28,40 +28,30 @@
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "lint": "eslint .",
-    "fmt": "prettier --write .",
-    "fmt:check": "prettier --check .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "test:types": "nuxi typecheck",
-    "validate": "npm run fmt:check && npm run lint && npm run test:types && npm run test",
-    "release": "npm run validate && npm run prepack && changelogen --release && npm publish && git push"
+    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
+    "validate": "npm run lint && npm run test:types && npm run test",
+    "release": "npm run validate && npm run prepack && changelogen --release && npm publish && git push --follow-tags"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.9.0",
+    "@nuxt/kit": "^3.13.0",
     "defu": "^6.1.4"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
-    "@nuxt/eslint-config": "^0.3.13",
+    "@nuxt/eslint-config": "^0.5.4",
     "@nuxt/module-builder": "^0.8.3",
-    "@nuxt/schema": "^3.9.0",
-    "@nuxt/test-utils": "^3.9.0",
-    "@types/node": "^20.11.13",
+    "@nuxt/schema": "^3.13.0",
+    "@nuxt/test-utils": "^3.14.1",
+    "@types/node": "^22.5.1",
     "changelogen": "^0.5.5",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "h3": "^1.10.1",
-    "nitropack": "^2.9.6",
-    "nuxi": "^3.10.0",
+    "eslint": "^9.9.1",
     "nuxt": "^3.13.0",
-    "prettier": "^3.0.3",
-    "typescript": "^5.4.5",
-    "vite": "^4.4.9",
-    "vitest": "^1.2.2",
-    "vue": "^3.3.4",
-    "vue-router": "^4.2.5",
-    "vue-tsc": "^2.0.29"
+    "typescript": "latest",
+    "vitest": "^2.0.5",
+    "vue-tsc": "^2.1.2"
   },
-  "packageManager": "yarn@4.4.1"
+  "packageManager": "pnpm@9.7.0+sha512.dc09430156b427f5ecfc79888899e1c39d2d690f004be70e05230b72cb173d96839587545d09429b55ac3c429c801b4dc3c0e002f653830a420fa2dd4e3cf9cf"
 }
