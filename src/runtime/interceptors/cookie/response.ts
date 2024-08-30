@@ -1,7 +1,7 @@
-import { appendResponseHeader, splitCookiesString } from 'h3';
-import type { FetchContext } from 'ofetch';
-import type { ConsolaInstance } from 'consola';
-import { navigateTo, useRequestEvent, type NuxtApp } from '#app';
+import { appendResponseHeader, splitCookiesString } from 'h3'
+import type { FetchContext } from 'ofetch'
+import type { ConsolaInstance } from 'consola'
+import { navigateTo, useRequestEvent, type NuxtApp } from '#app'
 
 /**
  * Pass all cookies from the API to the client on SSR response
@@ -10,46 +10,46 @@ import { navigateTo, useRequestEvent, type NuxtApp } from '#app';
  * @param logger Module logger instance
  */
 export default async function handleResponseHeaders(
-    app: NuxtApp,
-    ctx: FetchContext,
-    logger: ConsolaInstance
+  app: NuxtApp,
+  ctx: FetchContext,
+  logger: ConsolaInstance,
 ) {
-    if (ctx.response === undefined) {
-        logger.debug('No response to process');
+  if (ctx.response === undefined) {
+    logger.debug('No response to process')
 
-        return;
+    return
+  }
+
+  if (import.meta.server) {
+    const event = useRequestEvent(app)
+    const serverCookieName = 'set-cookie'
+    const cookieHeader = ctx.response.headers.get(serverCookieName)
+
+    if (cookieHeader === null || event === undefined) {
+      logger.debug(`No cookies to pass to the client [${ctx.request}]`)
+
+      return
     }
 
-    if (import.meta.server) {
-        const event = useRequestEvent(app);
-        const serverCookieName = 'set-cookie';
-        const cookieHeader = ctx.response.headers.get(serverCookieName);
+    const cookies = splitCookiesString(cookieHeader)
+    const cookieNameList = []
 
-        if (cookieHeader === null || event === undefined) {
-            logger.debug(`No cookies to pass to the client [${ctx.request}]`);
+    for (const cookie of cookies) {
+      appendResponseHeader(event, serverCookieName, cookie)
 
-            return;
-        }
-
-        const cookies = splitCookiesString(cookieHeader);
-        const cookieNameList = [];
-
-        for (const cookie of cookies) {
-            appendResponseHeader(event, serverCookieName, cookie);
-
-            const cookieName = cookie.split('=')[0];
-            cookieNameList.push(cookieName);
-        }
-
-        logger.debug(
-            `Append API cookies from SSR to CSR response [${cookieNameList.join(', ')}]`
-        );
+      const cookieName = cookie.split('=')[0]
+      cookieNameList.push(cookieName)
     }
 
-    // follow redirects on client
-    if (ctx.response.redirected) {
-        await app.runWithContext(
-            async () => await navigateTo(ctx.response!.url)
-        );
-    }
+    logger.debug(
+      `Append API cookies from SSR to CSR response [${cookieNameList.join(', ')}]`,
+    )
+  }
+
+  // follow redirects on client
+  if (ctx.response.redirected) {
+    await app.runWithContext(
+      async () => await navigateTo(ctx.response!.url),
+    )
+  }
 }

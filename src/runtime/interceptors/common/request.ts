@@ -1,5 +1,5 @@
-import type { FetchContext } from 'ofetch';
-import { type NuxtApp } from '#app';
+import type { FetchContext } from 'ofetch'
+import type { NuxtApp } from '#app'
 
 /**
  * Modify request before sending it to the Laravel API
@@ -7,19 +7,19 @@ import { type NuxtApp } from '#app';
  * @param ctx Fetch context
  */
 export default async function handleRequestHeaders(
-    app: NuxtApp,
-    ctx: FetchContext
+  app: NuxtApp,
+  ctx: FetchContext,
 ) {
-    const method = ctx.options.method?.toLowerCase() ?? 'get';
+  const method = ctx.options.method?.toLowerCase() ?? 'get'
 
-    ctx.options.headers = {
-        Accept: 'application/json',
-        ...ctx.options.headers,
-    };
+  ctx.options.headers = {
+    Accept: 'application/json',
+    ...ctx.options.headers,
+  }
 
-    // https://laravel.com/docs/10.x/routing#form-method-spoofing
-    if (method === 'put' && ctx.options.body instanceof FormData) {
-        ctx.options.method = 'POST';
-        ctx.options.body.append('_method', 'PUT');
-    }
+  // https://laravel.com/docs/10.x/routing#form-method-spoofing
+  if (method === 'put' && ctx.options.body instanceof FormData) {
+    ctx.options.method = 'POST'
+    ctx.options.body.append('_method', 'PUT')
+  }
 }

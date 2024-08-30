@@ -25,23 +25,23 @@ Where `XXX` is the issue number on the GitHub.
 To setup the development environment, you should install the dependencies first. You can do this by running the following command:
 
 ```bash
-yarn install
+pnpm install
 ```
 
 Then you can start dev server to see the playground app:
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
 Or if you want to build the project, you can run one of the following commands:
 
 ```bash
 # Generate type stubs
-yarn dev:prepare
+pnpm dev:prepare
 
 # Build the playground
-yarn dev:build
+pnpm dev:build
 ```
 
 # Testing process
@@ -52,25 +52,25 @@ if there are tests for the feature you are working on, you can run them by execu
 
 ```bash
 # Run Vitest
-yarn test
+pnpm test
 
 # Run Vitest in watch mode
-yarn test:watch
+pnpm test:watch
 ```
 
 # Code Style and Standards
 
-This project uses ESLint and Prettier to enforce code style and standards. Please make sure to run the following commands before creating a pull request:
+This project uses ESLint to enforce code style and standards. Please make sure to run the following commands before creating a pull request:
 
 ```bash
-# Run Prettier
-yarn fmt
-
 # Run ESLint
-yarn lint
+pnpm lint
 
 # Run Nuxt type check
-yarn types
+pnpm test:types
+
+# Run Vitest
+pnpm test
 ```
 
 # Releasing
@@ -78,7 +78,7 @@ yarn types
 Once all the changes are merged into main branch, run the following command to release a new version:
 
 ```bash
-yarn release
+pnpm release
 ```
 
 # Code of Conduct

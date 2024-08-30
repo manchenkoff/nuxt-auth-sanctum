@@ -1,6 +1,6 @@
-import { useRuntimeConfig } from '#app';
-import type { SanctumModuleOptions } from '../types/options';
+import type { ModuleOptions } from '../types/options'
+import { useRuntimeConfig } from '#app'
 
-export const useSanctumConfig = (): SanctumModuleOptions => {
-    return useRuntimeConfig().public.sanctum as SanctumModuleOptions;
-};
+export const useSanctumConfig = (): ModuleOptions => {
+  return useRuntimeConfig().public.sanctum as ModuleOptions
+}
