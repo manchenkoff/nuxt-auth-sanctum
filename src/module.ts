@@ -1,87 +1,70 @@
 import {
-    defineNuxtModule,
-    addPlugin,
-    createResolver,
-    addImportsDir,
-    addRouteMiddleware,
-    useLogger,
-} from '@nuxt/kit';
-import { defu } from 'defu';
-import { defaultModuleOptions } from './config';
-import type { SanctumGlobalMiddlewarePageMeta } from './runtime/types/meta';
-import type { SanctumModuleOptions } from './runtime/types/options';
-import { registerTypeTemplates } from './templates';
+  defineNuxtModule,
+  addPlugin,
+  createResolver,
+  addImportsDir,
+  addRouteMiddleware,
+  useLogger,
+} from '@nuxt/kit'
+import { defu } from 'defu'
+import { defaultModuleOptions } from './config'
+import type { ModuleOptions } from './runtime/types/options'
+import { registerTypeTemplates } from './templates'
 
-type DeepPartial<T> = {
-    [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
-};
+const MODULE_NAME = 'nuxt-auth-sanctum'
 
-declare module '#app' {
-    interface PageMeta {
-        /**
-         * Sanctum global middleware page configuration.
-         */
-        sanctum?: Partial<SanctumGlobalMiddlewarePageMeta>;
-    }
-}
-
-const MODULE_NAME = 'nuxt-auth-sanctum';
-
-export type ModuleOptions = DeepPartial<SanctumModuleOptions>;
-export type ModulePublicRuntimeConfig = { sanctum: ModuleOptions };
+export type ModulePublicRuntimeConfig = { sanctum: ModuleOptions }
 
 export default defineNuxtModule<ModuleOptions>({
-    meta: {
-        name: MODULE_NAME,
-        configKey: 'sanctum',
-        compatibility: {
-            nuxt: '>=3.12.0',
-        },
+  meta: {
+    name: MODULE_NAME,
+    configKey: 'sanctum',
+    compatibility: {
+      nuxt: '>=3.12.0',
     },
+  },
 
-    defaults: defaultModuleOptions,
+  defaults: defaultModuleOptions,
 
-    setup(options, nuxt) {
-        const resolver = createResolver(import.meta.url);
+  setup(_options, _nuxt) {
+    const resolver = createResolver(import.meta.url)
+    const sanctumConfig = defu(
+      _nuxt.options.runtimeConfig.public.sanctum,
+      _options,
+    )
 
-        const runtimeDir = resolver.resolve('./runtime');
-        nuxt.options.build.transpile.push(runtimeDir);
+    _nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
+    _nuxt.options.runtimeConfig.public.sanctum = sanctumConfig
 
-        const sanctumConfig = defu(
-            nuxt.options.runtimeConfig.public.sanctum as any,
-            options
-        );
+    const logger = useLogger(MODULE_NAME, {
+      level: sanctumConfig.logLevel,
+    })
 
-        nuxt.options.runtimeConfig.public.sanctum = sanctumConfig;
+    addPlugin(resolver.resolve('./runtime/plugin'))
+    addImportsDir(resolver.resolve('./runtime/composables'))
 
-        const logger = useLogger(MODULE_NAME, {
-            level: sanctumConfig.logLevel,
-        });
+    if (sanctumConfig.globalMiddleware.enabled) {
+      addRouteMiddleware({
+        name: 'sanctum:auth:global',
+        path: resolver.resolve('./runtime/middleware/sanctum.global'),
+        global: true,
+      })
 
-        addPlugin(resolver.resolve('./runtime/plugin'));
-        addImportsDir(resolver.resolve('./runtime/composables'));
+      logger.info('Sanctum module initialized with global middleware')
+    }
+    else {
+      addRouteMiddleware({
+        name: 'sanctum:auth',
+        path: resolver.resolve('./runtime/middleware/sanctum.auth'),
+      })
+      addRouteMiddleware({
+        name: 'sanctum:guest',
+        path: resolver.resolve('./runtime/middleware/sanctum.guest'),
+      })
 
-        if (sanctumConfig.globalMiddleware.enabled) {
-            addRouteMiddleware({
-                name: 'sanctum:auth:global',
-                path: resolver.resolve('./runtime/middleware/sanctum.global'),
-                global: true,
-            });
+      logger.info('Sanctum module initialized w/o global middleware')
+    }
 
-            logger.info('Sanctum module initialized with global middleware');
-        } else {
-            addRouteMiddleware({
-                name: 'sanctum:auth',
-                path: resolver.resolve('./runtime/middleware/sanctum.auth'),
-            });
-            addRouteMiddleware({
-                name: 'sanctum:guest',
-                path: resolver.resolve('./runtime/middleware/sanctum.guest'),
-            });
-
-            logger.info('Sanctum module initialized w/o global middleware');
-        }
-
-        registerTypeTemplates(resolver);
-    },
-});
+    registerTypeTemplates(resolver)
+  },
+})
