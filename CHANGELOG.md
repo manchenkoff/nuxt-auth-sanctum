@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.10
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.9...v0.4.10)
+
+### 🩹 Fixes
+
+- Improved nullable schema fields ([879fdee](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/879fdee))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.9
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.8...v0.4.9)
