@@ -1,62 +1,62 @@
-import { defineNuxtRouteMiddleware, navigateTo } from '#app';
-import type { RouteLocationRaw } from 'vue-router';
-import { useSanctumConfig } from '../composables/useSanctumConfig';
-import { useSanctumAuth } from '../composables/useSanctumAuth';
-import { trimTrailingSlash } from '../utils/formatter';
+import type { RouteLocationRaw } from 'vue-router'
+import { useSanctumConfig } from '../composables/useSanctumConfig'
+import { useSanctumAuth } from '../composables/useSanctumAuth'
+import { trimTrailingSlash } from '../utils/formatter'
+import { defineNuxtRouteMiddleware, navigateTo } from '#app'
 
 export default defineNuxtRouteMiddleware((to) => {
-    const options = useSanctumConfig();
-    const { isAuthenticated } = useSanctumAuth();
+  const options = useSanctumConfig()
+  const { isAuthenticated } = useSanctumAuth()
 
-    const [homePage, loginPage] = [
-        options.redirect.onGuestOnly,
-        options.redirect.onAuthOnly,
-    ];
+  const [homePage, loginPage] = [
+    options.redirect.onGuestOnly,
+    options.redirect.onAuthOnly,
+  ]
 
-    if (homePage === false) {
-        throw new Error(
-            'You must define onGuestOnly route when using global middleware.'
-        );
-    }
+  if (homePage === false) {
+    throw new Error(
+      'You must define onGuestOnly route when using global middleware.',
+    )
+  }
 
-    if (loginPage === false) {
-        throw new Error(
-            'You must define onAuthOnly route when using global middleware.'
-        );
-    }
+  if (loginPage === false) {
+    throw new Error(
+      'You must define onAuthOnly route when using global middleware.',
+    )
+  }
 
-    if (
-        options.globalMiddleware.allow404WithoutAuth &&
-        to.matched.length === 0
-    ) {
-        return;
-    }
+  if (
+    options.globalMiddleware.allow404WithoutAuth
+    && to.matched.length === 0
+  ) {
+    return
+  }
 
-    if (to.meta.sanctum?.excluded === true) {
-        return;
-    }
+  if (to.meta.sanctum?.excluded === true) {
+    return
+  }
 
-    const isPageForGuestsOnly =
-        trimTrailingSlash(to.path) === loginPage ||
-        to.meta.sanctum?.guestOnly === true;
+  const isPageForGuestsOnly
+        = trimTrailingSlash(to.path) === loginPage
+        || to.meta.sanctum?.guestOnly === true
 
-    if (isAuthenticated.value === true) {
-        if (isPageForGuestsOnly) {
-            return navigateTo(homePage, { replace: true });
-        }
-
-        return;
-    }
-
+  if (isAuthenticated.value === true) {
     if (isPageForGuestsOnly) {
-        return;
+      return navigateTo(homePage, { replace: true })
     }
 
-    const redirect: RouteLocationRaw = { path: loginPage };
+    return
+  }
 
-    if (options.redirect.keepRequestedRoute) {
-        redirect.query = { redirect: trimTrailingSlash(to.fullPath) };
-    }
+  if (isPageForGuestsOnly) {
+    return
+  }
 
-    return navigateTo(redirect, { replace: true });
-});
+  const redirect: RouteLocationRaw = { path: loginPage }
+
+  if (options.redirect.keepRequestedRoute) {
+    redirect.query = { redirect: trimTrailingSlash(to.fullPath) }
+  }
+
+  return navigateTo(redirect, { replace: true })
+})
