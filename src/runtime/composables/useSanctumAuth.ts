@@ -36,7 +36,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
   })
 
   async function refreshIdentity() {
-    user.value = await client<T>(options.endpoints.user)
+    user.value = await client<T>(options.endpoints.user!)
   }
 
   /**
@@ -65,7 +65,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       )
     }
 
-    const response = await client<TokenResponse>(options.endpoints.login, {
+    const response = await client<TokenResponse>(options.endpoints.login!, {
       method: 'post',
       body: credentials,
     })
@@ -111,7 +111,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     const currentRoute = useRoute()
     const currentPath = trimTrailingSlash(currentRoute.path)
 
-    await client(options.endpoints.logout, { method: 'post' })
+    await client(options.endpoints.logout!, { method: 'post' })
 
     user.value = null
 

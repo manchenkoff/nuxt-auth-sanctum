@@ -45,7 +45,7 @@ async function initCsrfCookie(
   config: ModuleOptions,
   logger: ConsolaInstance,
 ): Promise<void> {
-  await $fetch(config.endpoints.csrf, {
+  await $fetch(config.endpoints.csrf!, {
     baseURL: config.baseUrl,
     credentials: 'include',
   })
@@ -65,12 +65,12 @@ async function useCsrfHeader(
   config: ModuleOptions,
   logger: ConsolaInstance,
 ): Promise<HeadersInit> {
-  let csrfToken = useCookie(config.csrf.cookie, COOKIE_OPTIONS)
+  let csrfToken = useCookie(config.csrf.cookie!, COOKIE_OPTIONS)
 
   if (!csrfToken.value) {
     await initCsrfCookie(config, logger)
 
-    csrfToken = useCookie(config.csrf.cookie, COOKIE_OPTIONS)
+    csrfToken = useCookie(config.csrf.cookie!, COOKIE_OPTIONS)
   }
 
   if (!csrfToken.value) {
@@ -86,7 +86,7 @@ async function useCsrfHeader(
   return {
     ...headers,
     ...(csrfToken.value && {
-      [config.csrf.header]: csrfToken.value,
+      [config.csrf.header!]: csrfToken.value,
     }),
   }
 }

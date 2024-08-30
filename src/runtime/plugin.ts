@@ -62,7 +62,7 @@ export default defineNuxtPlugin(async () => {
 
     try {
       logger.debug('Fetching user identity on plugin initialization')
-      user.value = await client(options.endpoints.user)
+      user.value = await client(options.endpoints.user!)
     }
     catch (error) {
       handleIdentityLoadError(error as Error, logger)

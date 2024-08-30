@@ -139,23 +139,23 @@ export interface ModuleOptions {
   /**
    * Laravel Sanctum endpoints to be used by the client.
    */
-  endpoints: SanctumEndpoints
+  endpoints: Partial<SanctumEndpoints>
   /**
    * CSRF token specific options.
    */
-  csrf: CsrfOptions
+  csrf: Partial<CsrfOptions>
   /**
    * OFetch client specific options.
    */
-  client: ClientOptions
+  client: Partial<ClientOptions>
   /**
    * Behavior of the plugin redirects when user is authenticated or not.
    */
-  redirect: RedirectOptions
+  redirect: Partial<RedirectOptions>
   /**
    * Behavior of the global middleware.
    */
-  globalMiddleware: GlobalMiddlewareOptions
+  globalMiddleware: Partial<GlobalMiddlewareOptions>
   /**
    * The log level to use for the logger.
    *

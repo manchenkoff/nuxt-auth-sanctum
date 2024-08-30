@@ -1,4 +1,4 @@
-import type { RouteLocationRaw } from 'vue-router'
+import type { RouteLocationAsPathGeneric } from 'vue-router'
 import { useSanctumConfig } from '../composables/useSanctumConfig'
 import { useSanctumAuth } from '../composables/useSanctumAuth'
 import { trimTrailingSlash } from '../utils/formatter'
@@ -18,7 +18,7 @@ export default defineNuxtRouteMiddleware((to) => {
     throw createError({ statusCode: 403 })
   }
 
-  const redirect: RouteLocationRaw = { path: endpoint }
+  const redirect: RouteLocationAsPathGeneric = { path: endpoint! }
 
   if (options.redirect.keepRequestedRoute) {
     redirect.query = { redirect: trimTrailingSlash(to.fullPath) }

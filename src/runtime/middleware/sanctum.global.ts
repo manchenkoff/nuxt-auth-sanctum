@@ -1,4 +1,4 @@
-import type { RouteLocationRaw } from 'vue-router'
+import type { RouteLocationAsPathGeneric } from 'vue-router'
 import { useSanctumConfig } from '../composables/useSanctumConfig'
 import { useSanctumAuth } from '../composables/useSanctumAuth'
 import { trimTrailingSlash } from '../utils/formatter'
@@ -52,7 +52,7 @@ export default defineNuxtRouteMiddleware((to) => {
     return
   }
 
-  const redirect: RouteLocationRaw = { path: loginPage }
+  const redirect: RouteLocationAsPathGeneric = { path: loginPage! }
 
   if (options.redirect.keepRequestedRoute) {
     redirect.query = { redirect: trimTrailingSlash(to.fullPath) }
