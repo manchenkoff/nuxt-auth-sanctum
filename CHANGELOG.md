@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v0.4.9
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.8...v0.4.9)
+
+### 🚀 Enhancements
+
+- Simplified module config ([b3bad10](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b3bad10))
+
+### 🩹 Fixes
+
+- Added augmented types for PageMeta ([e784f88](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e784f88))
+
+### 🏡 Chore
+
+- Migrated from yarn to pnpm ([bad9820](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/bad9820))
+- Simplified pull request template ([8f8955b](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/8f8955b))
+- Applied eslint formatter ([1b2670d](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1b2670d))
+
+### 🤖 CI
+
+- Upgraded pipelines to work with pnpm ([1a041da](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1a041da))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.8
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.7...v0.4.8)
