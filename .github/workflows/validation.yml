@@ -1,63 +1,66 @@
-# Pipeline to run code quality checks (eslint, prettier, typecheck)
-name: Nuxt 3 [Validate]
+name: Nuxt [Validate]
 
 env:
-    node_version: 20.x
-    package_manager: yarn # or npm
-    install_command: yarn install # or npm ci
-    script_command: yarn # or npm run
-
-on:
-    workflow_dispatch: # manual trigger
-    pull_request:
-        branches: [main]
+  node_version: 20
 
 concurrency:
-    group: module-validation
-    cancel-in-progress: false
+  group: nuxt-auth-sanctum-ci
+  cancel-in-progress: false
+
+on:
+  workflow_dispatch: # manual trigger
+  pull_request:
+    branches:
+      - main
 
 jobs:
-    validate:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+  lint:
+    runs-on: ubuntu-latest
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ env.node_version }}
-                  cache: ${{ env.package_manager }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Create packages cache
-              uses: actions/cache@v3
-              with:
-                  path: |
-                      dist
-                      .nuxt
-                  key: ${{ runner.os }}-nuxt-build-${{ hashFiles('dist') }}
-                  restore-keys: |
-                      ${{ runner.os }}-nuxt-build-
+      - name: Enable corepack
+        run: corepack enable
 
-            - name: Install dependencies
-              run: ${{ env.install_command }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
 
-            - name: Run Prettier
-              run: |
-                  ${{ env.script_command }} fmt:check
+      - name: Install dependencies
+        run: npx nypm@latest i
 
-            - name: Run ESLint
-              run: |
-                  ${{ env.script_command }} lint
+      - name: Lint
+        run: pnpm lint
 
-            - name: Run TypeCheck
-              run: |
-                  ${{ env.script_command }} test:types
+      - name: Build stubs
+        run: pnpm dev:prepare
 
-            - name: Run tests
-              run: |
-                  ${{ env.script_command }} test
+      - name: Type check
+        run: pnpm test:types
 
-            - name: Run build
-              run: |
-                  ${{ env.script_command }} prepack
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+
+      - name: Install dependencies
+        run: npx nypm@latest i
+
+      - name: Build stubs
+        run: pnpm dev:prepare
+
+      - name: Test
+        run: pnpm test
