@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.4.11
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.10...v0.4.11)
+
+### 🏡 Chore
+
+- **deps-dev:** Bump vue-tsc from 2.1.2 to 2.1.4 ([35efc7b](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/35efc7b))
+- **deps-dev:** Bump @types/node from 22.5.1 to 22.5.2 ([7a7e912](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/7a7e912))
+- **deps-dev:** Bump @nuxt/eslint-config from 0.5.4 to 0.5.5 ([84e836d](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/84e836d))
+
+### 🤖 CI
+
+- Added prerelease pipeline ([deff64a](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/deff64a))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.10
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.9...v0.4.10)
