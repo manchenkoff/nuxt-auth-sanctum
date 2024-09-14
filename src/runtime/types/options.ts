@@ -49,6 +49,11 @@ export interface ClientOptions {
    * @default false
    */
   retry: number | boolean
+  /**
+   * Determines whether to request the user identity on plugin initialization.
+   * @default true
+   */
+  initialRequest: boolean
 }
 
 /**

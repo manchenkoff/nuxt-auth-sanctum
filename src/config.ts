@@ -18,6 +18,7 @@ export const defaultModuleOptions: ModuleOptions = {
   },
   client: {
     retry: false,
+    initialRequest: true,
   },
   redirect: {
     keepRequestedRoute: false,

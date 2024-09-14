@@ -5,6 +5,7 @@ import { useSanctumUser } from './composables/useSanctumUser'
 import { useSanctumConfig } from './composables/useSanctumConfig'
 import { useSanctumAppConfig } from './composables/useSanctumAppConfig'
 import type { ModuleOptions } from './types/options'
+import { IDENTITY_LOADED_KEY } from './utils/constants'
 import { defineNuxtPlugin, updateAppConfig, useState } from '#app'
 
 const LOGGER_NAME = 'nuxt-auth-sanctum'
@@ -34,7 +35,7 @@ async function initialIdentityLoad(client: $Fetch, options: ModuleOptions, logge
   const user = useSanctumUser()
 
   const identityFetchedOnInit = useState<boolean>(
-    'sanctum.user.loaded',
+    IDENTITY_LOADED_KEY,
     () => false,
   )
 
@@ -77,7 +78,9 @@ export default defineNuxtPlugin(async () => {
     await setupDefaultTokenStorage(logger)
   }
 
-  await initialIdentityLoad(client, options, logger)
+  if (options.client.initialRequest) {
+    await initialIdentityLoad(client, options, logger)
+  }
 
   return {
     provide: {

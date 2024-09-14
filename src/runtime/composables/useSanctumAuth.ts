@@ -1,14 +1,16 @@
 import { type Ref, computed } from 'vue'
 import { trimTrailingSlash } from '../utils/formatter'
+import { IDENTITY_LOADED_KEY } from '../utils/constants'
 import { useSanctumClient } from './useSanctumClient'
 import { useSanctumUser } from './useSanctumUser'
 import { useSanctumConfig } from './useSanctumConfig'
 import { useSanctumAppConfig } from './useSanctumAppConfig'
-import { navigateTo, useNuxtApp, useRoute } from '#app'
+import { navigateTo, useNuxtApp, useRoute, useState } from '#app'
 
 export interface SanctumAuth<T> {
   user: Ref<T | null>
   isAuthenticated: Ref<boolean>
+  init: () => Promise<void>
   login: (credentials: Record<string, any>) => Promise<void>
   logout: () => Promise<void>
   refreshIdentity: () => Promise<void>
@@ -35,6 +37,27 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     return user.value !== null
   })
 
+  const isIdentityLoaded = useState<boolean>(
+    IDENTITY_LOADED_KEY,
+    () => false,
+  )
+
+  /**
+   * Initial request of the user identity for plugin initialization.
+   * Only call this method when `sanctum.client.initialRequest` is false.
+   */
+  async function init() {
+    if (isIdentityLoaded.value === true) {
+      return
+    }
+
+    isIdentityLoaded.value = true
+    await refreshIdentity()
+  }
+
+  /**
+   * Fetches the user object from the API and sets it to the current state
+   */
   async function refreshIdentity() {
     user.value = await client<T>(options.endpoints.user!)
   }
@@ -134,6 +157,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
   return {
     user,
     isAuthenticated,
+    init,
     login,
     logout,
     refreshIdentity,
