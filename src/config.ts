@@ -31,4 +31,5 @@ export const defaultModuleOptions: ModuleOptions = {
     allow404WithoutAuth: true,
   },
   logLevel: 3,
+  appendPlugin: false,
 }
