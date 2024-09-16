@@ -49,6 +49,11 @@ export interface ClientOptions {
    * @default false
    */
   retry: number | boolean
+  /**
+   * Determines whether to request the user identity on plugin initialization.
+   * @default true
+   */
+  initialRequest: boolean
 }
 
 /**
@@ -170,4 +175,11 @@ export interface ModuleOptions {
    * @default 3
    */
   logLevel: number
+  /**
+   * Determines whether to append the plugin to the Nuxt application.
+   * Be default, Nuxt prepends the plugin to load it before the application modules.
+   * @default false
+   * @see https://nuxt.com/docs/api/kit/plugins#options
+   */
+  appendPlugin: boolean
 }

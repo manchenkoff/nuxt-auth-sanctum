@@ -18,6 +18,7 @@ export const defaultModuleOptions: ModuleOptions = {
   },
   client: {
     retry: false,
+    initialRequest: true,
   },
   redirect: {
     keepRequestedRoute: false,
@@ -31,4 +32,5 @@ export const defaultModuleOptions: ModuleOptions = {
     allow404WithoutAuth: true,
   },
   logLevel: 3,
+  appendPlugin: false,
 }

@@ -40,7 +40,7 @@ export default defineNuxtModule<ModuleOptions>({
       level: sanctumConfig.logLevel,
     })
 
-    addPlugin(resolver.resolve('./runtime/plugin'))
+    addPlugin(resolver.resolve('./runtime/plugin'), { append: sanctumConfig.appendPlugin })
     addImportsDir(resolver.resolve('./runtime/composables'))
 
     if (sanctumConfig.globalMiddleware.enabled) {

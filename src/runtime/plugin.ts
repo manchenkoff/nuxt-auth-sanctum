@@ -1,9 +1,11 @@
-import { FetchError } from 'ofetch'
+import { type $Fetch, FetchError } from 'ofetch'
 import { createConsola, type ConsolaInstance } from 'consola'
 import { createHttpClient } from './httpFactory'
 import { useSanctumUser } from './composables/useSanctumUser'
 import { useSanctumConfig } from './composables/useSanctumConfig'
 import { useSanctumAppConfig } from './composables/useSanctumAppConfig'
+import type { ModuleOptions } from './types/options'
+import { IDENTITY_LOADED_KEY } from './utils/constants'
 import { defineNuxtPlugin, updateAppConfig, useState } from '#app'
 
 const LOGGER_NAME = 'nuxt-auth-sanctum'
@@ -13,6 +15,41 @@ function createSanctumLogger(logLevel: number) {
   const loggerName = LOGGER_NAME + ':' + envSuffix
 
   return createConsola({ level: logLevel }).withTag(loggerName)
+}
+
+async function setupDefaultTokenStorage(logger: ConsolaInstance) {
+  logger.debug(
+    'Token storage is not defined, switch to default cookie storage',
+  )
+
+  const defaultStorage = await import('./storages/cookieTokenStorage')
+
+  updateAppConfig({
+    sanctum: {
+      tokenStorage: defaultStorage.cookieTokenStorage,
+    },
+  })
+}
+
+async function initialIdentityLoad(client: $Fetch, options: ModuleOptions, logger: ConsolaInstance) {
+  const user = useSanctumUser()
+
+  const identityFetchedOnInit = useState<boolean>(
+    IDENTITY_LOADED_KEY,
+    () => false,
+  )
+
+  if (user.value === null && identityFetchedOnInit.value === false) {
+    identityFetchedOnInit.value = true
+
+    try {
+      logger.debug('Fetching user identity on plugin initialization')
+      user.value = await client(options.endpoints.user!)
+    }
+    catch (error) {
+      handleIdentityLoadError(error as Error, logger)
+    }
+  }
 }
 
 function handleIdentityLoadError(error: Error, logger: ConsolaInstance) {
@@ -32,41 +69,17 @@ function handleIdentityLoadError(error: Error, logger: ConsolaInstance) {
 }
 
 export default defineNuxtPlugin(async () => {
-  const user = useSanctumUser()
   const options = useSanctumConfig()
   const appConfig = useSanctumAppConfig()
   const logger = createSanctumLogger(options.logLevel)
   const client = createHttpClient(logger)
 
   if (options.mode === 'token' && !appConfig.tokenStorage) {
-    logger.debug(
-      'Token storage is not defined, switch to default cookie storage',
-    )
-
-    const defaultStorage = await import('./storages/cookieTokenStorage')
-
-    updateAppConfig({
-      sanctum: {
-        tokenStorage: defaultStorage.cookieTokenStorage,
-      },
-    })
+    await setupDefaultTokenStorage(logger)
   }
 
-  const identityFetchedOnInit = useState<boolean>(
-    'sanctum.user.loaded',
-    () => false,
-  )
-
-  if (user.value === null && identityFetchedOnInit.value === false) {
-    identityFetchedOnInit.value = true
-
-    try {
-      logger.debug('Fetching user identity on plugin initialization')
-      user.value = await client(options.endpoints.user!)
-    }
-    catch (error) {
-      handleIdentityLoadError(error as Error, logger)
-    }
+  if (options.client.initialRequest) {
+    await initialIdentityLoad(client, options, logger)
   }
 
   return {
