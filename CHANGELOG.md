@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v0.4.12
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.11...v0.4.12)
+
+### 🚀 Enhancements
+
+- Control plugin load order ([fa1e46d](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/fa1e46d))
+- Control over initial user request ([5f3d8d4](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5f3d8d4))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump nuxt from 3.13.0 to 3.13.1 ([33e6323](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/33e6323))
+- **deps-dev:** Bump @nuxt/eslint-config from 0.5.5 to 0.5.6 ([f88ecb9](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/f88ecb9))
+- **deps-dev:** Bump vue-tsc from 2.1.4 to 2.1.6 ([11661f9](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/11661f9))
+- **deps-dev:** Bump eslint from 9.9.1 to 9.10.0 ([95cd069](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/95cd069))
+- **deps-dev:** Bump @nuxt/module-builder from 0.8.3 to 0.8.4 ([51fd807](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/51fd807))
+- **deps-dev:** Bump @types/node from 22.5.2 to 22.5.5 ([abe3846](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/abe3846))
+- **deps-dev:** Bump vitest from 2.0.5 to 2.1.1 ([bbcb244](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/bbcb244))
+- Upgraded nuxt dependencies ([6b28a2a](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/6b28a2a))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.11
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.10...v0.4.11)
