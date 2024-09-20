@@ -48,8 +48,8 @@
     "@types/node": "^22.5.1",
     "changelogen": "^0.5.5",
     "eslint": "^9.9.1",
-    "nuxt": "^3.13.0",
-    "typescript": "latest",
+    "nuxt": "^3.13.2",
+    "typescript": "^5.5.4",
     "vitest": "^2.0.5",
     "vue-tsc": "^2.1.2"
   },
