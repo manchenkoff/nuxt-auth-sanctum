@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.13
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.12...v0.4.13)
+
+### 🩹 Fixes
+
+- Keep same session on SSR requests ([fc96f34](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/fc96f34))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.12
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.11...v0.4.12)
