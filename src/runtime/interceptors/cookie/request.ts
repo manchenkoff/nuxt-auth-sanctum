@@ -13,6 +13,7 @@ type Headers = HeadersInit | undefined
 
 const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch'])
 const COOKIE_OPTIONS: { readonly: true } = { readonly: true }
+const CLIENT_HEADERS = ['cookie', 'user-agent']
 
 /**
  * Pass all cookies, headers and referrer from the client to the API
@@ -24,14 +25,14 @@ function buildServerHeaders(
   headers: Headers,
   config: ModuleOptions,
 ): HeadersInit {
-  const clientCookies = useRequestHeaders(['cookie'])
+  const clientHeaders = useRequestHeaders(CLIENT_HEADERS)
   const origin = config.origin ?? useRequestURL().origin
 
   return {
     ...headers,
     Referer: origin,
     Origin: origin,
-    ...(clientCookies.cookie && clientCookies),
+    ...clientHeaders,
   }
 }
 
