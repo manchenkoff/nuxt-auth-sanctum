@@ -43,36 +43,17 @@ export default defineNuxtConfig({
 
 **Nuxt environment:**
 
--   Version: YOUR_NUXT_VERSION
+-   Version: <YOUR_NUXT_VERSION>
 -   SSR Enabled: (yes / no)
 -   Environment: (local / production)
 
 **Laravel environment:**
 
--   Version: YOUR_LARAVEL_VERSION
+-   Version: <YOUR_LARAVEL_VERSION>
 -   Sanctum installed via Breeze: (yes / no)
 -   [Checklist](https://manchenkoff.gitbook.io/nuxt-auth-sanctum/authentication/spa-cookie#laravel-configuration) completed: (yes / no)
--   Session domain from your `config/session.php`: [e.g. `domain.test`]
--   List of stateful domains from your `config/sanctum.php`
-
-```php
-return [
-    'stateful' => explode(
-        ',',
-        env(
-            'SANCTUM_STATEFUL_DOMAINS',
-            sprintf('%s','localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1')
-        )
-    ),
-];
-```
-
-or
-
-```env
-SANCTUM_STATEFUL_DOMAINS=localhost,localhost:3000
-```
-
+-   Session domain from your `config/session.php`: `.domain.test`
+-   List of stateful domains from your `config/sanctum.php`: `['domain.test', 'www.domain.test']`
 -   CORS settings from your `config/cors.php`
 
 ```php
