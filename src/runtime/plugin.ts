@@ -6,7 +6,7 @@ import { useSanctumConfig } from './composables/useSanctumConfig'
 import { useSanctumAppConfig } from './composables/useSanctumAppConfig'
 import type { ModuleOptions } from './types/options'
 import { IDENTITY_LOADED_KEY } from './utils/constants'
-import { defineNuxtPlugin, updateAppConfig, useState } from '#app'
+import { defineNuxtPlugin, updateAppConfig, useState, type NuxtApp } from '#app'
 
 const LOGGER_NAME = 'nuxt-auth-sanctum'
 
@@ -17,17 +17,19 @@ function createSanctumLogger(logLevel: number) {
   return createConsola({ level: logLevel }).withTag(loggerName)
 }
 
-async function setupDefaultTokenStorage(logger: ConsolaInstance) {
+async function setupDefaultTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstance) {
   logger.debug(
     'Token storage is not defined, switch to default cookie storage',
   )
 
   const defaultStorage = await import('./storages/cookieTokenStorage')
 
-  updateAppConfig({
-    sanctum: {
-      tokenStorage: defaultStorage.cookieTokenStorage,
-    },
+  nuxtApp.runWithContext(() => {
+    updateAppConfig({
+      sanctum: {
+        tokenStorage: defaultStorage.cookieTokenStorage,
+      },
+    })
   })
 }
 
@@ -39,7 +41,7 @@ async function initialIdentityLoad(client: $Fetch, options: ModuleOptions, logge
     () => false,
   )
 
-  if (user.value === null && identityFetchedOnInit.value === false) {
+  if (user.value === null && !identityFetchedOnInit.value) {
     identityFetchedOnInit.value = true
 
     try {
@@ -68,14 +70,15 @@ function handleIdentityLoadError(error: Error, logger: ConsolaInstance) {
   }
 }
 
-export default defineNuxtPlugin(async () => {
+export default defineNuxtPlugin(async (_nuxtApp) => {
+  const nuxtApp = _nuxtApp as NuxtApp
   const options = useSanctumConfig()
   const appConfig = useSanctumAppConfig()
   const logger = createSanctumLogger(options.logLevel)
-  const client = createHttpClient(logger)
+  const client = createHttpClient(nuxtApp, logger)
 
   if (options.mode === 'token' && !appConfig.tokenStorage) {
-    await setupDefaultTokenStorage(logger)
+    await setupDefaultTokenStorage(nuxtApp, logger)
   }
 
   if (options.client.initialRequest) {

@@ -9,7 +9,7 @@ import handleRequestHeaders from './interceptors/common/request'
 import handleRequestTokenHeader from './interceptors/token/request'
 import type { SanctumAppConfig, SanctumInterceptor } from './types/config'
 import type { ModuleOptions } from './types/options'
-import { navigateTo, useNuxtApp } from '#app'
+import { navigateTo, type NuxtApp } from '#app'
 
 function configureClientInterceptors(
   requestInterceptors: SanctumInterceptor[],
@@ -46,11 +46,10 @@ function determineCredentialsMode() {
   return 'include'
 }
 
-export function createHttpClient(logger: ConsolaInstance): $Fetch {
+export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fetch {
   const options = useSanctumConfig()
   const user = useSanctumUser()
   const appConfig = useSanctumAppConfig()
-  const nuxtApp = useNuxtApp()
 
   const requestInterceptors: SanctumInterceptor[] = [handleRequestHeaders]
   const responseInterceptors: SanctumInterceptor[] = []
