@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.4.14
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.13...v0.4.14)
+
+### 🩹 Fixes
+
+- Use nuxt app context for default token storage ([1f7fdb2](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1f7fdb2))
+
+### 🏡 Chore
+
+- Updated issue templates ([8647cdc](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/8647cdc))
+- Updated bug report issue template ([fca3627](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/fca3627))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.13
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.12...v0.4.13)
