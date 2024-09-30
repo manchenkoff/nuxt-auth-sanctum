@@ -73,6 +73,11 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
           await interceptor(nuxtApp, context, logger)
         })
       }
+
+      logger.trace(
+        `Request headers for "${context.request.toString()}"`,
+        context.options.headers,
+      )
     },
 
     async onResponse(context: FetchContext): Promise<void> {
@@ -81,6 +86,11 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
           await interceptor(nuxtApp, context, logger)
         })
       }
+
+      logger.trace(
+        `Response headers for "${context.request.toString()}"`,
+        context.response?.headers,
+      )
     },
 
     async onResponseError({ response }): Promise<void> {
