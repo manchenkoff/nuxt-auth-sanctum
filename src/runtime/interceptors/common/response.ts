@@ -1,8 +1,3 @@
-// 'access-control-allow-credentials': 'true',
-// 'access-control-allow-origin': 'http://localhost:3000',
-// 'content-type': 'application/json',
-// 'set-cookie': 'XSRF-TOKEN=eyJpdiI6IjBaallkZjcxOXdSZFFHa3FEL3lGYlE9PSIsInZhbHVlIjoiN3dXQTlOV2QyVnMzQ1FZWHU0MDNHSVBPbnJSbjl2VFpMN3V2R3lPU2pEUGk0TytORVdneHE2bmZRVnZGMkhJdDRCL1JVR0xWcE1lTFZRQTZObCtRd3V0RFY2UVREOEFNSU5UZzQ5YjVnbERqOEpwN0RDN3FwSWFMMGJ6Sm9sV08iLCJtYWMiOiI3Y2Q1YzkyNTRkMWNhYmVhMzA5MGM2MmQzMWU3NmRiMjFkNzNlOWNhYzBmOTdjNzZlNThkM2UwMGE1YmE0NzRhIiwidGFnIjoiIn0%3D; expires=Tue, 01 Oct 2024 22:13:33 GMT; Max-Age=7200; path=/; samesite=lax, laravel_session=eyJpdiI6Ik5WSktXZzhhaExSYi9wYS9KUU95UFE9PSIsInZhbHVlIjoiWnVZdEVwSUNhWHBGTVBMNHhtbllwa2ljTHdoL2xJSWhxS1JOTkpOcGdyS0RPREx0S2xkZHlGYUZXcFM2ZEN4akxMWGtLWjVWUkUxWVV5cG0zWWFrWnY5QTBZdUVTTGlzSkhwYTNmTzdWdThPYkpNcUJoQTN4NnZ3eVJGSG9wY2ciLCJtYWMiOiIyNjhlNzYyNDM1OTg3NDBiM2NjMDU0YWQ0N2Y3MDk1Njg2ZjgxNTM0Yzk0YjhkOWJmOGVjNjM3MzY0Mjc2ZDY2IiwidGFnIjoiIn0%3D; expires=Tue, 01 Oct 2024 22:13:33 GMT; Max-Age=7200; path=/; httponly; samesite=lax',
-
 import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import type { ModuleOptions } from '../../types/options'
