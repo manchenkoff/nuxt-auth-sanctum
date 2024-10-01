@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.17
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.16...v0.4.17)
+
+### 🚀 Enhancements
+
+- Added headers validation and more control on config values ([c08c778](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c08c778))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.16
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.15...v0.4.16)
