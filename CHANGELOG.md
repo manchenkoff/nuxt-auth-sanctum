@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.16
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.15...v0.4.16)
+
+### 🩹 Fixes
+
+- Prevent concurrent update of request headers ([c5af530](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c5af530))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.15
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.14...v0.4.15)
