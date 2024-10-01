@@ -7,6 +7,7 @@ import handleRequestCookies from './interceptors/cookie/request'
 import handleResponseHeaders from './interceptors/cookie/response'
 import handleRequestHeaders from './interceptors/common/request'
 import handleRequestTokenHeader from './interceptors/token/request'
+import validateResponseHeaders from './interceptors/common/response'
 import type { SanctumAppConfig, SanctumInterceptor } from './types/config'
 import type { ModuleOptions } from './types/options'
 import { navigateTo, type NuxtApp } from '#app'
@@ -15,7 +16,10 @@ function useClientInterceptors(
   options: ModuleOptions,
   appConfig: SanctumAppConfig,
 ): [SanctumInterceptor[], SanctumInterceptor[]] {
-  const [request, response] = [[] as SanctumInterceptor[], [] as SanctumInterceptor[]]
+  const [request, response] = [
+    [] as SanctumInterceptor[],
+    [] as SanctumInterceptor[],
+  ]
 
   request.push(handleRequestHeaders)
 
@@ -27,6 +31,8 @@ function useClientInterceptors(
   if (options.mode === 'token') {
     request.push(handleRequestTokenHeader)
   }
+
+  response.push(validateResponseHeaders)
 
   if (appConfig.interceptors?.onRequest) {
     request.push(appConfig.interceptors.onRequest)
@@ -94,19 +100,13 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
 
     async onResponseError({ response }): Promise<void> {
       if (response.status === 419) {
-        logger.warn(
-          'CSRF token mismatch, check your API configuration',
-        )
-
+        logger.warn('CSRF token mismatch, check your API configuration')
         return
       }
 
       if (response.status === 401) {
         if (user.value !== null) {
-          logger.warn(
-            'User session is not set in API or expired, resetting identity',
-          )
-
+          logger.warn('User session is not set in API or expired, resetting identity')
           user.value = null
         }
 

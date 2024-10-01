@@ -14,10 +14,11 @@ export default async function handleRequestHeaders(
   logger: ConsolaInstance,
 ): Promise<void> {
   const method = ctx.options.method?.toLowerCase() ?? 'get'
+  const headersToAdd = { Accept: 'application/json' }
 
   ctx.options.headers = Object.assign(
     ctx.options.headers || {},
-    { Accept: 'application/json' },
+    headersToAdd,
   )
 
   // https://laravel.com/docs/10.x/routing#form-method-spoofing
@@ -27,7 +28,7 @@ export default async function handleRequestHeaders(
   }
 
   logger.debug(
-    '[handleRequestHeaders] headers modified',
-    Object.keys(ctx.options.headers!),
+    '[request] added default headers',
+    Object.keys(headersToAdd),
   )
 }

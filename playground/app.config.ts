@@ -36,7 +36,7 @@ export default defineAppConfig({
         ctx: FetchContext,
         logger: ConsolaInstance,
       ) => {
-        logger.debug(`custom onRequest interceptor (${ctx.request})`)
+        logger.debug(`[onRequest] custom interceptor (${ctx.request})`)
       },
 
       onResponse: async (
@@ -44,7 +44,7 @@ export default defineAppConfig({
         ctx: FetchContext,
         logger: ConsolaInstance,
       ) => {
-        logger.debug(`custom onResponse interceptor (${ctx.request})`)
+        logger.debug(`[onResponse] custom interceptor (${ctx.request})`)
       },
     },
 

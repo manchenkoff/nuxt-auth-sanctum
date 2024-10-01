@@ -44,9 +44,14 @@ async function initialIdentityLoad(client: $Fetch, options: ModuleOptions, logge
   if (user.value === null && !identityFetchedOnInit.value) {
     identityFetchedOnInit.value = true
 
+    logger.debug('Fetching user identity on plugin initialization')
+
+    if (!options.endpoints.user) {
+      throw new Error('`sanctum.endpoints.user` is not defined')
+    }
+
     try {
-      logger.debug('Fetching user identity on plugin initialization')
-      user.value = await client(options.endpoints.user!)
+      user.value = await client(options.endpoints.user)
     }
     catch (error) {
       handleIdentityLoadError(error as Error, logger)

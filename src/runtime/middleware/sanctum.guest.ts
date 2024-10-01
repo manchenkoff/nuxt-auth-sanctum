@@ -6,11 +6,15 @@ export default defineNuxtRouteMiddleware(() => {
   const options = useSanctumConfig()
   const { isAuthenticated } = useSanctumAuth()
 
-  if (isAuthenticated.value === false) {
+  if (!isAuthenticated.value) {
     return
   }
 
   const endpoint = options.redirect.onGuestOnly
+
+  if (endpoint === undefined) {
+    throw new Error('`sanctum.redirect.onGuestOnly` is not defined')
+  }
 
   if (endpoint === false) {
     throw createError({ statusCode: 403 })
