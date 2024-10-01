@@ -23,7 +23,10 @@ export default async function handleRequestTokenHeader(
     return
   }
 
-  Object.assign(ctx.options.headers!, { Authorization: `Bearer ${token}` })
+  ctx.options.headers = Object.assign(
+    ctx.options.headers || {},
+    { Authorization: `Bearer ${token}` },
+  )
 
   logger.debug(
     '[handleRequestTokenHeader] headers modified',
