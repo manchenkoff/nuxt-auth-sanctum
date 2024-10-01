@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v0.4.15
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.14...v0.4.15)
+
+### 🚀 Enhancements
+
+- Add request and response headers logging ([fed1d16](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/fed1d16))
+
+### 🩹 Fixes
+
+- Prevent object merging with HeadersList ([393ddca](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/393ddca))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @nuxt/devtools from 1.5.0 to 1.5.1 ([c564ab3](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c564ab3))
+- **deps-dev:** Bump @types/node from 22.5.5 to 22.7.4 ([9a2f385](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/9a2f385))
+- **deps-dev:** Bump eslint from 9.11.0 to 9.11.1 ([4b4ab3f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/4b4ab3f))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.14
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.13...v0.4.14)
