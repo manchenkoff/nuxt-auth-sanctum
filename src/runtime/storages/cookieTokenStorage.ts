@@ -10,16 +10,15 @@ const cookieTokenKey = 'sanctum.token.cookie'
  */
 export const cookieTokenStorage: TokenStorage = {
   async get(app: NuxtApp) {
-    return await app.runWithContext(() => {
+    return app.runWithContext(() => {
       const cookie = useCookie(cookieTokenKey, { readonly: true })
-
       return unref(cookie.value) ?? undefined
     })
   },
+
   async set(app: NuxtApp, token?: string) {
     await app.runWithContext(() => {
       const cookie = useCookie(cookieTokenKey, { secure: true })
-
       cookie.value = token
     })
   },

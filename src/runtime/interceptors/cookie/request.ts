@@ -11,23 +11,30 @@ const COOKIE_OPTIONS: { readonly: true } = { readonly: true }
  * Pass all cookies, headers and referrer from the client to the API
  * @param headers Headers collection to extend
  * @param config Module configuration
+ * @param logger Logger instance
+ * @returns Headers collection to pass to the API
  */
 function useServerHeaders(
   headers: HeadersInit | undefined,
   config: ModuleOptions,
+  logger: ConsolaInstance,
 ): HeadersInit {
   const clientHeaders = useRequestHeaders(['cookie', 'user-agent'])
   const origin = config.origin ?? useRequestURL().origin
 
-  return Object.assign(
-    headers || {},
-    {
-      Referer: origin,
-      Origin: origin,
-      ...(clientHeaders.cookie && { Cookie: clientHeaders.cookie }),
-      ...(clientHeaders['user-agent'] && { 'User-Agent': clientHeaders['user-agent'] }),
-    },
+  const headersToAdd = {
+    Referer: origin,
+    Origin: origin,
+    ...(clientHeaders.cookie && { Cookie: clientHeaders.cookie }),
+    ...(clientHeaders['user-agent'] && { 'User-Agent': clientHeaders['user-agent'] }),
+  }
+
+  logger.debug(
+    '[request] added client headers to server request',
+    Object.keys(headersToAdd),
   )
+
+  return Object.assign(headers || {}, headersToAdd)
 }
 
 /**
@@ -40,12 +47,16 @@ async function initCsrfCookie(
   config: ModuleOptions,
   logger: ConsolaInstance,
 ): Promise<void> {
-  await $fetch(config.endpoints.csrf!, {
+  if (config.endpoints.csrf === undefined) {
+    throw new Error('`sanctum.endpoints.csrf` is not defined')
+  }
+
+  await $fetch(config.endpoints.csrf, {
     baseURL: config.baseUrl,
     credentials: 'include',
   })
 
-  logger.debug('CSRF cookie has been initialized')
+  logger.debug('[request] CSRF cookie has been initialized')
 }
 
 /**
@@ -53,35 +64,40 @@ async function initCsrfCookie(
  * @param headers Headers collection to extend
  * @param config Module configuration
  * @param logger Logger instance
+ * @returns Headers collection to pass to the API
  */
 async function useCsrfHeader(
   headers: HeadersInit | undefined,
   config: ModuleOptions,
   logger: ConsolaInstance,
 ): Promise<HeadersInit> {
-  let csrfToken = useCookie(config.csrf.cookie!, COOKIE_OPTIONS)
+  if (config.csrf.cookie === undefined) {
+    throw new Error('`sanctum.csrf.cookie` is not defined')
+  }
+
+  if (config.csrf.header === undefined) {
+    throw new Error('`sanctum.csrf.header` is not defined')
+  }
+
+  let csrfToken = useCookie(config.csrf.cookie, COOKIE_OPTIONS)
 
   if (!csrfToken.value) {
     await initCsrfCookie(config, logger)
-
-    csrfToken = useCookie(config.csrf.cookie!, COOKIE_OPTIONS)
+    csrfToken = useCookie(config.csrf.cookie, COOKIE_OPTIONS)
   }
 
   if (!csrfToken.value) {
-    logger.warn(
-      `${config.csrf.cookie} cookie is missing, unable to set ${config.csrf.header} header`,
-    )
-
+    logger.warn(`${config.csrf.cookie} cookie is missing, unable to set ${config.csrf.header} header`)
     return headers || {}
   }
 
-  logger.debug(`Added ${config.csrf.header} header to pass to the API`)
+  const headersToAdd = { [config.csrf.header]: csrfToken.value }
 
-  return Object.assign(
-    headers || {},
-    { [config.csrf.header!]: csrfToken.value },
-  )
+  logger.debug(`[request] added csrf token header`, Object.keys(headersToAdd))
+
+  return Object.assign(headers || {}, headersToAdd)
 }
+
 /**
  * Handle cookies and headers for the request
  * @param app Nuxt application instance
@@ -97,7 +113,11 @@ export default async function handleRequestCookies(
   const method = ctx.options.method?.toLowerCase() ?? 'get'
 
   if (import.meta.server) {
-    ctx.options.headers = useServerHeaders(ctx.options.headers, config)
+    ctx.options.headers = useServerHeaders(
+      ctx.options.headers,
+      config,
+      logger,
+    )
   }
 
   if (SECURE_METHODS.has(method)) {
@@ -107,9 +127,4 @@ export default async function handleRequestCookies(
       logger,
     )
   }
-
-  logger.debug(
-    '[handleRequestCookies] headers modified',
-    Object.keys(ctx.options.headers!),
-  )
 }

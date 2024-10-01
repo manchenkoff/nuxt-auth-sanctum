@@ -17,7 +17,7 @@ export interface SanctumAuth<T> {
 }
 
 export type TokenResponse = {
-  token: string
+  token?: string
 }
 
 /**
@@ -47,7 +47,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
    * Only call this method when `sanctum.client.initialRequest` is false.
    */
   async function init() {
-    if (isIdentityLoaded.value === true) {
+    if (isIdentityLoaded.value) {
       return
     }
 
@@ -71,8 +71,8 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     const currentRoute = useRoute()
     const currentPath = trimTrailingSlash(currentRoute.path)
 
-    if (isAuthenticated.value === true) {
-      if (options.redirectIfAuthenticated === false) {
+    if (isAuthenticated.value) {
+      if (!options.redirectIfAuthenticated) {
         throw new Error('User is already authenticated')
       }
 
@@ -83,30 +83,43 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
         return
       }
 
+      if (options.redirect.onLogin === undefined) {
+        throw new Error('`sanctum.redirect.onLogin` is not defined')
+      }
+
       await nuxtApp.runWithContext(
         async () => await navigateTo(options.redirect.onLogin as string),
       )
     }
 
-    const response = await client<TokenResponse>(options.endpoints.login!, {
+    if (options.endpoints.login === undefined) {
+      throw new Error('`sanctum.endpoints.login` is not defined')
+    }
+
+    const response = await client<TokenResponse>(options.endpoints.login, {
       method: 'post',
       body: credentials,
     })
 
     if (options.mode === 'token') {
-      await appConfig.tokenStorage!.set(nuxtApp, response.token)
+      if (appConfig.tokenStorage === undefined) {
+        throw new Error('`sanctum.tokenStorage` is not defined in app.config.ts')
+      }
+
+      if (response.token === undefined) {
+        throw new Error('Token was not returned from the API')
+      }
+
+      await appConfig.tokenStorage.set(nuxtApp, response.token)
     }
 
     await refreshIdentity()
 
     if (options.redirect.keepRequestedRoute) {
-      const requestedRoute = currentRoute.query.redirect
+      const requestedRoute = currentRoute.query.redirect as string | undefined
 
       if (requestedRoute && requestedRoute !== currentPath) {
-        await nuxtApp.runWithContext(
-          async () => await navigateTo(requestedRoute as string),
-        )
-
+        await nuxtApp.runWithContext(async () => await navigateTo(requestedRoute))
         return
       }
     }
@@ -118,6 +131,10 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       return
     }
 
+    if (options.redirect.onLogin === undefined) {
+      throw new Error('`sanctum.redirect.onLogin` is not defined')
+    }
+
     await nuxtApp.runWithContext(
       async () => await navigateTo(options.redirect.onLogin as string),
     )
@@ -127,19 +144,27 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
    * Calls the logout endpoint and clears the user object
    */
   async function logout() {
-    if (isAuthenticated.value === false) {
+    if (!isAuthenticated.value) {
       throw new Error('User is not authenticated')
     }
 
     const currentRoute = useRoute()
     const currentPath = trimTrailingSlash(currentRoute.path)
 
-    await client(options.endpoints.logout!, { method: 'post' })
+    if (options.endpoints.logout === undefined) {
+      throw new Error('`sanctum.endpoints.logout` is not defined')
+    }
+
+    await client(options.endpoints.logout, { method: 'post' })
 
     user.value = null
 
     if (options.mode === 'token') {
-      await appConfig.tokenStorage!.set(nuxtApp, undefined)
+      if (appConfig.tokenStorage === undefined) {
+        throw new Error('`sanctum.tokenStorage` is not defined in app.config.ts')
+      }
+
+      await appConfig.tokenStorage.set(nuxtApp, undefined)
     }
 
     if (
@@ -147,6 +172,10 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       || currentPath === options.redirect.onLogout
     ) {
       return
+    }
+
+    if (options.redirect.onLogout === undefined) {
+      throw new Error('`sanctum.redirect.onLogout` is not defined')
     }
 
     await nuxtApp.runWithContext(

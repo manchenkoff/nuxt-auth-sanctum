@@ -13,13 +13,13 @@ export default defineNuxtRouteMiddleware((to) => {
     options.redirect.onAuthOnly,
   ]
 
-  if (homePage === false) {
+  if (homePage === undefined || homePage === false) {
     throw new Error(
       'You must define onGuestOnly route when using global middleware.',
     )
   }
 
-  if (loginPage === false) {
+  if (loginPage === undefined || loginPage === false) {
     throw new Error(
       'You must define onAuthOnly route when using global middleware.',
     )
@@ -40,7 +40,7 @@ export default defineNuxtRouteMiddleware((to) => {
         = trimTrailingSlash(to.path) === loginPage
         || to.meta.sanctum?.guestOnly === true
 
-  if (isAuthenticated.value === true) {
+  if (isAuthenticated.value) {
     if (isPageForGuestsOnly) {
       return navigateTo(homePage, { replace: true })
     }
@@ -52,7 +52,7 @@ export default defineNuxtRouteMiddleware((to) => {
     return
   }
 
-  const redirect: RouteLocationAsPathGeneric = { path: loginPage! }
+  const redirect: RouteLocationAsPathGeneric = { path: loginPage }
 
   if (options.redirect.keepRequestedRoute) {
     redirect.query = { redirect: trimTrailingSlash(to.fullPath) }

@@ -16,20 +16,23 @@ export default async function handleRequestTokenHeader(
 ): Promise<void> {
   const appConfig = useSanctumAppConfig()
 
-  const token = await appConfig.tokenStorage!.get(app)
+  if (appConfig.tokenStorage === undefined) {
+    throw new Error('`sanctum.tokenStorage` is not defined in app.config.ts')
+  }
+
+  const token = await appConfig.tokenStorage.get(app)
 
   if (!token) {
-    logger.debug('Authentication token is not set in the storage')
+    logger.debug('[request] authentication token is not set in the storage')
     return
   }
 
-  ctx.options.headers = Object.assign(
-    ctx.options.headers || {},
-    { Authorization: `Bearer ${token}` },
-  )
+  const headersToAdd = { Authorization: `Bearer ${token}` }
 
   logger.debug(
-    '[handleRequestTokenHeader] headers modified',
-    Object.keys(ctx.options.headers!),
+    '[request] add authentication token header',
+    Object.keys(headersToAdd),
   )
+
+  ctx.options.headers = Object.assign(ctx.options.headers || {}, headersToAdd)
 }
