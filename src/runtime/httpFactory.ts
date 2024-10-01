@@ -11,28 +11,32 @@ import type { SanctumAppConfig, SanctumInterceptor } from './types/config'
 import type { ModuleOptions } from './types/options'
 import { navigateTo, type NuxtApp } from '#app'
 
-function configureClientInterceptors(
-  requestInterceptors: SanctumInterceptor[],
-  responseInterceptors: SanctumInterceptor[],
+function useClientInterceptors(
   options: ModuleOptions,
   appConfig: SanctumAppConfig,
-) {
+): [SanctumInterceptor[], SanctumInterceptor[]] {
+  const [request, response] = [[] as SanctumInterceptor[], [] as SanctumInterceptor[]]
+
+  request.push(handleRequestHeaders)
+
   if (options.mode === 'cookie') {
-    requestInterceptors.push(handleRequestCookies)
-    responseInterceptors.push(handleResponseHeaders)
+    request.push(handleRequestCookies)
+    response.push(handleResponseHeaders)
   }
 
   if (options.mode === 'token') {
-    requestInterceptors.push(handleRequestTokenHeader)
+    request.push(handleRequestTokenHeader)
   }
 
   if (appConfig.interceptors?.onRequest) {
-    requestInterceptors.push(appConfig.interceptors.onRequest)
+    request.push(appConfig.interceptors.onRequest)
   }
 
   if (appConfig.interceptors?.onResponse) {
-    responseInterceptors.push(appConfig.interceptors.onResponse)
+    response.push(appConfig.interceptors.onResponse)
   }
+
+  return [request, response]
 }
 
 function determineCredentialsMode() {
@@ -51,15 +55,10 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
   const user = useSanctumUser()
   const appConfig = useSanctumAppConfig()
 
-  const requestInterceptors: SanctumInterceptor[] = [handleRequestHeaders]
-  const responseInterceptors: SanctumInterceptor[] = []
-
-  configureClientInterceptors(
+  const [
     requestInterceptors,
     responseInterceptors,
-    options,
-    appConfig,
-  )
+  ] = useClientInterceptors(options, appConfig)
 
   const httpOptions: FetchOptions = {
     baseURL: options.baseUrl,
