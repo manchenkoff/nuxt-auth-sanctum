@@ -2,12 +2,7 @@ import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import type { ModuleOptions } from '../../types/options'
-import {
-  useCookie,
-  useRequestHeaders,
-  useRequestURL,
-  type NuxtApp,
-} from '#app'
+import { type NuxtApp, useCookie, useRequestHeaders, useRequestURL } from '#app'
 
 const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch'])
 const COOKIE_OPTIONS: { readonly: true } = { readonly: true }
@@ -17,15 +12,15 @@ const COOKIE_OPTIONS: { readonly: true } = { readonly: true }
  * @param headers Headers collection to extend
  * @param config Module configuration
  */
-function appendServerHeaders(
-  headers: HeadersInit,
+function useServerHeaders(
+  headers: HeadersInit | undefined,
   config: ModuleOptions,
-): void {
+): HeadersInit {
   const clientHeaders = useRequestHeaders(['cookie', 'user-agent'])
   const origin = config.origin ?? useRequestURL().origin
 
-  Object.assign(
-    headers,
+  return Object.assign(
+    headers || {},
     {
       Referer: origin,
       Origin: origin,
@@ -60,10 +55,10 @@ async function initCsrfCookie(
  * @param logger Logger instance
  */
 async function useCsrfHeader(
-  headers: HeadersInit,
+  headers: HeadersInit | undefined,
   config: ModuleOptions,
   logger: ConsolaInstance,
-): Promise<void> {
+): Promise<HeadersInit> {
   let csrfToken = useCookie(config.csrf.cookie!, COOKIE_OPTIONS)
 
   if (!csrfToken.value) {
@@ -77,13 +72,13 @@ async function useCsrfHeader(
       `${config.csrf.cookie} cookie is missing, unable to set ${config.csrf.header} header`,
     )
 
-    return
+    return headers || {}
   }
 
   logger.debug(`Added ${config.csrf.header} header to pass to the API`)
 
-  Object.assign(
-    headers,
+  return Object.assign(
+    headers || {},
     { [config.csrf.header!]: csrfToken.value },
   )
 }
@@ -102,12 +97,12 @@ export default async function handleRequestCookies(
   const method = ctx.options.method?.toLowerCase() ?? 'get'
 
   if (import.meta.server) {
-    appendServerHeaders(ctx.options.headers!, config)
+    ctx.options.headers = useServerHeaders(ctx.options.headers, config)
   }
 
   if (SECURE_METHODS.has(method)) {
-    await useCsrfHeader(
-      ctx.options.headers!,
+    ctx.options.headers = await useCsrfHeader(
+      ctx.options.headers,
       config,
       logger,
     )

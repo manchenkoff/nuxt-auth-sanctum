@@ -15,11 +15,10 @@ export default async function handleRequestHeaders(
 ): Promise<void> {
   const method = ctx.options.method?.toLowerCase() ?? 'get'
 
-  if (!ctx.options.headers) {
-    ctx.options.headers = {}
-  }
-
-  Object.assign(ctx.options.headers!, { Accept: 'application/json' })
+  ctx.options.headers = Object.assign(
+    ctx.options.headers || {},
+    { Accept: 'application/json' },
+  )
 
   // https://laravel.com/docs/10.x/routing#form-method-spoofing
   if (method === 'put' && ctx.options.body instanceof FormData) {
