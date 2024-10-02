@@ -1,6 +1,7 @@
 import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import { useSanctumAppConfig } from '../../composables/useSanctumAppConfig'
+import { appendRequestHeaders } from '../../utils/headers'
 import type { NuxtApp } from '#app'
 
 /**
@@ -34,5 +35,5 @@ export default async function handleRequestTokenHeader(
     Object.keys(headersToAdd),
   )
 
-  ctx.options.headers = Object.assign(ctx.options.headers || {}, headersToAdd)
+  ctx.options.headers = appendRequestHeaders(ctx.options.headers, headersToAdd)
 }

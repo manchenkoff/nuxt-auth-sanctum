@@ -81,7 +81,7 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
 
       logger.trace(
         `Request headers for "${context.request.toString()}"`,
-        context.options.headers,
+        Object.fromEntries(context.options.headers.entries()),
       )
     },
 
@@ -94,7 +94,7 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
 
       logger.trace(
         `Response headers for "${context.request.toString()}"`,
-        context.response?.headers,
+        context.response ? Object.fromEntries(context.response.headers.entries()) : {},
       )
     },
 
