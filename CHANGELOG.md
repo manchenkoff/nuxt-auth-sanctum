@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v0.4.18
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.17...v0.4.18)
+
+### 🚀 Enhancements
+
+- Improve headers logging readability ([8160e8c](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/8160e8c))
+
+### 🩹 Fixes
+
+- Use normalized Headers object for interceptors ([22602b6](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/22602b6))
+
+### 🏡 Chore
+
+- Use specific ofetch version for development ([6edf22d](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/6edf22d))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.17
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.16...v0.4.17)
