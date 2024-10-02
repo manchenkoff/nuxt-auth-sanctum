@@ -1,5 +1,6 @@
 import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
+import { appendRequestHeaders } from '../../utils/headers'
 import type { NuxtApp } from '#app'
 
 /**
@@ -16,10 +17,7 @@ export default async function handleRequestHeaders(
   const method = ctx.options.method?.toLowerCase() ?? 'get'
   const headersToAdd = { Accept: 'application/json' }
 
-  ctx.options.headers = Object.assign(
-    ctx.options.headers || {},
-    headersToAdd,
-  )
+  ctx.options.headers = appendRequestHeaders(ctx.options.headers, headersToAdd)
 
   // https://laravel.com/docs/10.x/routing#form-method-spoofing
   if (method === 'put' && ctx.options.body instanceof FormData) {
