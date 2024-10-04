@@ -1,4 +1,4 @@
-import type { $Fetch, FetchOptions, FetchContext } from 'ofetch'
+import type { $Fetch, FetchContext, FetchOptions } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import { useSanctumUser } from './composables/useSanctumUser'
 import { useSanctumConfig } from './composables/useSanctumConfig'
@@ -81,7 +81,9 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
 
       logger.trace(
         `Request headers for "${context.request.toString()}"`,
-        Object.fromEntries(context.options.headers.entries()),
+        context.options.headers instanceof Headers
+          ? Object.fromEntries(context.options.headers.entries())
+          : context.options.headers,
       )
     },
 
