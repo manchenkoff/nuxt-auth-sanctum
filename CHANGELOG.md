@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v0.5.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.18...v0.5.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Use ofetch as actual dependency ([07f0213](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/07f0213))
+
+### 🩹 Fixes
+
+- Expect object instead of headers to log ([aeeddb8](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/aeeddb8))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Use ofetch as actual dependency ([07f0213](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/07f0213))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.4.18
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.17...v0.4.18)
