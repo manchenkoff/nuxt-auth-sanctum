@@ -48,6 +48,8 @@ export default defineNuxtModule<ModuleOptions>({
         name: 'sanctum:auth:global',
         path: resolver.resolve('./runtime/middleware/sanctum.global'),
         global: true,
+      }, {
+        prepend: sanctumConfig.globalMiddleware.prepend,
       })
 
       logger.info('Sanctum module initialized with global middleware')
