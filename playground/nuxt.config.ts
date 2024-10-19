@@ -1,10 +1,8 @@
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-
   modules: ['../src/module'],
-
   ssr: true,
-
+  devtools: { enabled: true },
+  compatibilityDate: '2024-09-28',
   sanctum: {
     baseUrl: 'http://localhost:80',
     mode: 'cookie',
@@ -27,6 +25,4 @@ export default defineNuxtConfig({
       enabled: false,
     },
   },
-
-  compatibilityDate: '2024-09-28',
 })
