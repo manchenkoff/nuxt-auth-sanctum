@@ -75,6 +75,16 @@ return [
 ];
 ```
 
+**Logs**
+
+Please provide module logs that can help to understand the problem. 
+Make sure to change `sanctum.logLevel` to `5` in your `nuxt.config.ts`. 
+CSR logs can be found in the browser, while SSR logs can be found in the server terminal.
+
+```log
+# REPLACE WITH YOUR LOGS!
+```
+
 **Additional context**
 
 Add any other context about the problem here. 
