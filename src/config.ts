@@ -29,6 +29,7 @@ export const defaultModuleOptions: ModuleOptions = {
   },
   globalMiddleware: {
     enabled: false,
+    prepend: false,
     allow404WithoutAuth: true,
   },
   logLevel: 3,
