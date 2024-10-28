@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v0.5.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.0...v0.5.1)
+
+### 🚀 Enhancements
+
+- Add option to prepend the global middleware ([94c3346](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/94c3346))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump eslint from 9.11.1 to 9.12.0 ([b593bd7](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b593bd7))
+- **deps-dev:** Bump @nuxt/test-utils from 3.14.2 to 3.14.3 ([e775417](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e775417))
+- **deps-dev:** Bump typescript from 5.5.4 to 5.6.3 ([0963a0b](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/0963a0b))
+- **deps-dev:** Bump @nuxt/eslint-config from 0.5.7 to 0.6.0 ([c5bc900](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c5bc900))
+- Updated bug report issue template ([f8534f1](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/f8534f1))
+- **deps-dev:** Bump @nuxt/test-utils from 3.14.3 to 3.14.4 ([e89441f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e89441f))
+- **deps-dev:** Bump vitest from 2.1.2 to 2.1.3 ([e563484](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e563484))
+- **deps-dev:** Bump eslint from 9.12.0 to 9.13.0 ([412f36f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/412f36f))
+
+### ❤️ Contributors
+
+- Jonian Guveli <jonian@hardpixel.eu>
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.5.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.4.18...v0.5.0)
