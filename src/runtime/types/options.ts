@@ -101,6 +101,11 @@ export interface GlobalMiddlewareOptions {
    */
   enabled: boolean
   /**
+   * Determines whether the global middleware is prepended.
+   * @default false
+   */
+  prepend: boolean
+  /**
    * Determines whether to allow 404 pages without authentication.
    * @default true
    */

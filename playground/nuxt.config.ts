@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     globalMiddleware: {
       allow404WithoutAuth: true,
       enabled: false,
+      prepend: false,
     },
   },
 })
