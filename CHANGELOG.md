@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v0.5.2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.1...v0.5.2)
+
+### 🩹 Fixes
+
+- Support insecure cookies for auth token ([5e59064](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5e59064))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @types/node from 22.7.7 to 22.8.1 ([979c480](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/979c480))
+- **deps-dev:** Bump vue-tsc from 2.1.6 to 2.1.8 ([b3a6b5a](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b3a6b5a))
+- **deps-dev:** Bump vue-tsc from 2.1.8 to 2.1.10 ([73259c8](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/73259c8))
+- **deps-dev:** Bump vitest from 2.1.3 to 2.1.4 ([ce299ac](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/ce299ac))
+- **deps-dev:** Bump eslint from 9.13.0 to 9.14.0 ([2840859](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/2840859))
+- **deps-dev:** Bump @nuxt/eslint-config from 0.6.0 to 0.6.1 ([5f4e34c](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5f4e34c))
+- **deps-dev:** Bump @types/node from 22.8.7 to 22.9.0 ([cbe9b6f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/cbe9b6f))
+- **deps-dev:** Bump nuxt from 3.13.2 to 3.14.159 ([79ccffc](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/79ccffc))
+- **deps-dev:** Bump @nuxt/schema from 3.13.2 to 3.14.159 ([4dbd21a](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/4dbd21a))
+- **deps-dev:** Bump vitest from 2.1.4 to 2.1.5 ([1bd218b](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1bd218b))
+- **deps-dev:** Bump @nuxt/eslint-config from 0.6.1 to 0.7.0 ([1303a9a](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1303a9a))
+- **deps-dev:** Bump eslint from 9.14.0 to 9.15.0 ([b71d6e8](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b71d6e8))
+- Install typescript-eslint with a fix ([0e6b0e5](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/0e6b0e5))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.5.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.0...v0.5.1)
