@@ -1,4 +1,4 @@
-import { type $Fetch, FetchError } from 'ofetch'
+import { FetchError } from 'ofetch'
 import { createConsola, type ConsolaInstance } from 'consola'
 import { createHttpClient } from './httpFactory'
 import { useSanctumUser } from './composables/useSanctumUser'
@@ -33,7 +33,7 @@ async function setupDefaultTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstanc
   })
 }
 
-async function initialIdentityLoad(client: $Fetch, options: ModuleOptions, logger: ConsolaInstance) {
+async function initialIdentityLoad(client: typeof $fetch, options: ModuleOptions, logger: ConsolaInstance) {
   const user = useSanctumUser()
 
   const identityFetchedOnInit = useState<boolean>(
