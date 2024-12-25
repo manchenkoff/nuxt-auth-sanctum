@@ -1,6 +1,6 @@
 import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
-import type { TokenStorage } from '../src/runtime/types/config'
+import type { TokenStorage } from '../../src/runtime/types/config'
 import { defineAppConfig } from '#imports'
 import type { NuxtApp } from '#app'
 

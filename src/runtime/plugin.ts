@@ -75,24 +75,27 @@ function handleIdentityLoadError(error: Error, logger: ConsolaInstance) {
   }
 }
 
-export default defineNuxtPlugin(async (_nuxtApp) => {
-  const nuxtApp = _nuxtApp as NuxtApp
-  const options = useSanctumConfig()
-  const appConfig = useSanctumAppConfig()
-  const logger = createSanctumLogger(options.logLevel)
-  const client = createHttpClient(nuxtApp, logger)
+export default defineNuxtPlugin({
+  name: 'nuxt-auth-sanctum',
+  async setup(_nuxtApp) {
+    const nuxtApp = _nuxtApp as NuxtApp
+    const options = useSanctumConfig()
+    const appConfig = useSanctumAppConfig()
+    const logger = createSanctumLogger(options.logLevel)
+    const client = createHttpClient(nuxtApp, logger)
 
-  if (options.mode === 'token' && !appConfig.tokenStorage) {
-    await setupDefaultTokenStorage(nuxtApp, logger)
-  }
+    if (options.mode === 'token' && !appConfig.tokenStorage) {
+      await setupDefaultTokenStorage(nuxtApp, logger)
+    }
 
-  if (options.client.initialRequest) {
-    await initialIdentityLoad(client, options, logger)
-  }
+    if (options.client.initialRequest) {
+      await initialIdentityLoad(client, options, logger)
+    }
 
-  return {
-    provide: {
-      sanctumClient: client,
-    },
-  }
+    return {
+      provide: {
+        sanctumClient: client,
+      },
+    }
+  },
 })

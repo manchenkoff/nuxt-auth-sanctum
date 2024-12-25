@@ -2,6 +2,9 @@ export default defineNuxtConfig({
   modules: ['../src/module'],
   ssr: true,
   devtools: { enabled: true },
+  future: {
+    compatibilityVersion: 4,
+  },
   compatibilityDate: '2024-09-28',
   sanctum: {
     baseUrl: 'http://localhost:80',
