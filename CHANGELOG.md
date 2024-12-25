@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v0.5.3
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.2...v0.5.3)
+
+### 🩹 Fixes
+
+- Expose plugin name to be used in dependsOn ([c2d930b](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c2d930b))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @nuxt/schema from 3.14.159 to 3.14.1592 ([83be062](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/83be062))
+- **deps-dev:** Bump nuxt from 3.14.159 to 3.14.1592 ([0469f64](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/0469f64))
+- **deps-dev:** Bump @typescript-eslint/eslint-plugin ([f619be8](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/f619be8))
+- **deps-dev:** Bump eslint from 9.15.0 to 9.16.0 ([464c8ed](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/464c8ed))
+- **deps-dev:** Bump @nuxt/eslint-config from 0.7.0 to 0.7.2 ([38c1c46](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/38c1c46))
+- **deps-dev:** Bump @nuxt/devtools from 1.6.1 to 1.6.3 ([31a8027](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/31a8027))
+- **deps-dev:** Bump @typescript-eslint/eslint-plugin ([1d47a17](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1d47a17))
+- **deps-dev:** Bump vitest from 2.1.5 to 2.1.8 ([63fa544](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/63fa544))
+- **deps-dev:** Bump @nuxt/test-utils from 3.14.4 to 3.15.1 ([7c21b35](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/7c21b35))
+- **deps-dev:** Bump @types/node from 22.10.1 to 22.10.2 ([b1d429b](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b1d429b))
+- **deps-dev:** Bump @typescript-eslint/eslint-plugin ([3067b61](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/3067b61))
+- **deps-dev:** Bump eslint from 9.16.0 to 9.17.0 ([ce17914](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/ce17914))
+- **deps-dev:** Bump @nuxt/eslint-config from 0.7.2 to 0.7.3 ([2ff5e99](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/2ff5e99))
+- Upgraded playground to nuxt v4 structure ([056b488](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/056b488))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.5.2
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.1...v0.5.2)
