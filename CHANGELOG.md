@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.5.4
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.3...v0.5.4)
+
+### 🩹 Fixes
+
+- Use relative paths for injected types ([63696ff](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/63696ff))
+
+### ❤️ Contributors
+
+- Denis Mamaev ([@ExileofAranei](http://github.com/ExileofAranei))
+
 ## v0.5.3
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.2...v0.5.3)
