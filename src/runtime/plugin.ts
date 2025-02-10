@@ -11,7 +11,7 @@ import { defineNuxtPlugin, updateAppConfig, useState, type NuxtApp } from '#app'
 const LOGGER_NAME = 'nuxt-auth-sanctum'
 
 function createSanctumLogger(logLevel: number) {
-  const envSuffix = import.meta.env.SSR ? 'ssr' : 'csr'
+  const envSuffix = import.meta.server ? 'ssr' : 'csr'
   const loggerName = LOGGER_NAME + ':' + envSuffix
 
   return createConsola({ level: logLevel }).withTag(loggerName)
