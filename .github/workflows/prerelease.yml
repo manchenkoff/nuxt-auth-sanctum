@@ -27,13 +27,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Enable corepack
-        run: corepack enable
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node_version }}
+
+      - name: Enable corepack
+        run: corepack enable
+
+      # Issue: https://github.com/cypress-io/github-action/issues/1355
+      - name: Set alternate npm integrity keys
+        run: |
+          echo COREPACK_INTEGRITY_KEYS="$(curl https://registry.npmjs.org/-/npm/v1/keys | jq -c '{npm: .keys}')" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npx nypm@latest i
@@ -54,14 +59,19 @@ jobs:
         with:
           fetch-depth: 0 # fetch all history for tags
 
-      - name: Enable corepack
-        run: corepack enable
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node_version }}
           registry-url: ${{ env.NODE_REGISTRY }}
+
+      - name: Enable corepack
+        run: corepack enable
+
+      # Issue: https://github.com/cypress-io/github-action/issues/1355
+      - name: Set alternate npm integrity keys
+        run: |
+          echo COREPACK_INTEGRITY_KEYS="$(curl https://registry.npmjs.org/-/npm/v1/keys | jq -c '{npm: .keys}')" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npx nypm@latest i
