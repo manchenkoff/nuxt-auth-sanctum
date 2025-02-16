@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v0.5.5
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.4...v0.5.5)
+
+### 🩹 Fixes
+
+- Use npm keys in actions ([9bc984f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/9bc984f))
+- Deduplicate `set-cookie` headers on SSR response ([9d957e2](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/9d957e2))
+- Downgraded typescript to fix module-builder ([f28daf8](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/f28daf8))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @nuxt/devtools from 1.6.4 to 1.7.0 ([b58ebc4](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b58ebc4))
+- **deps-dev:** Bump @nuxt/eslint-config from 0.7.3 to 0.7.4 ([0f79c42](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/0f79c42))
+- **deps-dev:** Bump @typescript-eslint/eslint-plugin ([0cae715](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/0cae715))
+- **deps-dev:** Bump @nuxt/schema from 3.14.1592 to 3.15.0 ([77c79f6](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/77c79f6))
+- **deps-dev:** Bump @nuxt/test-utils from 3.15.1 to 3.15.4 ([2cc446b](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/2cc446b))
+- **deps-dev:** Bump vitest in the npm_and_yarn group ([b64a354](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b64a354))
+- **deps-dev:** Bump @nuxt/schema from 3.15.2 to 3.15.4 ([c2dd453](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c2dd453))
+- **deps-dev:** Bump @nuxt/eslint-config from 0.7.4 to 1.0.0 ([a435516](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/a435516))
+- Upgraded nuxt packages ([e0c5bb9](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e0c5bb9))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.5.4
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.3...v0.5.4)
