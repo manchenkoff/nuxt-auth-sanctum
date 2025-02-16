@@ -79,6 +79,11 @@ function createCookiesMap(...cookieCollections: string[][]) {
   for (const cookies of cookieCollections) {
     for (const cookie of cookies) {
       const cookieName = cookie.split('=')[0]
+
+      if (cookieName === undefined) {
+        continue
+      }
+
       cookiesMap.set(cookieName, cookie)
     }
   }
