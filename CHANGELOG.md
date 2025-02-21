@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.5.6
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.5...v0.5.6)
+
+### 🚀 Enhancements
+
+- Added new composables to make requests ([a6bfc2f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/a6bfc2f))
+
+### 🩹 Fixes
+
+- Added type hints for fetch composables ([bbb9e04](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/bbb9e04))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.5.5
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.4...v0.5.5)
