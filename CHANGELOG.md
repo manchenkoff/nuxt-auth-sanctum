@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.5.7
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.6...v0.5.7)
+
+### 🩹 Fixes
+
+- Migrated from useFetch to useAsyncData ([79cb27d](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/79cb27d))
+
+### 🏡 Chore
+
+- Dependencies upgrade ([2bbe90c](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/2bbe90c))
+- **dev-deps:** Upgraded dev dependencies ([6a629df](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/6a629df))
+- **dev-deps:** Upgraded nuxt devtools ([bc3b601](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/bc3b601))
+- **security:** Upgraded esbuild to avoid security issues ([82ad135](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/82ad135))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.5.6
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.5...v0.5.6)
