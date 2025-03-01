@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.5.8
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.7...v0.5.8)
+
+### 🩹 Fixes
+
+- Use unique key for sanctum fetch across csr/ssr ([0d43ea6](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/0d43ea6))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](http://github.com/manchenkoff))
+
 ## v0.5.7
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.6...v0.5.7)
