@@ -21,7 +21,5 @@ export function useSanctumFetch<T>(
 
   const key = keyParts.join(':')
 
-  console.log(key)
-
   return useAsyncData<T>(key, () => client<T>(url, options as FetchOptions<'json'>))
 }
