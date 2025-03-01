@@ -8,5 +8,20 @@ export function useSanctumFetch<T>(
 ): AsyncData<PickFrom<T, KeysOf<T>> | null | undefined, Error | null | undefined> {
   const client = useSanctumClient()
 
-  return useAsyncData<T>(() => client<T>(url, options as FetchOptions<'json'>))
+  const keyParts = [
+    'sanctum',
+    'fetch',
+    url,
+    options?.method ?? 'get',
+    JSON.stringify({
+      query: options?.query ?? {},
+      body: options?.body ?? {},
+    }),
+  ]
+
+  const key = keyParts.join(':')
+
+  console.log(key)
+
+  return useAsyncData<T>(key, () => client<T>(url, options as FetchOptions<'json'>))
 }
