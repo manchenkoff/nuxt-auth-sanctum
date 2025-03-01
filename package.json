@@ -41,13 +41,13 @@
     "pathe": "^1.1.2"
   },
   "devDependencies": {
-    "@nuxt/devtools": "latest",
+    "@nuxt/devtools": "^2.0.0",
     "@nuxt/eslint-config": "^1.1.0",
     "@nuxt/kit": "^3.15.4",
     "@nuxt/module-builder": "^0.8.4",
     "@nuxt/schema": "^3.15.4",
-    "@nuxt/test-utils": "^3.15.4",
-    "@types/node": "latest",
+    "@nuxt/test-utils": "^3.17.0",
+    "@types/node": "^22.13.8",
     "@typescript-eslint/eslint-plugin": "^8.25.0",
     "changelogen": "^0.5.7",
     "eslint": "^9.21.0",
