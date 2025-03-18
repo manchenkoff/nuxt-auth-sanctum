@@ -43,24 +43,24 @@
   "devDependencies": {
     "@nuxt/devtools": "^2.0.0",
     "@nuxt/eslint-config": "^1.1.0",
-    "@nuxt/kit": "^3.15.4",
+    "@nuxt/kit": "^3.16.0",
     "@nuxt/module-builder": "^0.8.4",
-    "@nuxt/schema": "^3.15.4",
+    "@nuxt/schema": "^3.16.0",
     "@nuxt/test-utils": "^3.17.0",
     "@types/node": "^22.13.8",
     "@typescript-eslint/eslint-plugin": "^8.25.0",
     "changelogen": "^0.5.7",
     "eslint": "^9.21.0",
-    "nuxt": "^3.15.4",
+    "nuxt": "^3.16.0",
     "typescript": "^5.6.3",
     "vite": "^6.2.0",
     "vitest": "^2.1.9",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^2.2.8"
   },
-  "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b",
+  "packageManager": "pnpm@10.6.4+sha512.da3d715bfd22a9a105e6e8088cfc7826699332ded60c423b14ec613a185f1602206702ff0fe4c438cb15c979081ce4cb02568e364b15174503a63c7a8e2a5f6c",
   "pnpm": {
-    "overrides": {
-      "esbuild@<=0.24.2": ">=0.25.0"
-    }
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }
