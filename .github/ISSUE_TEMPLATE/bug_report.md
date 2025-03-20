@@ -6,6 +6,8 @@ labels: bug
 assignees: manchenkoff
 ---
 
+## Please, make sure that you have checked our [troubleshooting](https://manchenkoff.gitbook.io/nuxt-auth-sanctum/advanced/troubleshooting) guide before creating an issue.
+
 **Describe the bug**
 
 A clear and concise description of what the bug is.
@@ -40,39 +42,6 @@ export default defineNuxtConfig({
         baseUrl: 'http://localhost:80',
     },
 });
-```
-
-**Nuxt environment:**
-
--   Version: `x.x.x`
--   SSR Enabled: **yes / no**
--   Environment: **local / production**
-
-**Laravel environment:**
-
--   Version: `x.x.x`
--   Sanctum installed via Breeze: **yes / no**
--   [Checklist](https://manchenkoff.gitbook.io/nuxt-auth-sanctum/authentication/spa-cookie#laravel-configuration) completed: **yes / no**
--   What is your session domain in `config/session.php`: `<REPLACE_ME>`
--   What is your stateful domains in `config/sanctum.php`: `<REPLACE_ME>`
--   Content of `config/cors.php`:
-
-```php
-<?php
-// REPLACE WITH YOUR FILE CONTENT!
-
-return [
-    'paths' => ['*'],
-    'allowed_methods' => ['*'],
-    'allowed_origins' => [
-        env('FRONTEND_URL', 'http://localhost:3000'),
-    ],
-    'allowed_origins_patterns' => [],
-    'allowed_headers' => ['*'],
-    'exposed_headers' => [],
-    'max_age' => 0,
-    'supports_credentials' => true,
-];
 ```
 
 **Logs**
