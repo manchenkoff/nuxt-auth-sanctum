@@ -35,3 +35,4 @@
 * [Token storage](advanced/token-storage.md)
 * [Plugin dependencies](advanced/plugin-dependencies.md)
 * [Breeze Nuxt template](advanced/breeze-nuxt-template.md)
+* [Troubleshooting](advanced/troubleshooting.md)
