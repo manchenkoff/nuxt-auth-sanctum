@@ -101,6 +101,8 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
     },
 
     async onResponseError({ response }): Promise<void> {
+      await nuxtApp.callHook('sanctum:error', response)
+
       if (response.status === 419) {
         logger.warn('CSRF token mismatch, check your API configuration')
         return
