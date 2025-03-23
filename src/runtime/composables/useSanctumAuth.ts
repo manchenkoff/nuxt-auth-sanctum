@@ -118,6 +118,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     }
 
     await refreshIdentity()
+    await nuxtApp.callHook('sanctum:login')
 
     if (options.redirect.keepRequestedRoute) {
       const requestedRoute = currentRoute.query.redirect as string | undefined

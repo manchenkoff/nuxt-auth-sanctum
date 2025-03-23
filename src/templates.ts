@@ -56,6 +56,10 @@ declare module '#app' {
      * Triggers when user identity has been refreshed.
      */
     'sanctum:refresh': () => HookResult
+    /**
+     * Triggers when user successfully logged in.
+     */
+    'sanctum:login': () => HookResult
   }
 }
 
