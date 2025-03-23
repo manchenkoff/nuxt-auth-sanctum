@@ -6,4 +6,12 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('sanctum:redirect', (url) => {
     console.log('Sanctum redirect hook triggered', url)
   })
+
+  nuxtApp.hook('sanctum:init', () => {
+    console.log('Sanctum init hook triggered')
+  })
+
+  nuxtApp.hook('sanctum:refresh', () => {
+    console.log('Sanctum refresh hook triggered')
+  })
 })
