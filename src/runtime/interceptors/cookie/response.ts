@@ -128,8 +128,9 @@ export default async function handleResponseHeaders(
 
   // follow redirects on client
   if (ctx.response.redirected) {
-    await app.runWithContext(
-      async () => await navigateTo(ctx.response!.url),
-    )
+    const redirectUrl = ctx.response!.url
+
+    await app.callHook('sanctum:redirect', redirectUrl)
+    await app.runWithContext(async () => await navigateTo(redirectUrl))
   }
 }
