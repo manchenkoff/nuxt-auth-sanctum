@@ -14,4 +14,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('sanctum:refresh', () => {
     console.log('Sanctum refresh hook triggered')
   })
+
+  nuxtApp.hook('sanctum:login', () => {
+    console.log('Sanctum login hook triggered')
+  })
 })
