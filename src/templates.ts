@@ -44,6 +44,10 @@ declare module '#app' {
      * Triggers when receiving an error response.
      */
     'sanctum:error': (response: FetchResponse<any>) => HookResult
+    /**
+     * Triggers when user has been redirected.
+     */
+    'sanctum:redirect': (path: string) => HookResult
   }
 }
 

@@ -87,9 +87,10 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
         throw new Error('`sanctum.redirect.onLogin` is not defined')
       }
 
-      await nuxtApp.runWithContext(
-        async () => await navigateTo(options.redirect.onLogin as string),
-      )
+      const redirectUrl = options.redirect.onLogin as string
+
+      await nuxtApp.callHook('sanctum:redirect', redirectUrl)
+      await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))
     }
 
     if (options.endpoints.login === undefined) {
@@ -119,6 +120,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       const requestedRoute = currentRoute.query.redirect as string | undefined
 
       if (requestedRoute && requestedRoute !== currentPath) {
+        await nuxtApp.callHook('sanctum:redirect', requestedRoute)
         await nuxtApp.runWithContext(async () => await navigateTo(requestedRoute))
         return
       }
@@ -135,9 +137,10 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       throw new Error('`sanctum.redirect.onLogin` is not defined')
     }
 
-    await nuxtApp.runWithContext(
-      async () => await navigateTo(options.redirect.onLogin as string),
-    )
+    const redirectUrl = options.redirect.onLogin as string
+
+    await nuxtApp.callHook('sanctum:redirect', redirectUrl)
+    await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))
   }
 
   /**
@@ -178,9 +181,10 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       throw new Error('`sanctum.redirect.onLogout` is not defined')
     }
 
-    await nuxtApp.runWithContext(
-      async () => await navigateTo(options.redirect.onLogout as string),
-    )
+    const redirectUrl = options.redirect.onLogout as string
+
+    await nuxtApp.callHook('sanctum:redirect', redirectUrl)
+    await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))
   }
 
   return {

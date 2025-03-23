@@ -119,12 +119,10 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
             && options.redirectIfUnauthenticated
             && options.redirect.onAuthOnly
         ) {
-          await nuxtApp.runWithContext(
-            async () =>
-              await navigateTo(
-                options.redirect.onAuthOnly as string,
-              ),
-          )
+          const redirectUrl = options.redirect.onAuthOnly as string
+
+          await nuxtApp.callHook('sanctum:redirect', redirectUrl)
+          await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))
         }
       }
     },
