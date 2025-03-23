@@ -27,6 +27,6 @@ We recommend looking at our [breeze-nuxt](advanced/breeze-nuxt-template.md) temp
 
 ### Support
 
-If you like this module, please support the project to help me to maintain and improve it!
+If you use this module, please support me to help to maintain and improve it!
 
 [<img src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me A Coffee" data-size="original">](https://www.buymeacoffee.com/manchenkoff)
