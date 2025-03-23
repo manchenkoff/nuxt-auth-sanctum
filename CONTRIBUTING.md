@@ -58,6 +58,33 @@ pnpm test
 pnpm test:watch
 ```
 
+# Testing package locally
+
+If you want to test the package before publishing it to `npm`, 
+you can create an archive and install it as a dependency in your project.
+
+To do this, run the following command:
+
+```bash
+pnpm rc
+```
+
+This will create a `.tgz` file in the `dist` directory. You can then reference it in your project:
+
+```json
+{
+  "devDependencies": {
+    "nuxt-auth-sanctum": "file:/dist/nuxt-auth-sanctum-0.0.0.tgz"
+  }
+}
+```
+
+Then you can install the package by running:
+
+```bash
+pnpm install
+```
+
 # Code Style and Standards
 
 This project uses ESLint to enforce code style and standards. Please make sure to run the following commands before creating a pull request:
