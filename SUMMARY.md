@@ -27,6 +27,15 @@
 * [sanctum:guest](middleware/sanctum-guest.md)
 * [Global middleware](middleware/global-middleware.md)
 
+## Hooks
+
+* [sanctum:error](hooks/sanctum-error.md)
+* [sanctum:redirect](hooks/sanctum-redirect.md)
+* [sanctum:init](hooks/sanctum-init.md)
+* [sanctum:refresh](hooks/sanctum-refresh.md)
+* [sanctum:login](hooks/sanctum-login.md)
+* [sanctum:logout](hooks/sanctum-logout.md)
+
 ## Advanced
 
 * [Interceptors](advanced/interceptors.md)
