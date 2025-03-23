@@ -18,4 +18,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('sanctum:login', () => {
     console.log('Sanctum login hook triggered')
   })
+
+  nuxtApp.hook('sanctum:logout', () => {
+    console.log('Sanctum logout hook triggered')
+  })
 })
