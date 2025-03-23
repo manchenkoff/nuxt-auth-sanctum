@@ -57,9 +57,13 @@ declare module '#app' {
      */
     'sanctum:refresh': () => HookResult
     /**
-     * Triggers when user successfully logged in.
+     * Triggers when user successfully logs in.
      */
     'sanctum:login': () => HookResult
+    /**
+     * Triggers when user successfully logs out.
+     */
+    'sanctum:logout': () => HookResult
   }
 }
 

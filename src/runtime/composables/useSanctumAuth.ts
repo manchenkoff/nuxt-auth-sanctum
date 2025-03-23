@@ -165,6 +165,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     await client(options.endpoints.logout, { method: 'post' })
 
     user.value = null
+    await nuxtApp.callHook('sanctum:logout')
 
     if (options.mode === 'token') {
       if (appConfig.tokenStorage === undefined) {
