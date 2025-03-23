@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v0.6.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.8...v0.6.0)
+
+### 🚀 Enhancements
+
+- **hooks:** Added sanctum:error hook ([413989f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/413989f))
+- **hooks:** Added sanctum:redirect hook ([c7bf355](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c7bf355))
+- **hooks:** Added sanctum:init and sanctum:refresh hooks ([fa5b592](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/fa5b592))
+- **hooks:** Added sanctum:login hook ([ad67393](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/ad67393))
+- **hooks:** Added sanctum:logout hook ([dd496cf](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/dd496cf))
+- **fetch:** ⚠️  Support AsyncDataOptions in sanctum fetch composables ([9f23351](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/9f23351))
+
+### 🏡 Chore
+
+- Upgraded nuxt packages ([0df572b](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/0df572b))
+- Upgraded changelogen package ([03c8b31](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/03c8b31))
+- Added troubleshooting guide link ([2bd41a1](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/2bd41a1))
+- Upgraded nuxt dependencies ([5a34273](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5a34273))
+
+#### ⚠️ Breaking Changes
+
+- **fetch:** ⚠️  Support AsyncDataOptions in sanctum fetch composables ([9f23351](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/9f23351))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v0.5.8
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.7...v0.5.8)
