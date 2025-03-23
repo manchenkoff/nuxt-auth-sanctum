@@ -1,25 +1,20 @@
 import type { FetchOptions } from 'ofetch'
+import type { DefaultAsyncDataValue } from 'nuxt/app/defaults'
+import { assembleFetchRequestKey } from '../utils/fetch'
 import { useLazyAsyncData, useSanctumClient } from '#imports'
-import type { AsyncData, KeysOf, PickFrom } from '#app/composables/asyncData'
+import type { AsyncData, AsyncDataOptions, KeysOf, PickFrom } from '#app/composables/asyncData'
 
-export function useLazySanctumFetch<T>(
+export function useLazySanctumFetch<ResT, DataE = Error, DataT = ResT, PickKeys extends KeysOf<DataT> = KeysOf<DataT>, DefaultT = DefaultAsyncDataValue>(
   url: string,
   options?: FetchOptions,
-): AsyncData<PickFrom<T, KeysOf<T>> | null | undefined, Error | null | undefined> {
+  asyncDataOptions?: Omit<AsyncDataOptions<ResT, DataT, PickKeys, DefaultT>, 'lazy'>,
+): AsyncData<PickFrom<DataT, PickKeys> | DefaultT, DataE | DefaultAsyncDataValue> {
   const client = useSanctumClient()
+  const key = assembleFetchRequestKey(url, true, options)
 
-  const keyParts = [
-    'sanctum',
-    'lazy-fetch',
-    url,
-    options?.method ?? 'get',
-    JSON.stringify({
-      query: options?.query ?? {},
-      body: options?.body ?? {},
-    }),
-  ]
-
-  const key = keyParts.join(':')
-
-  return useLazyAsyncData<T>(key, () => client<T>(url, options as FetchOptions<'json'>))
+  return useLazyAsyncData<ResT, DataE, DataT, PickKeys, DefaultT>(
+    key,
+    () => client<ResT>(url, options as FetchOptions<'json'>),
+    asyncDataOptions,
+  )
 }
