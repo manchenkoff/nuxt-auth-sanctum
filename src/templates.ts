@@ -48,6 +48,14 @@ declare module '#app' {
      * Triggers when user has been redirected.
      */
     'sanctum:redirect': (path: string) => HookResult
+    /**
+     * Triggers when an initial user identity request has been made.
+     */
+    'sanctum:init': () => HookResult
+    /**
+     * Triggers when user identity has been refreshed.
+     */
+    'sanctum:refresh': () => HookResult
   }
 }
 

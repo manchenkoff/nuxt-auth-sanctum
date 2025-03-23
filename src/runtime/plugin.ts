@@ -33,7 +33,7 @@ async function setupDefaultTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstanc
   })
 }
 
-async function initialIdentityLoad(client: $Fetch, options: ModuleOptions, logger: ConsolaInstance) {
+async function initialIdentityLoad(nuxtApp: NuxtApp, client: $Fetch, options: ModuleOptions, logger: ConsolaInstance) {
   const user = useSanctumUser()
 
   const identityFetchedOnInit = useState<boolean>(
@@ -52,6 +52,7 @@ async function initialIdentityLoad(client: $Fetch, options: ModuleOptions, logge
 
     try {
       user.value = await client(options.endpoints.user)
+      await nuxtApp.callHook('sanctum:init')
     }
     catch (error) {
       handleIdentityLoadError(error as Error, logger)
@@ -89,7 +90,7 @@ export default defineNuxtPlugin({
     }
 
     if (options.client.initialRequest) {
-      await initialIdentityLoad(client, options, logger)
+      await initialIdentityLoad(nuxtApp, client, options, logger)
     }
 
     return {

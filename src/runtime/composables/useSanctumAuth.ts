@@ -52,7 +52,9 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     }
 
     isIdentityLoaded.value = true
+
     await refreshIdentity()
+    await nuxtApp.callHook('sanctum:init')
   }
 
   /**
@@ -60,6 +62,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
    */
   async function refreshIdentity() {
     user.value = await client<T>(options.endpoints.user!)
+    await nuxtApp.callHook('sanctum:refresh')
   }
 
   /**
