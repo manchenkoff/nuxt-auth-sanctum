@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.6.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.0...v0.6.1)
+
+### 🚀 Enhancements
+
+- **logs:** Added more details into logs for troubleshooting ([b7331c9](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b7331c9))
+- **tests:** Added test fixture project to simulate remote API ([27a7976](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/27a7976))
+
+### 🩹 Fixes
+
+- **init:** Use raw fetch to handle errors on identity init ([c1321bf](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c1321bf))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v0.6.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.5.8...v0.6.0)
