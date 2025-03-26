@@ -15,7 +15,7 @@ const validateCookieHeader: HeaderValidator = (
   }
 
   if (!headers.has('set-cookie')) {
-    logger.warn('[response] `set-cookie` header is missing')
+    logger.warn('[response] `set-cookie` header is missing, CSRF token will not be set')
   }
 }
 
@@ -27,7 +27,7 @@ const validateContentTypeHeader: HeaderValidator = (
   const contentType = headers.get('content-type')
 
   if (!contentType || !contentType.includes('application/json')) {
-    logger.warn('[response] `content-type` header is missing or invalid')
+    logger.warn(`[response] 'content-type' header is missing or invalid (expected: application/json, got: ${contentType})`)
   }
 }
 
@@ -43,7 +43,7 @@ const validateCredentialsHeader: HeaderValidator = (
   const allowCredentials = headers.get('access-control-allow-credentials')
 
   if (!allowCredentials || allowCredentials !== 'true') {
-    logger.warn('[response] `access-control-allow-credentials` header is missing or invalid')
+    logger.warn(`[response] 'access-control-allow-credentials' header is missing or invalid (expected: true, got: ${allowCredentials})`)
   }
 }
 
@@ -56,7 +56,7 @@ const validateOriginHeader: HeaderValidator = (
   const currentOrigin = config?.origin ?? useRequestURL().origin
 
   if (!allowOrigin || !allowOrigin.includes(currentOrigin)) {
-    logger.warn('[response] `access-control-allow-origin` header is missing or invalid')
+    logger.warn(`[response] 'access-control-allow-origin' header is missing or invalid (expected: ${currentOrigin}, got: ${allowOrigin})`)
   }
 }
 
