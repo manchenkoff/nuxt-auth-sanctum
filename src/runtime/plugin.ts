@@ -1,4 +1,4 @@
-import { type $Fetch, FetchError } from 'ofetch'
+import type { $Fetch, FetchResponse } from 'ofetch'
 import { createConsola, type ConsolaInstance } from 'consola'
 import { createHttpClient } from './httpFactory'
 import { useSanctumUser } from './composables/useSanctumUser'
@@ -50,29 +50,29 @@ async function initialIdentityLoad(nuxtApp: NuxtApp, client: $Fetch, options: Mo
       throw new Error('`sanctum.endpoints.user` is not defined')
     }
 
-    try {
-      user.value = await client(options.endpoints.user)
-      await nuxtApp.callHook('sanctum:init')
+    const response = await client.raw(
+      options.endpoints.user,
+      { ignoreResponseError: true },
+    )
+
+    if (response.ok) {
+      user.value = response._data
+      return await nuxtApp.callHook('sanctum:init')
     }
-    catch (error) {
-      handleIdentityLoadError(error as Error, logger)
-    }
+
+    handleIdentityLoadError(response, logger)
   }
 }
 
-function handleIdentityLoadError(error: Error, logger: ConsolaInstance) {
-  if (
-    error instanceof FetchError
-    && error.response
-    && [401, 419].includes(error.response.status)
-  ) {
+function handleIdentityLoadError(response: FetchResponse<unknown>, logger: ConsolaInstance) {
+  if ([401, 419].includes(response.status)) {
     logger.debug(
       'User is not authenticated on plugin initialization, status:',
-      error.response.status,
+      response.status,
     )
   }
   else {
-    logger.error('Unable to load user identity from API', error)
+    logger.error('Unable to load user identity from API', response.status)
   }
 }
 
