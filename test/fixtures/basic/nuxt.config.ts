@@ -6,7 +6,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       sanctum: {
-        baseUrl: 'http://localhost:80',
+        baseUrl: '/',
+        endpoints: {
+          csrf: '/api/csrf',
+          user: '/api/user',
+        },
       },
     },
   },
