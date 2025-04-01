@@ -39,7 +39,7 @@
   "dependencies": {
     "defu": "^6.1.4",
     "ofetch": "^1.4.1",
-    "pathe": "^1.1.2"
+    "pathe": "^2.0.3"
   },
   "devDependencies": {
     "@nuxt/devtools": "^2.3.1",
