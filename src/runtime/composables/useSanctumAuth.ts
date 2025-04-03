@@ -11,7 +11,7 @@ export interface SanctumAuth<T> {
   user: Ref<T | null>
   isAuthenticated: Ref<boolean>
   init: () => Promise<void>
-  login: (credentials: Record<string, any>) => Promise<void>
+  login: (credentials: Record<string, any>) => Promise<any>
   logout: () => Promise<void>
   refreshIdentity: () => Promise<void>
 }
@@ -126,7 +126,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       if (requestedRoute && requestedRoute !== currentPath) {
         await nuxtApp.callHook('sanctum:redirect', requestedRoute)
         await nuxtApp.runWithContext(async () => await navigateTo(requestedRoute))
-        return
+        return response
       }
     }
 
@@ -134,7 +134,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       options.redirect.onLogin === false
       || currentRoute.path === options.redirect.onLogin
     ) {
-      return
+      return response
     }
 
     if (options.redirect.onLogin === undefined) {
@@ -145,6 +145,8 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
 
     await nuxtApp.callHook('sanctum:redirect', redirectUrl)
     await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))
+
+    return response
   }
 
   /**
