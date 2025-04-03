@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.6.2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.1...v0.6.2)
+
+### 🚀 Enhancements
+
+- Return login response ([d341431](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/d341431))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @nuxt/devtools from 2.3.1 to 2.3.2 ([5d8442f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5d8442f))
+- **deps-dev:** Bump vitest from 3.0.9 to 3.1.1 ([71f7049](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/71f7049))
+- **deps-dev:** Bump @types/node from 22.13.13 to 22.13.16 ([4273f0f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/4273f0f))
+
+### ❤️ Contributors
+
+- SwiTool <switooldev@gmail.com>
+
 ## v0.6.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.0...v0.6.1)
