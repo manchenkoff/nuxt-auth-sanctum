@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.6.3
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.2...v0.6.3)
+
+### 🚀 Enhancements
+
+- **client:** Allow overriding of Accept header per request ([871fcae](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/871fcae))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v0.6.2
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.1...v0.6.2)
