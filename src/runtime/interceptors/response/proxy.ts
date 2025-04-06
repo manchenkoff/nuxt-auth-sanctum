@@ -2,6 +2,7 @@ import type { OutgoingHttpHeaders } from 'node:http'
 import { getResponseHeaders, type H3Event, setResponseHeaders, splitCookiesString, type TypedHeaders } from 'h3'
 import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
+import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import { navigateTo, useRequestEvent, type NuxtApp } from '#app'
 
 const ServerCookieName = 'set-cookie'
@@ -112,11 +113,17 @@ function writeCookiesToEventResponse(event: H3Event, headers: OutgoingHttpHeader
  * @param ctx Fetch context
  * @param logger Module logger instance
  */
-export default async function handleResponseHeaders(
+export async function proxyResponseHeaders(
   app: NuxtApp,
   ctx: FetchContext,
   logger: ConsolaInstance,
 ): Promise<void> {
+  const config = useSanctumConfig()
+
+  if (config.mode !== 'cookie') {
+    return
+  }
+
   if (ctx.response === undefined) {
     logger.debug('[response] no response to process')
     return

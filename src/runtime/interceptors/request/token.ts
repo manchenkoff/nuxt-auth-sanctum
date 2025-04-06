@@ -1,20 +1,28 @@
 import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import { useSanctumAppConfig } from '../../composables/useSanctumAppConfig'
-import { appendRequestHeaders } from '../../utils/headers'
+import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import type { NuxtApp } from '#app'
 
+const AUTHORIZATION_HEADER = 'Authorization'
+
 /**
- * Use token in authentication header for the request
+ * Sets the authentication Bearer token in the request header
  * @param app Nuxt application instance
  * @param ctx Fetch context
  * @param logger Module logger instance
  */
-export default async function handleRequestTokenHeader(
+export async function setTokenHeader(
   app: NuxtApp,
   ctx: FetchContext,
   logger: ConsolaInstance,
 ): Promise<void> {
+  const config = useSanctumConfig()
+
+  if (config.mode !== 'token') {
+    return
+  }
+
   const appConfig = useSanctumAppConfig()
 
   if (appConfig.tokenStorage === undefined) {
@@ -28,12 +36,9 @@ export default async function handleRequestTokenHeader(
     return
   }
 
-  const headersToAdd = { Authorization: `Bearer ${token}` }
+  const bearerToken = `Bearer ${token}`
 
-  logger.debug(
-    '[request] add authentication token header',
-    Object.keys(headersToAdd),
-  )
+  ctx.options.headers.set(AUTHORIZATION_HEADER, bearerToken)
 
-  ctx.options.headers = appendRequestHeaders(ctx.options.headers, headersToAdd)
+  logger.debug(`[request] added ${AUTHORIZATION_HEADER} token header`)
 }

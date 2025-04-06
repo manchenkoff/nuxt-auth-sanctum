@@ -3,36 +3,20 @@ import type { ConsolaInstance } from 'consola'
 import { useSanctumUser } from './composables/useSanctumUser'
 import { useSanctumConfig } from './composables/useSanctumConfig'
 import { useSanctumAppConfig } from './composables/useSanctumAppConfig'
-import handleRequestCookies from './interceptors/cookie/request'
-import handleResponseHeaders from './interceptors/cookie/response'
-import handleRequestHeaders from './interceptors/common/request'
-import handleRequestTokenHeader from './interceptors/token/request'
-import validateResponseHeaders from './interceptors/common/response'
 import type { SanctumAppConfig, SanctumInterceptor } from './types/config'
-import type { ModuleOptions } from './types/options'
+import { interceptors } from './interceptors'
 import { navigateTo, type NuxtApp } from '#app'
 
-function useClientInterceptors(
-  options: ModuleOptions,
-  appConfig: SanctumAppConfig,
-): [SanctumInterceptor[], SanctumInterceptor[]] {
+/**
+ * Returns a tuple of request and response interceptors.
+ * Includes both module and user-defined interceptors.
+ * @param appConfig Sanctum application configuration
+ */
+function useClientInterceptors(appConfig: SanctumAppConfig): [SanctumInterceptor[], SanctumInterceptor[]] {
   const [request, response] = [
-    [] as SanctumInterceptor[],
-    [] as SanctumInterceptor[],
+    interceptors.request,
+    interceptors.response,
   ]
-
-  request.push(handleRequestHeaders)
-
-  if (options.mode === 'cookie') {
-    request.push(handleRequestCookies)
-    response.push(handleResponseHeaders)
-  }
-
-  if (options.mode === 'token') {
-    request.push(handleRequestTokenHeader)
-  }
-
-  response.push(validateResponseHeaders)
 
   if (appConfig.interceptors?.onRequest) {
     request.push(appConfig.interceptors.onRequest)
@@ -45,6 +29,9 @@ function useClientInterceptors(
   return [request, response]
 }
 
+/**
+ * Determines the credentials mode for the fetch request.
+ */
 function determineCredentialsMode() {
   // Fix for Cloudflare workers - https://github.com/cloudflare/workers-sdk/issues/2514
   const isCredentialsSupported = 'credentials' in Request.prototype
@@ -56,6 +43,11 @@ function determineCredentialsMode() {
   return 'include'
 }
 
+/**
+ * Creates a custom OFetch instance with interceptors and Laravel-specific options.
+ * @param nuxtApp Nuxt application instance
+ * @param logger Module logger instance
+ */
 export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fetch {
   const options = useSanctumConfig()
   const user = useSanctumUser()
@@ -64,7 +56,7 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
   const [
     requestInterceptors,
     responseInterceptors,
-  ] = useClientInterceptors(options, appConfig)
+  ] = useClientInterceptors(appConfig)
 
   const httpOptions: FetchOptions = {
     baseURL: options.baseUrl,
@@ -78,13 +70,6 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
           await interceptor(nuxtApp, context, logger)
         })
       }
-
-      logger.trace(
-        `Request headers for "${context.request.toString()}"`,
-        context.options.headers instanceof Headers
-          ? Object.fromEntries(context.options.headers.entries())
-          : context.options.headers,
-      )
     },
 
     async onResponse(context: FetchContext): Promise<void> {
@@ -93,11 +78,6 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
           await interceptor(nuxtApp, context, logger)
         })
       }
-
-      logger.trace(
-        `Response headers for "${context.request.toString()}"`,
-        context.response ? Object.fromEntries(context.response.headers.entries()) : {},
-      )
     },
 
     async onResponseError({ response }): Promise<void> {
@@ -119,7 +99,7 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
             && options.redirectIfUnauthenticated
             && options.redirect.onAuthOnly
         ) {
-          const redirectUrl = options.redirect.onAuthOnly as string
+          const redirectUrl = options.redirect.onAuthOnly
 
           await nuxtApp.callHook('sanctum:redirect', redirectUrl)
           await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))

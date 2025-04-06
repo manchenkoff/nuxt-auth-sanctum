@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   sanctum: {
     baseUrl: 'http://localhost:80',
     mode: 'cookie',
-    logLevel: 5,
+    logLevel: 4,
     redirect: {
       keepRequestedRoute: true,
       onAuthOnly: '/login',

@@ -1,7 +1,8 @@
 import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
-import { appendRequestHeaders } from '../../utils/headers'
 import type { NuxtApp } from '#app'
+
+const ACCEPT_HEADER = 'Accept'
 
 /**
  * Modify request before sending it to the Laravel API
@@ -9,30 +10,24 @@ import type { NuxtApp } from '#app'
  * @param ctx Fetch context
  * @param logger Module logger instance
  */
-export default async function handleRequestHeaders(
+export async function setRequestParams(
   app: NuxtApp,
   ctx: FetchContext,
   logger: ConsolaInstance,
 ): Promise<void> {
   const method = ctx.options.method?.toLowerCase() ?? 'get'
 
-  if (!ctx.options.headers?.has('Accept')) {
-    const headersToAdd = { Accept: 'application/json' }
+  if (!ctx.options.headers?.has(ACCEPT_HEADER)) {
+    ctx.options.headers.set(ACCEPT_HEADER, 'application/json')
 
-    ctx.options.headers = appendRequestHeaders(
-      ctx.options.headers,
-      headersToAdd,
-    )
-
-    logger.debug(
-      '[request] added default headers',
-      Object.keys(headersToAdd),
-    )
+    logger.debug(`[request] added default ${ACCEPT_HEADER} header`)
   }
 
   // https://laravel.com/docs/10.x/routing#form-method-spoofing
   if (method === 'put' && ctx.options.body instanceof FormData) {
     ctx.options.method = 'POST'
     ctx.options.body.append('_method', 'PUT')
+
+    logger.debug('[request] changed PUT to POST method for FormData compatibility')
   }
 }

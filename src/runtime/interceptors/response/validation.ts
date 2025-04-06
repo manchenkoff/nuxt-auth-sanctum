@@ -5,6 +5,12 @@ import { type NuxtApp, useRequestURL } from '#app'
 
 type HeaderValidator = (headers: Headers, config: ModuleOptions, logger: ConsolaInstance) => void
 
+/**
+ * Checks if the `set-cookie` header is present in the response headers.
+ * @param headers The response headers
+ * @param config Module options
+ * @param logger Logger instance
+ */
 const validateCookieHeader: HeaderValidator = (
   headers: Headers,
   config: ModuleOptions,
@@ -19,6 +25,12 @@ const validateCookieHeader: HeaderValidator = (
   }
 }
 
+/**
+ * Checks if the `content-type` header is present and valid in the response headers.
+ * @param headers The response headers
+ * @param config Module options
+ * @param logger Logger instance
+ */
 const validateContentTypeHeader: HeaderValidator = (
   headers: Headers,
   config: ModuleOptions,
@@ -26,11 +38,22 @@ const validateContentTypeHeader: HeaderValidator = (
 ): void => {
   const contentType = headers.get('content-type')
 
-  if (!contentType || !contentType.includes('application/json')) {
-    logger.warn(`[response] 'content-type' header is missing or invalid (expected: application/json, got: ${contentType})`)
+  if (!contentType) {
+    logger.warn('[response] "content-type" header is missing')
+    return
+  }
+
+  if (!contentType.includes('application/json')) {
+    logger.debug(`[response] 'content-type' is present in response but different (expected: application/json, got: ${contentType})`)
   }
 }
 
+/**
+ * Checks if the `access-control-allow-credentials` header is present in the response headers.
+ * @param headers The response headers
+ * @param config Module options
+ * @param logger Logger instance
+ */
 const validateCredentialsHeader: HeaderValidator = (
   headers: Headers,
   config: ModuleOptions,
@@ -47,6 +70,12 @@ const validateCredentialsHeader: HeaderValidator = (
   }
 }
 
+/**
+ * Checks if the `access-control-allow-origin` header is the same as the current origin.
+ * @param headers The response headers
+ * @param config Module options
+ * @param logger Logger instance
+ */
 const validateOriginHeader: HeaderValidator = (
   headers: Headers,
   config: ModuleOptions,
@@ -67,7 +96,13 @@ const validators: HeaderValidator[] = [
   validateOriginHeader,
 ]
 
-export default async function validateResponseHeaders(
+/**
+ * Validate response headers and log warnings if any are missing or invalid.
+ * @param app Nuxt application instance
+ * @param ctx Fetch context
+ * @param logger Module logger instance
+ */
+export async function validateResponseHeaders(
   app: NuxtApp,
   ctx: FetchContext,
   logger: ConsolaInstance,
