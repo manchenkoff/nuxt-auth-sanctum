@@ -3,6 +3,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     console.log('Sanctum error hook triggered', response)
   })
 
+  nuxtApp.hook('sanctum:error:request', (context) => {
+    console.log('Sanctum request error hook triggered', context)
+  })
+
   nuxtApp.hook('sanctum:redirect', (url) => {
     console.log('Sanctum redirect hook triggered', url)
   })

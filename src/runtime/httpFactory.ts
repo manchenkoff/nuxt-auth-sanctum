@@ -80,6 +80,10 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
       }
     },
 
+    async onRequestError(context: FetchContext): Promise<void> {
+      await nuxtApp.callHook('sanctum:error:request', context)
+    },
+
     async onResponseError({ response }): Promise<void> {
       await nuxtApp.callHook('sanctum:error', response)
 
