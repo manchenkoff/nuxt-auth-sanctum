@@ -30,6 +30,7 @@
 ## Hooks
 
 * [sanctum:error](hooks/sanctum-error.md)
+* [sanctum:error:request](hooks/sanctum-error-request.md)
 * [sanctum:redirect](hooks/sanctum-redirect.md)
 * [sanctum:init](hooks/sanctum-init.md)
 * [sanctum:refresh](hooks/sanctum-refresh.md)
