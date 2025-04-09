@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.6.4
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.3...v0.6.4)
+
+### 🚀 Enhancements
+
+- **hook:** Added onRequestError event `sanctum:error:request` hook ([b5095e5](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b5095e5))
+
+### 🏡 Chore
+
+- Restructured project ([161dc4e](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/161dc4e))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v0.6.3
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.2...v0.6.3)
