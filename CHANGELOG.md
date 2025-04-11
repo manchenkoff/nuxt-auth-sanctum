@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.6.5
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.4...v0.6.5)
+
+### 🩹 Fixes
+
+- Avoid mutable list of interceptors ([333f7c8](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/333f7c8))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v0.6.4
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.3...v0.6.4)
