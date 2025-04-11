@@ -14,9 +14,11 @@ import { navigateTo, type NuxtApp } from '#app'
  */
 function useClientInterceptors(appConfig: SanctumAppConfig): [SanctumInterceptor[], SanctumInterceptor[]] {
   const [request, response] = [
-    interceptors.request,
-    interceptors.response,
+    [...interceptors.request],
+    [...interceptors.response],
   ]
+
+  console.log(`Sanctum interceptors:`, request.length, response.length)
 
   if (appConfig.interceptors?.onRequest) {
     request.push(appConfig.interceptors.onRequest)
