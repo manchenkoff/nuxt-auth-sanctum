@@ -18,8 +18,6 @@ function useClientInterceptors(appConfig: SanctumAppConfig): [SanctumInterceptor
     [...interceptors.response],
   ]
 
-  console.log(`Sanctum interceptors:`, request.length, response.length)
-
   if (appConfig.interceptors?.onRequest) {
     request.push(appConfig.interceptors.onRequest)
   }
