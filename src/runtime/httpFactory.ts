@@ -1,10 +1,11 @@
-import type { $Fetch, FetchContext, FetchOptions } from 'ofetch'
+import type { FetchContext, FetchOptions } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import { useSanctumUser } from './composables/useSanctumUser'
 import { useSanctumConfig } from './composables/useSanctumConfig'
 import { useSanctumAppConfig } from './composables/useSanctumAppConfig'
 import type { SanctumAppConfig, SanctumInterceptor } from './types/config'
 import { interceptors } from './interceptors'
+import type { SanctumFetch } from './types/fetch'
 import { navigateTo, type NuxtApp } from '#app'
 
 /**
@@ -48,7 +49,7 @@ function determineCredentialsMode() {
  * @param nuxtApp Nuxt application instance
  * @param logger Module logger instance
  */
-export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fetch {
+export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): SanctumFetch {
   const options = useSanctumConfig()
   const user = useSanctumUser()
   const appConfig = useSanctumAppConfig()
@@ -112,5 +113,5 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
     },
   }
 
-  return $fetch.create(httpOptions) as $Fetch
+  return $fetch.create(httpOptions) as SanctumFetch
 }
