@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v0.6.7
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.6...v0.6.7)
+
+### 🩹 Fixes
+
+- Use proper typing for lazy fetch ([9c124dc](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/9c124dc))
+- Use github action permissions ([1ced700](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1ced700))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @types/node from 22.14.0 to 22.15.3 ([5de3e8f](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5de3e8f))
+- **deps-dev:** Bump @nuxt/kit from 3.16.2 to 3.17.1 ([6bf9aa1](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/6bf9aa1))
+- **deps-dev:** Bump nuxt from 3.16.2 to 3.17.1 ([1caa2ce](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1caa2ce))
+- **deps-dev:** Bump @nuxt/schema from 3.16.2 to 3.17.1 ([95e2233](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/95e2233))
+- Upgraded dependencies ([427ced5](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/427ced5))
+- Upgraded nuxt module builder ([511d6fc](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/511d6fc))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v0.6.6
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.5...v0.6.6)
