@@ -11,7 +11,7 @@ export interface SanctumAuth<T> {
   user: Ref<T | null>
   isAuthenticated: Ref<boolean>
   init: () => Promise<void>
-  login: (credentials: Record<string, any>) => Promise<any>
+  login: (credentials: Record<string, unknown>) => Promise<unknown>
   logout: () => Promise<void>
   refreshIdentity: () => Promise<void>
 }
@@ -70,7 +70,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
    *
    * @param credentials Credentials to pass to the login endpoint
    */
-  async function login(credentials: Record<string, any>) {
+  async function login(credentials: Record<string, unknown>) {
     const currentRoute = useRoute()
     const currentPath = trimTrailingSlash(currentRoute.path)
 

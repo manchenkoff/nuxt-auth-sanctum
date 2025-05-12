@@ -8,7 +8,7 @@ interface ErrorProps {
     statusMessage: string
     message: string
     description: string
-    data?: any
+    data?: unknown
   }
 }
 
