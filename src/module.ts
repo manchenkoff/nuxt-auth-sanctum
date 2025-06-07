@@ -20,7 +20,7 @@ export default defineNuxtModule<ModuleOptions>({
     name: MODULE_NAME,
     configKey: 'sanctum',
     compatibility: {
-      nuxt: '>=3.12.0',
+      nuxt: '>=3.17.0',
     },
   },
 

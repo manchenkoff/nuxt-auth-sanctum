@@ -3,7 +3,7 @@ import { useSanctumConfig } from './useSanctumConfig'
 import { useState } from '#app'
 
 /**
- * Returns a current authenticated user information.
+ * Returns current authenticated user information.
  * @returns Reference to the user state as T.
  */
 export const useSanctumUser = <T>(): Ref<T | null> => {

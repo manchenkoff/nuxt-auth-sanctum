@@ -25,7 +25,7 @@ export interface SanctumEndpoints {
 }
 
 /**
- * CSRF token specific options.
+ * CSRF token-specific options.
  */
 export interface CsrfOptions {
   /**
@@ -41,7 +41,7 @@ export interface CsrfOptions {
 }
 
 /**
- * OFetch client specific options.
+ * OFetch client-specific options.
  */
 export interface ClientOptions {
   /**
@@ -57,7 +57,7 @@ export interface ClientOptions {
 }
 
 /**
- * Behavior of the plugin redirects when user is authenticated or not.
+ * Behavior of the plugin redirects when the user is authenticated or not.
  */
 export interface RedirectOptions {
   /**
@@ -66,26 +66,26 @@ export interface RedirectOptions {
    */
   keepRequestedRoute: boolean
   /**
-   * Route to redirect to when user is authenticated.
+   * Route to redirect to when the user is authenticated.
    * If set to false, do nothing.
    * @default '/'
    */
   onLogin: string | false
   /**
-   * Route to redirect to when user is not authenticated.
+   * Route to redirect to when the user is not authenticated.
    * If set to false, do nothing.
    * @default '/'
    */
   onLogout: string | false
   /**
-   * Route to redirect to when user has to be authenticated.
-   * If set to false, the plugin will throw an 403 error.
+   * Route to redirect to when the user has to be authenticated.
+   * If set to false, the plugin will throw a 403 error.
    * @default '/login'
    */
   onAuthOnly: string | false
   /**
-   * Route to redirect to when user has to be a guest.
-   * If set to false, the plugin will throw an 403 error.
+   * Route to redirect to when a user has to be a guest.
+   * If set to false, the plugin will throw a 403 error.
    * @default '/'
    */
   onGuestOnly: string | false
@@ -127,7 +127,7 @@ export interface ModuleOptions {
    */
   mode: 'cookie' | 'token'
   /**
-   * The URL of the current application to use in Referrer header. (Optional)
+   * The URL of the current application to use in the Referrer header. (Optional)
    * @default useRequestURL().origin
    */
   origin?: string
@@ -151,15 +151,15 @@ export interface ModuleOptions {
    */
   endpoints: Partial<SanctumEndpoints>
   /**
-   * CSRF token specific options.
+   * CSRF token-specific options.
    */
   csrf: Partial<CsrfOptions>
   /**
-   * OFetch client specific options.
+   * OFetch client-specific options.
    */
   client: Partial<ClientOptions>
   /**
-   * Behavior of the plugin redirects when user is authenticated or not.
+   * Behavior of the plugin redirects when the user is authenticated or not.
    */
   redirect: Partial<RedirectOptions>
   /**
