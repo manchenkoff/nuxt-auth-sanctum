@@ -1,4 +1,4 @@
-import type { $Fetch, FetchResponse } from 'ofetch'
+import type { $Fetch } from 'ofetch'
 import { createConsola, type ConsolaInstance } from 'consola'
 import { createHttpClient } from './httpFactory'
 import { useSanctumUser } from './composables/useSanctumUser'
@@ -34,37 +34,38 @@ async function setupDefaultTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstanc
 }
 
 async function initialIdentityLoad(nuxtApp: NuxtApp, client: $Fetch, options: ModuleOptions, logger: ConsolaInstance) {
-  const user = useSanctumUser()
-
   const identityFetchedOnInit = useState<boolean>(
     IDENTITY_LOADED_KEY,
     () => false,
   )
 
-  if (user.value === null && !identityFetchedOnInit.value) {
-    identityFetchedOnInit.value = true
-
-    logger.debug('Fetching user identity on plugin initialization')
-
-    if (!options.endpoints.user) {
-      throw new Error('`sanctum.endpoints.user` is not defined')
-    }
-
-    const response = await client.raw(
-      options.endpoints.user,
-      { ignoreResponseError: true },
-    )
-
-    if (response.ok) {
-      user.value = response._data
-      return await nuxtApp.callHook('sanctum:init')
-    }
-
-    handleIdentityLoadError(response, logger)
+  if (identityFetchedOnInit.value) {
+    return
   }
-}
 
-function handleIdentityLoadError(response: FetchResponse<unknown>, logger: ConsolaInstance) {
+  const user = useSanctumUser()
+
+  if (user.value !== null) {
+    return
+  }
+
+  identityFetchedOnInit.value = true
+  logger.debug('Fetching user identity on plugin initialization')
+
+  if (!options.endpoints.user) {
+    throw new Error('`sanctum.endpoints.user` is not defined')
+  }
+
+  const response = await client.raw(
+    options.endpoints.user,
+    { ignoreResponseError: true },
+  )
+
+  if (response.ok) {
+    user.value = response._data
+    return await nuxtApp.callHook('sanctum:init')
+  }
+
   if ([401, 419].includes(response.status)) {
     logger.debug(
       'User is not authenticated on plugin initialization, status:',
@@ -90,7 +91,11 @@ export default defineNuxtPlugin({
     }
 
     if (options.client.initialRequest) {
-      await initialIdentityLoad(nuxtApp, client, options, logger)
+      nuxtApp.hook(
+        'page:loading:start',
+        async () => {
+          await initialIdentityLoad(nuxtApp, client, options, logger)
+        })
     }
 
     return {
