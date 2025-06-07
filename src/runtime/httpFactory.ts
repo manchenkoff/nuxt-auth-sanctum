@@ -1,32 +1,25 @@
 import type { $Fetch, FetchContext, FetchOptions } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
-import { useSanctumUser } from './composables/useSanctumUser'
 import { useSanctumConfig } from './composables/useSanctumConfig'
-import { useSanctumAppConfig } from './composables/useSanctumAppConfig'
-import type { SanctumAppConfig, SanctumInterceptor } from './types/config'
+import type { SanctumInterceptor } from './types/config'
 import { interceptors } from './interceptors'
-import { navigateTo, type NuxtApp } from '#app'
+import type { NuxtApp } from '#app'
 
 /**
  * Returns a tuple of request and response interceptors.
- * Includes both module and user-defined interceptors.
- * @param appConfig Sanctum application configuration
  */
-function useClientInterceptors(appConfig: SanctumAppConfig): [SanctumInterceptor[], SanctumInterceptor[]] {
-  const [request, response] = [
+function useClientInterceptors(): [
+  SanctumInterceptor[],
+  SanctumInterceptor[],
+  SanctumInterceptor[],
+] {
+  const [request, response, responseError] = [
     [...interceptors.request],
     [...interceptors.response],
+    [...interceptors.responseError],
   ]
 
-  if (appConfig.interceptors?.onRequest) {
-    request.push(appConfig.interceptors.onRequest)
-  }
-
-  if (appConfig.interceptors?.onResponse) {
-    response.push(appConfig.interceptors.onResponse)
-  }
-
-  return [request, response]
+  return [request, response, responseError]
 }
 
 /**
@@ -45,18 +38,18 @@ function determineCredentialsMode() {
 
 /**
  * Creates a custom OFetch instance with interceptors and Laravel-specific options.
+ *
  * @param nuxtApp Nuxt application instance
  * @param logger Module logger instance
  */
 export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fetch {
   const options = useSanctumConfig()
-  const user = useSanctumUser()
-  const appConfig = useSanctumAppConfig()
 
   const [
     requestInterceptors,
     responseInterceptors,
-  ] = useClientInterceptors(appConfig)
+    responseErrorInterceptors,
+  ] = useClientInterceptors()
 
   const httpOptions: FetchOptions = {
     baseURL: options.baseUrl,
@@ -70,6 +63,8 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
           await interceptor(nuxtApp, context, logger)
         })
       }
+
+      await nuxtApp.callHook('sanctum:request', nuxtApp, context, logger)
     },
 
     async onResponse(context: FetchContext): Promise<void> {
@@ -78,37 +73,22 @@ export function createHttpClient(nuxtApp: NuxtApp, logger: ConsolaInstance): $Fe
           await interceptor(nuxtApp, context, logger)
         })
       }
+
+      await nuxtApp.callHook('sanctum:response', nuxtApp, context, logger)
     },
 
     async onRequestError(context: FetchContext): Promise<void> {
       await nuxtApp.callHook('sanctum:error:request', context)
     },
 
-    async onResponseError({ response }): Promise<void> {
-      await nuxtApp.callHook('sanctum:error', response)
-
-      if (response.status === 419) {
-        logger.warn('CSRF token mismatch, check your API configuration')
-        return
+    async onResponseError(context): Promise<void> {
+      for (const interceptor of responseErrorInterceptors) {
+        await nuxtApp.runWithContext(async () => {
+          await interceptor(nuxtApp, context, logger)
+        })
       }
 
-      if (response.status === 401) {
-        if (user.value !== null) {
-          logger.warn('User session is not set in API or expired, resetting identity')
-          user.value = null
-        }
-
-        if (
-          import.meta.client
-            && options.redirectIfUnauthenticated
-            && options.redirect.onAuthOnly
-        ) {
-          const redirectUrl = options.redirect.onAuthOnly
-
-          await nuxtApp.callHook('sanctum:redirect', redirectUrl)
-          await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))
-        }
-      }
+      await nuxtApp.callHook('sanctum:error:response', context)
     },
   }
 

@@ -6,8 +6,9 @@ import { logRequestHeaders } from './request/logging'
 import { proxyResponseHeaders } from './response/proxy'
 import { validateResponseHeaders } from './response/validation'
 import { logResponseHeaders } from './response/logging'
+import { handleResponseError } from './response/errorHandler'
 
-const [request, response] = [
+const [request, response, responseError] = [
   [
     setRequestParams,
     setStatefulParams,
@@ -19,9 +20,13 @@ const [request, response] = [
     validateResponseHeaders,
     logResponseHeaders,
   ] as SanctumInterceptor[],
+  [
+    handleResponseError,
+  ] as SanctumInterceptor[],
 ]
 
 export const interceptors = {
   request,
   response,
+  responseError,
 }
