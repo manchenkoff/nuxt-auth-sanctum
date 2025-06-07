@@ -49,7 +49,7 @@ declare module '#app' {
      */
     'sanctum:error:request': (context: FetchContext) => HookResult
     /**
-     * Triggers when user has been redirected.
+     * Triggers when the user has been redirected.
      */
     'sanctum:redirect': (path: string) => HookResult
     /**
@@ -68,15 +68,6 @@ declare module '#app' {
      * Triggers when user successfully logs out.
      */
     'sanctum:logout': () => HookResult
-  }
-}
-
-declare module '#app/../pages/runtime/composables' {
-  interface PageMeta {
-    /**
-     * Sanctum global middleware page configuration.
-     */
-    sanctum?: Partial<SanctumGlobalMiddlewarePageMeta>
   }
 }
 

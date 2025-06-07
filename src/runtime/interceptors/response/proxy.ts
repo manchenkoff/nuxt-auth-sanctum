@@ -133,7 +133,7 @@ export async function proxyResponseHeaders(
     appendServerResponseHeaders(app, ctx, logger)
   }
 
-  // follow redirects on client
+  // follow redirects on a client
   if (ctx.response.redirected) {
     const redirectUrl = ctx.response!.url
 
