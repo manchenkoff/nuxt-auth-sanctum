@@ -113,6 +113,28 @@ export interface GlobalMiddlewareOptions {
 }
 
 /**
+ * Server API proxy configuration to handle Laravel requests on SSR-side first.
+ */
+export interface ServerProxy {
+  /**
+   * Determines whether the server side proxy is enabled.
+   * @default false
+   */
+  enabled: boolean
+  /**
+   * Nuxt server route to catch all requests. This route will receive any nested path as well,
+   * for instance: `/api/sanctum` will also catch `/api/sanctum/login` and `/api/sanctum/user/info`.
+   * @default '/api/sanctum'
+   */
+  route: string
+  /**
+   * The base URL of the Laravel API.
+   * @default 'http://localhost:80'
+   */
+  baseUrl: string
+}
+
+/**
  * Options to be passed to the plugin.
  */
 export interface ModuleOptions {
@@ -187,4 +209,8 @@ export interface ModuleOptions {
    * @see https://nuxt.com/docs/api/kit/plugins#options
    */
   appendPlugin: boolean
+  /**
+   * Server API proxy configuration to handle Laravel requests on SSR-side first.
+   */
+  serverProxy: ServerProxy
 }

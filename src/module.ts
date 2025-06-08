@@ -5,6 +5,7 @@ import {
   addImportsDir,
   addRouteMiddleware,
   useLogger,
+  addServerHandler,
 } from '@nuxt/kit'
 import { defu } from 'defu'
 import { defaultModuleOptions } from './config'
@@ -65,6 +66,15 @@ export default defineNuxtModule<ModuleOptions>({
       })
 
       logger.info('Sanctum module initialized w/o global middleware')
+    }
+
+    if (sanctumConfig.serverProxy.enabled) {
+      addServerHandler({
+        route: `${sanctumConfig.serverProxy.route}/**`,
+        handler: resolver.resolve('./runtime/server/api/proxy'),
+      })
+
+      logger.info('Sanctum module initialized with server proxy')
     }
 
     registerTypeTemplates(resolver)
