@@ -3,6 +3,7 @@ import type { ConsolaInstance } from 'consola'
 import { useSanctumConfig } from './composables/useSanctumConfig'
 import type { SanctumInterceptor } from './types/config'
 import { interceptors } from './interceptors'
+import { determineCredentialsMode } from './utils/credentials'
 import type { SanctumFetch } from './types/fetch'
 import type { NuxtApp } from '#app'
 
@@ -21,20 +22,6 @@ function useClientInterceptors(): [
   ]
 
   return [request, response, responseError]
-}
-
-/**
- * Determines the credentials mode for the fetch request.
- */
-function determineCredentialsMode() {
-  // Fix for Cloudflare workers - https://github.com/cloudflare/workers-sdk/issues/2514
-  const isCredentialsSupported = 'credentials' in Request.prototype
-
-  if (!isCredentialsSupported) {
-    return undefined
-  }
-
-  return 'include'
 }
 
 /**

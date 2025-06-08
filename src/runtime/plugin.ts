@@ -1,21 +1,13 @@
 import type { $Fetch } from 'ofetch'
-import { createConsola, type ConsolaInstance } from 'consola'
+import type { ConsolaInstance } from 'consola'
 import { createHttpClient } from './httpFactory'
 import { useSanctumUser } from './composables/useSanctumUser'
 import { useSanctumConfig } from './composables/useSanctumConfig'
 import { useSanctumAppConfig } from './composables/useSanctumAppConfig'
 import type { ModuleOptions } from './types/options'
 import { IDENTITY_LOADED_KEY } from './utils/constants'
+import { useSanctumLogger } from './utils/logging'
 import { defineNuxtPlugin, updateAppConfig, useState, type NuxtApp } from '#app'
-
-const LOGGER_NAME = 'nuxt-auth-sanctum'
-
-function createSanctumLogger(logLevel: number) {
-  const envSuffix = import.meta.server ? 'ssr' : 'csr'
-  const loggerName = LOGGER_NAME + ':' + envSuffix
-
-  return createConsola({ level: logLevel }).withTag(loggerName)
-}
 
 async function setupDefaultTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstance) {
   logger.debug(
@@ -83,7 +75,7 @@ export default defineNuxtPlugin({
     const nuxtApp = _nuxtApp as NuxtApp
     const options = useSanctumConfig()
     const appConfig = useSanctumAppConfig()
-    const logger = createSanctumLogger(options.logLevel)
+    const logger = useSanctumLogger(options.logLevel)
     const client = createHttpClient(nuxtApp, logger)
 
     if (options.mode === 'token' && !appConfig.tokenStorage) {
