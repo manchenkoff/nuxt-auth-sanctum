@@ -34,4 +34,9 @@ export const defaultModuleOptions: ModuleOptions = {
   },
   logLevel: 3,
   appendPlugin: false,
+  serverProxy: {
+    enabled: false,
+    route: '/api/sanctum',
+    baseUrl: 'http://localhost:80',
+  },
 }

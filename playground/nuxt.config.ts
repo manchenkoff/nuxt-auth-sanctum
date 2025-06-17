@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-09-28',
   sanctum: {
-    baseUrl: 'http://localhost:80',
+    baseUrl: '/api/sanctum',
     mode: 'cookie',
     logLevel: 4,
     redirect: {
@@ -27,6 +27,11 @@ export default defineNuxtConfig({
       allow404WithoutAuth: true,
       enabled: false,
       prepend: false,
+    },
+    serverProxy: {
+      enabled: true,
+      route: '/api/sanctum',
+      baseUrl: 'http://localhost:80',
     },
   },
 })
