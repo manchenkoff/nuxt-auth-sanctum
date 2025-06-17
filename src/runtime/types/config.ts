@@ -26,27 +26,9 @@ export type SanctumInterceptor = (
 ) => Promise<void>
 
 /**
- * Interceptors to be used by the ofetch client.
- */
-export interface SanctumInterceptors {
-  /**
-   * Function to execute before sending a request.
-   */
-  onRequest?: SanctumInterceptor
-  /**
-   * Function to execute after receiving a response.
-   */
-  onResponse?: SanctumInterceptor
-}
-
-/**
  * Sanctum configuration for the application side with user-defined handlers.
  */
 export interface SanctumAppConfig {
-  /**
-   * Interceptors to be used by the client.
-   */
-  interceptors?: SanctumInterceptors
   /**
    * Token storage handlers to be used by the client.
    */

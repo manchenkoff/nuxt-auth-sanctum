@@ -1,5 +1,3 @@
-import type { FetchContext } from 'ofetch'
-import type { ConsolaInstance } from 'consola'
 import type { TokenStorage } from '../../src/runtime/types/config'
 import { defineAppConfig } from '#imports'
 import type { NuxtApp } from '#app'
@@ -30,24 +28,6 @@ const localTokenStorage: TokenStorage = {
 
 export default defineAppConfig({
   sanctum: {
-    interceptors: {
-      onRequest: async (
-        app: NuxtApp,
-        ctx: FetchContext,
-        logger: ConsolaInstance,
-      ) => {
-        logger.debug(`[onRequest] custom interceptor (${ctx.request})`)
-      },
-
-      onResponse: async (
-        app: NuxtApp,
-        ctx: FetchContext,
-        logger: ConsolaInstance,
-      ) => {
-        logger.debug(`[onResponse] custom interceptor (${ctx.request})`)
-      },
-    },
-
     tokenStorage: localTokenStorage,
   },
 })
