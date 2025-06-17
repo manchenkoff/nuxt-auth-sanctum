@@ -1,7 +1,7 @@
-import type { $Fetch } from 'ofetch'
+import type { SanctumFetch } from '../types/fetch'
 import { useNuxtApp } from '#app'
 
-export const useSanctumClient = (): $Fetch => {
+export const useSanctumClient = (): SanctumFetch => {
   const { $sanctumClient } = useNuxtApp()
-  return $sanctumClient as $Fetch
+  return $sanctumClient as SanctumFetch
 }

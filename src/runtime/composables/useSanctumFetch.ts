@@ -1,13 +1,13 @@
-import type { FetchOptions } from 'ofetch'
 import type { DefaultAsyncDataErrorValue, DefaultAsyncDataValue } from 'nuxt/app/defaults'
 import { assembleFetchRequestKey } from '../utils/fetch'
+import type { SanctumFetchOptions } from '../types/fetch'
 import { useAsyncData, useSanctumClient } from '#imports'
 import type { AsyncData, AsyncDataOptions, KeysOf, PickFrom } from '#app/composables/asyncData'
 import type { NuxtError } from '#app'
 
 export function useSanctumFetch<ResT, NuxtErrorDataT = unknown, DataT = ResT, PickKeys extends KeysOf<DataT> = KeysOf<DataT>, DefaultT = DefaultAsyncDataValue>(
   url: string,
-  options?: FetchOptions,
+  options?: SanctumFetchOptions,
   asyncDataOptions?: AsyncDataOptions<ResT, DataT, PickKeys, DefaultT>,
 ): AsyncData<PickFrom<DataT, PickKeys> | DefaultT, (NuxtErrorDataT extends Error | NuxtError ? NuxtErrorDataT : NuxtError<NuxtErrorDataT>) | DefaultAsyncDataErrorValue> {
   const client = useSanctumClient()
@@ -15,7 +15,7 @@ export function useSanctumFetch<ResT, NuxtErrorDataT = unknown, DataT = ResT, Pi
 
   return useAsyncData<ResT, NuxtErrorDataT, DataT, PickKeys, DefaultT>(
     key,
-    () => client<ResT>(url, options as FetchOptions<'json'>),
+    () => client<ResT>(url, options as SanctumFetchOptions<'json'>),
     asyncDataOptions,
   )
 }

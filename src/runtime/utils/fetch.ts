@@ -1,4 +1,4 @@
-import type { FetchOptions } from 'ofetch'
+import type { SanctumFetchOptions } from '../types/fetch'
 
 /**
  * Assemble a unique key for the fetch request, required for hydration.
@@ -9,7 +9,7 @@ import type { FetchOptions } from 'ofetch'
 export function assembleFetchRequestKey(
   url: string,
   lazy: boolean,
-  options?: FetchOptions,
+  options?: SanctumFetchOptions,
 ): string {
   const operation = lazy ? 'lazy-fetch' : 'fetch'
 
