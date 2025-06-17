@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v1.0.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.7...v1.0.0)
+
+### 🚀 Enhancements
+
+- **types:** ⚠️  Added explicit types for fetch client ([6054510](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/6054510))
+- **hooks:** ⚠️  Migrated interceptors to hooks ([3d23818](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/3d23818))
+- Added nuxt server proxy endpoint ([4a32314](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/4a32314))
+
+### 🩹 Fixes
+
+- **types:** ⚠️  Drop old app types augmentation ([4b54597](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/4b54597))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump nuxt from 3.17.3 to 3.17.4 ([ce65d87](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/ce65d87))
+
+#### ⚠️ Breaking Changes
+
+- **types:** ⚠️  Added explicit types for fetch client ([6054510](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/6054510))
+- **hooks:** ⚠️  Migrated interceptors to hooks ([3d23818](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/3d23818))
+- **types:** ⚠️  Drop old app types augmentation ([4b54597](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/4b54597))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v0.6.7
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.6...v0.6.7)
