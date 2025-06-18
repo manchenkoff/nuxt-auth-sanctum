@@ -11,6 +11,7 @@ import { useSanctumLogger } from '../../utils/logging'
 import { determineCredentialsMode } from '../../utils/credentials'
 
 const METHODS_WITH_BODY: HTTPMethod[] = ['POST', 'PUT', 'PATCH', 'DELETE']
+const HEADERS_TO_IGNORE = ['content-length', 'content-encoding', 'transfer-encoding']
 
 export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) => {
   const config = useSanctumConfig()
@@ -40,6 +41,10 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
   })
 
   response.headers.forEach((value, key) => {
+    if (HEADERS_TO_IGNORE.includes(key.toLowerCase())) {
+      return
+    }
+
     appendResponseHeader(event, key, value)
   })
 
