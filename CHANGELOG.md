@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.0.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.0.0...v1.0.1)
+
+### 🩹 Fixes
+
+- Ignore reprocessed response content headers ([861fdfd](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/861fdfd))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.0.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v0.6.7...v1.0.0)
