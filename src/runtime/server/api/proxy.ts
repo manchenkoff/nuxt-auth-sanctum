@@ -34,7 +34,7 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
     body: body,
     credentials: determineCredentialsMode(),
     headers: {
-      accept: 'application/json',
+      accept: 'application/vnd.api+json, application/json',
       ...headers,
     } as HeadersInit,
     ignoreResponseError: true,
