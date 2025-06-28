@@ -18,7 +18,7 @@ export async function setRequestParams(
   const method = ctx.options.method?.toLowerCase() ?? 'get'
 
   if (!ctx.options.headers?.has(ACCEPT_HEADER)) {
-    ctx.options.headers.set(ACCEPT_HEADER, 'application/json')
+    ctx.options.headers.set(ACCEPT_HEADER, 'application/vnd.api+json, application/json')
 
     logger.debug(`[request] added default ${ACCEPT_HEADER} header`)
   }

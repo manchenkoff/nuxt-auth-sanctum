@@ -43,8 +43,8 @@ const validateContentTypeHeader: HeaderValidator = (
     return
   }
 
-  if (!contentType.includes('application/json')) {
-    logger.debug(`[response] 'content-type' is present in response but different (expected: application/json, got: ${contentType})`)
+  if (!['application/json', 'application/vnd.api+json'].some(type => contentType.includes(type))) {
+    logger.debug(`[response] 'content-type' is present in response but different (expected: 'application/vnd.api+json, application/json', got: ${contentType})`)
   }
 }
 
