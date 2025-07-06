@@ -1,9 +1,9 @@
 import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
-import type { ModuleOptions } from '../../types/options'
+import type { PublicModuleOptions } from '../../types/options'
 import { type NuxtApp, useRequestURL } from '#app'
 
-type HeaderValidator = (headers: Headers, config: ModuleOptions, logger: ConsolaInstance) => void
+type HeaderValidator = (headers: Headers, config: PublicModuleOptions, logger: ConsolaInstance) => void
 
 /**
  * Checks if the `set-cookie` header is present in the response headers.
@@ -13,7 +13,7 @@ type HeaderValidator = (headers: Headers, config: ModuleOptions, logger: Consola
  */
 const validateCookieHeader: HeaderValidator = (
   headers: Headers,
-  config: ModuleOptions,
+  config: PublicModuleOptions,
   logger: ConsolaInstance,
 ): void => {
   if (config.mode == 'token') {
@@ -33,7 +33,7 @@ const validateCookieHeader: HeaderValidator = (
  */
 const validateContentTypeHeader: HeaderValidator = (
   headers: Headers,
-  config: ModuleOptions,
+  config: PublicModuleOptions,
   logger: ConsolaInstance,
 ): void => {
   const contentType = headers.get('content-type')
@@ -56,7 +56,7 @@ const validateContentTypeHeader: HeaderValidator = (
  */
 const validateCredentialsHeader: HeaderValidator = (
   headers: Headers,
-  config: ModuleOptions,
+  config: PublicModuleOptions,
   logger: ConsolaInstance,
 ): void => {
   if (config.mode == 'token') {
@@ -78,7 +78,7 @@ const validateCredentialsHeader: HeaderValidator = (
  */
 const validateOriginHeader: HeaderValidator = (
   headers: Headers,
-  config: ModuleOptions,
+  config: PublicModuleOptions,
   logger: ConsolaInstance,
 ): void => {
   const allowOrigin = headers.get('access-control-allow-origin')
@@ -112,7 +112,7 @@ export async function validateResponseHeaders(
     return
   }
 
-  const config = app.$config.public.sanctum as ModuleOptions
+  const config = app.$config.public.sanctum as PublicModuleOptions
   const headers = ctx.response?.headers
 
   if (!headers) {

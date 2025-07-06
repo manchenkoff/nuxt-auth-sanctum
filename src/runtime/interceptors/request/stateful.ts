@@ -1,7 +1,7 @@
 import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import { useSanctumConfig } from '../../composables/useSanctumConfig'
-import type { ModuleOptions } from '../../types/options'
+import type { PublicModuleOptions } from '../../types/options'
 import { type NuxtApp, useCookie, useRequestHeaders, useRequestURL } from '#app'
 
 const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch'])
@@ -15,7 +15,7 @@ const COOKIE_OPTIONS: { readonly: true } = { readonly: true }
  */
 function useClientHeaders(
   headers: Headers,
-  config: ModuleOptions,
+  config: PublicModuleOptions,
   logger: ConsolaInstance,
 ): void {
   const clientHeaders = useRequestHeaders(['cookie', 'user-agent'])
@@ -44,7 +44,7 @@ function useClientHeaders(
  * @param logger Logger instance
  */
 async function initCsrfCookie(
-  config: ModuleOptions,
+  config: PublicModuleOptions,
   logger: ConsolaInstance,
 ): Promise<void> {
   if (config.endpoints.csrf === undefined) {
@@ -67,7 +67,7 @@ async function initCsrfCookie(
  */
 async function useCsrfHeader(
   headers: Headers,
-  config: ModuleOptions,
+  config: PublicModuleOptions,
   logger: ConsolaInstance,
 ): Promise<void> {
   if (config.csrf.cookie === undefined) {

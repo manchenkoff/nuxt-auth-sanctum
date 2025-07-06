@@ -137,7 +137,7 @@ export interface ServerProxy {
 /**
  * Options to be passed to the plugin.
  */
-export interface ModuleOptions {
+export interface PublicModuleOptions {
   /**
    * The base URL of the Laravel API.
    * @default 'http://localhost:80'
@@ -209,6 +209,9 @@ export interface ModuleOptions {
    * @see https://nuxt.com/docs/api/kit/plugins#options
    */
   appendPlugin: boolean
+}
+
+export interface ModuleOptions extends PublicModuleOptions {
   /**
    * Server API proxy configuration to handle Laravel requests on SSR-side first.
    */
