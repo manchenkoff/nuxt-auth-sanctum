@@ -6,15 +6,16 @@ import {
 } from 'h3'
 import { defineEventHandler, getRequestHeaders, readBody, getQuery, setResponseStatus } from 'h3'
 import { $fetch } from 'ofetch'
-import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import { useSanctumLogger } from '../../utils/logging'
 import { determineCredentialsMode } from '../../utils/credentials'
+import type { ModuleOptions } from '../../types/options'
+import { useRuntimeConfig } from '#imports'
 
 const METHODS_WITH_BODY: HTTPMethod[] = ['POST', 'PUT', 'PATCH', 'DELETE']
 const HEADERS_TO_IGNORE = ['content-length', 'content-encoding', 'transfer-encoding']
 
 export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) => {
-  const config = useSanctumConfig()
+  const config = useRuntimeConfig().sanctum as ModuleOptions
   const logger = useSanctumLogger(config.logLevel)
 
   const

@@ -9,12 +9,13 @@ import {
 } from '@nuxt/kit'
 import { defu } from 'defu'
 import { defaultModuleOptions } from './config'
-import type { ModuleOptions } from './runtime/types/options'
+import type { PublicModuleOptions, ModuleOptions } from './runtime/types/options'
 import { registerTypeTemplates } from './templates'
 
 const MODULE_NAME = 'nuxt-auth-sanctum'
 
-export type ModulePublicRuntimeConfig = { sanctum: ModuleOptions }
+export type ModuleRuntimeConfig = { sanctum: ModuleOptions }
+export type ModulePublicRuntimeConfig = { sanctum: PublicModuleOptions }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -35,7 +36,13 @@ export default defineNuxtModule<ModuleOptions>({
     )
 
     _nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
-    _nuxt.options.runtimeConfig.public.sanctum = sanctumConfig
+    _nuxt.options.runtimeConfig.sanctum = sanctumConfig
+
+    const publicSanctumConfig = { ...sanctumConfig }
+    // @ts-expect-error force delete non-optional key
+    delete publicSanctumConfig.serverProxy
+
+    _nuxt.options.runtimeConfig.public.sanctum = publicSanctumConfig
 
     const logger = useLogger(MODULE_NAME, {
       level: sanctumConfig.logLevel,

@@ -4,7 +4,7 @@ import { createHttpClient } from './httpFactory'
 import { useSanctumUser } from './composables/useSanctumUser'
 import { useSanctumConfig } from './composables/useSanctumConfig'
 import { useSanctumAppConfig } from './composables/useSanctumAppConfig'
-import type { ModuleOptions } from './types/options'
+import type { PublicModuleOptions } from './types/options'
 import { IDENTITY_LOADED_KEY } from './utils/constants'
 import { useSanctumLogger } from './utils/logging'
 import { defineNuxtPlugin, updateAppConfig, useState, type NuxtApp } from '#app'
@@ -25,7 +25,7 @@ async function setupDefaultTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstanc
   })
 }
 
-async function initialIdentityLoad(nuxtApp: NuxtApp, client: $Fetch, options: ModuleOptions, logger: ConsolaInstance) {
+async function initialIdentityLoad(nuxtApp: NuxtApp, client: $Fetch, options: PublicModuleOptions, logger: ConsolaInstance) {
   const identityFetchedOnInit = useState<boolean>(
     IDENTITY_LOADED_KEY,
     () => false,
