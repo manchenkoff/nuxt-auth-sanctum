@@ -1,10 +1,8 @@
 import {
-  type H3Event,
-  type EventHandlerRequest,
-  type HTTPMethod,
-  appendResponseHeader,
+
+  appendResponseHeader, defineEventHandler, getRequestHeaders, getQuery, setResponseStatus,
 } from 'h3'
-import { defineEventHandler, getRequestHeaders, getQuery, setResponseStatus } from 'h3'
+import type { H3Event, EventHandlerRequest, HTTPMethod } from 'h3'
 import { $fetch } from 'ofetch'
 import { useSanctumLogger } from '../../utils/logging'
 import { determineCredentialsMode } from '../../utils/credentials'

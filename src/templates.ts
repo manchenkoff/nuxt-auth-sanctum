@@ -1,4 +1,5 @@
-import { addTypeTemplate, type Resolver } from '@nuxt/kit'
+import { addTypeTemplate } from '@nuxt/kit'
+import type { Resolver } from '@nuxt/kit'
 import { relative, resolve } from 'pathe'
 
 export const registerTypeTemplates = (resolver: Resolver) => {

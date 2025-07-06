@@ -1,9 +1,11 @@
 import type { OutgoingHttpHeaders } from 'node:http'
-import { getResponseHeaders, type H3Event, setResponseHeaders, splitCookiesString, type TypedHeaders } from 'h3'
+import { getResponseHeaders, setResponseHeaders, splitCookiesString } from 'h3'
+import type { H3Event, TypedHeaders } from 'h3'
 import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import { useSanctumConfig } from '../../composables/useSanctumConfig'
-import { navigateTo, useRequestEvent, type NuxtApp } from '#app'
+import { navigateTo, useRequestEvent } from '#app'
+import type { NuxtApp } from '#app'
 
 const ServerCookieName = 'set-cookie'
 
