@@ -11,7 +11,7 @@ export interface SanctumAuth<T> {
   user: Ref<T | null>
   isAuthenticated: Ref<boolean>
   init: () => Promise<void>
-  login: (credentials: Record<string, unknown>) => Promise<unknown>
+  login: (credentials: Record<string, unknown>, fetchIdentity?: boolean) => Promise<unknown>
   logout: () => Promise<void>
   refreshIdentity: () => Promise<void>
 }
@@ -69,8 +69,9 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
    * Calls the login endpoint and sets the user object to the current state
    *
    * @param credentials Credentials to pass to the login endpoint
+   * @param fetchIdentity Determines whether user identity should be fetched on successful response
    */
-  async function login(credentials: Record<string, unknown>) {
+  async function login(credentials: Record<string, unknown>, fetchIdentity: boolean = true): Promise<unknown> {
     const currentRoute = useRoute()
     const currentPath = trimTrailingSlash(currentRoute.path)
 
@@ -117,7 +118,10 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       await appConfig.tokenStorage.set(nuxtApp, response.token)
     }
 
-    await refreshIdentity()
+    if (fetchIdentity) {
+      await refreshIdentity()
+    }
+
     await nuxtApp.callHook('sanctum:login')
 
     if (options.redirect.keepRequestedRoute) {
