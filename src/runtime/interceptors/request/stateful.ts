@@ -2,7 +2,8 @@ import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import type { PublicModuleOptions } from '../../types/options'
-import { type NuxtApp, useCookie, useRequestHeaders, useRequestURL } from '#app'
+import { useCookie, useRequestHeaders, useRequestURL } from '#app'
+import type { NuxtApp } from '#app'
 
 const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch'])
 const COOKIE_OPTIONS: { readonly: true } = { readonly: true }

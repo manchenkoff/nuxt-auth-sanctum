@@ -7,7 +7,8 @@ import { useSanctumAppConfig } from './composables/useSanctumAppConfig'
 import type { PublicModuleOptions } from './types/options'
 import { IDENTITY_LOADED_KEY } from './utils/constants'
 import { useSanctumLogger } from './utils/logging'
-import { defineNuxtPlugin, updateAppConfig, useState, type NuxtApp } from '#app'
+import { defineNuxtPlugin, updateAppConfig, useState } from '#app'
+import type { NuxtApp } from '#app'
 
 async function setupDefaultTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstance) {
   logger.debug(

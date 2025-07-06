@@ -1,7 +1,8 @@
 import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import type { PublicModuleOptions } from '../../types/options'
-import { type NuxtApp, useRequestURL } from '#app'
+import { useRequestURL } from '#app'
+import type { NuxtApp } from '#app'
 
 type HeaderValidator = (headers: Headers, config: PublicModuleOptions, logger: ConsolaInstance) => void
 

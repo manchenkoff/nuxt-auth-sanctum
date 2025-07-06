@@ -1,4 +1,5 @@
-import { getRequestURL, type H3Event, appendResponseHeaders, defineEventHandler } from 'h3'
+import { getRequestURL, appendResponseHeaders, defineEventHandler } from 'h3'
+import type { H3Event } from 'h3'
 
 export default defineEventHandler((event: H3Event) => {
   const { protocol } = getRequestURL(event)

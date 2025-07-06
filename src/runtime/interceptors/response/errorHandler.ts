@@ -2,7 +2,8 @@ import type { FetchContext, FetchResponse } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import { useSanctumUser } from '../../composables/useSanctumUser'
-import { navigateTo, type NuxtApp } from '#app'
+import { navigateTo } from '#app'
+import type { NuxtApp } from '#app'
 
 /**
  * Handles error responses from the API.

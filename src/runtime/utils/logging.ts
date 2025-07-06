@@ -1,4 +1,5 @@
-import { type ConsolaInstance, createConsola } from 'consola'
+import { createConsola } from 'consola'
+import type { ConsolaInstance } from 'consola'
 
 const LOGGER_NAME = 'nuxt-auth-sanctum'
 

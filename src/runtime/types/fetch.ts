@@ -2,14 +2,14 @@ import type { MappedResponseType, FetchRequest, Fetch, FetchOptions, FetchRespon
 
 export type SanctumFetchOptions<R extends ResponseType = ResponseType, T = unknown> = Omit<
   FetchOptions<R, T>,
-  'baseUrl' |
-  'credentials' |
-  'redirect' |
-  'retry' |
-  'onRequest' |
-  'onRequestError' |
-  'onResponse' |
-  'onResponseError'
+  'baseUrl'
+  | 'credentials'
+  | 'redirect'
+  | 'retry'
+  | 'onRequest'
+  | 'onRequestError'
+  | 'onResponse'
+  | 'onResponseError'
 >
 
 export interface SanctumFetch extends $Fetch {

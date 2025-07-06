@@ -1,10 +1,8 @@
 import {
-  type H3Event,
-  type EventHandlerRequest,
-  type HTTPMethod,
-  appendResponseHeader,
+
+  appendResponseHeader, defineEventHandler, getRequestHeaders, getQuery, setResponseStatus,
 } from 'h3'
-import { defineEventHandler, getRequestHeaders, readBody, getQuery, setResponseStatus } from 'h3'
+import type { H3Event, EventHandlerRequest, HTTPMethod } from 'h3'
 import { $fetch } from 'ofetch'
 import { useSanctumLogger } from '../../utils/logging'
 import { determineCredentialsMode } from '../../utils/credentials'
@@ -21,7 +19,7 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
   const
     method = event.method,
     query = getQuery(event),
-    body = METHODS_WITH_BODY.includes(method) ? await readBody(event) : undefined,
+    body = METHODS_WITH_BODY.includes(method) ? event.node.req : undefined,
     headers = getRequestHeaders(event),
     proxyRoute = event.context.params?._
 
