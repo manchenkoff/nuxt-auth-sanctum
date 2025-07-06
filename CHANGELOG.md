@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v1.1.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.0.1...v1.1.0)
+
+### 🚀 Enhancements
+
+- Allow login without fetching an identity ([55df80c](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/55df80c))
+- Hide serverProxy endpoint from runtime config ([a730c4c](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/a730c4c))
+
+### 🩹 Fixes
+
+- Proxy request without reading ([18b6105](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/18b6105))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @types/node from 22.15.32 to 24.0.8 ([c193a81](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c193a81))
+- **deps-dev:** Bump @nuxt/devtools from 2.5.0 to 2.6.0 ([5a284b4](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5a284b4))
+- **deps-dev:** Bump eslint from 9.29.0 to 9.30.0 ([0a5e885](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/0a5e885))
+- Bumped packages and apply formatting ([c16c843](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c16c843))
+- Added approved build ([c75bd7d](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c75bd7d))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.0.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.0.0...v1.0.1)
