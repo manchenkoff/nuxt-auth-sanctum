@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.1.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.1.0...v1.1.1)
+
+### 🩹 Fixes
+
+- Upgraded vulnerable package ([fd4acf1](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/fd4acf1))
+
+### 🏡 Chore
+
+- Upgraded to nuxt 4 ([34450d7](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/34450d7))
+- Bump packages ([2155122](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/2155122))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.1.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.0.1...v1.1.0)
