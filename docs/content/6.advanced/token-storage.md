@@ -1,0 +1,78 @@
+# Token storage
+
+Token storage is used for keeping authentication token value from the Laravel API available for module consumption during requests assembling.
+
+Storage is used only when `sanctum.mode` equals to `token`.
+
+::note
+By default, if there is no custom token storage defined, cookies will be used.
+::
+
+### How it works
+
+Each token storage implements the following interface:
+
+```typescript
+/**
+ * Handlers to work with authentication token.
+ */
+export interface TokenStorage {
+    /**
+     * Function to load a token from the storage.
+     */
+    get: (app: NuxtApp) => Promise<string | undefined>;
+    /**
+     * Function to save a token to the storage.
+     */
+    set: (app: NuxtApp, token?: string) => Promise<void>;
+}
+```
+
+After the user sends credentials to the API module passes a token from the response to `set` method as well as the current Nuxt application instance to allow calls like `app.runWithConext()`.
+
+Once the user logs out, the module sends `undefined` as a token value to reset the stored value.
+
+Before each request against the API, the module loads the token by calling `get` method with Nuxt instance passed.
+
+### Define token storage
+
+You can define your own handler in the `app.config.ts` configuration file and it will be automatically used by the module:
+
+```typescript [app.config.ts]
+// LocalStorage example for Laravel Authentication token
+const tokenStorageKey = 'sanctum.storage.token';
+const localTokenStorage: TokenStorage = {
+    get: async () => {
+        if (import.meta.server) {
+            return undefined;
+        }
+
+        return window.localStorage.getItem(tokenStorageKey) ?? undefined;
+    },
+
+    set: async (app: NuxtApp, token?: string) => {
+        if (import.meta.server) {
+            return;
+        }
+
+        if (!token) {
+            window.localStorage.removeItem(tokenStorageKey);
+            return;
+        }
+
+        window.localStorage.setItem(tokenStorageKey, token);
+    },
+};
+
+export default defineAppConfig({
+    sanctum: {
+        tokenStorage: localTokenStorage,
+    },
+});
+```
+
+Now your application will store tokens in a local storage of your browser.
+
+::warning
+Keep in mind, `localStorage` is not available for SSR mode, so you should turn it off in your `nuxt.config.ts.`
+::
