@@ -1,13 +1,14 @@
 {
-    "private": true,
-    "name": "nuxt-auth-sanctum-playground",
-    "type": "module",
-    "scripts": {
-        "dev": "nuxi dev",
-        "build": "nuxi build",
-        "generate": "nuxi generate"
-    },
-    "devDependencies": {
-        "nuxt": "latest"
-    }
+  "private": true,
+  "name": "nuxt-auth-sanctum-playground",
+  "type": "module",
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "generate": "nuxi generate"
+  },
+  "devDependencies": {
+    "nuxt": "latest",
+    "vue": "^3.5.18"
+  }
 }
