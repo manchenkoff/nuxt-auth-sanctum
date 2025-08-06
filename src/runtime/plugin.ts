@@ -77,7 +77,7 @@ async function initialIdentityLoad(nuxtApp: NuxtApp, client: $Fetch, options: Pu
 
 export default defineNuxtPlugin({
   name: 'nuxt-auth-sanctum',
-  async setup(_nuxtApp: NuxtApp) {
+  async setup(_nuxtApp) {
     const nuxtApp = _nuxtApp as NuxtApp
     const options = useSanctumConfig()
     const appConfig = useSanctumAppConfig()
