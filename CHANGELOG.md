@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.1.2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.1.1...v1.1.2)
+
+### 🩹 Fixes
+
+- Handle no connection error ([5b9bb04](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5b9bb04))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @nuxt/schema from 4.0.1 to 4.0.2 ([e0f12bd](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e0f12bd))
+- **deps-dev:** Bump eslint from 9.31.0 to 9.32.0 ([66f5de9](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/66f5de9))
+- **deps-dev:** Bump @nuxt/module-builder from 1.0.1 to 1.0.2 ([f6f6d01](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/f6f6d01))
+- **deps-dev:** Bump @nuxt/eslint-config from 1.7.0 to 1.7.1 ([e48a4be](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e48a4be))
+- **deps-dev:** Bump @nuxt/kit from 4.0.1 to 4.0.2 ([206a7c5](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/206a7c5))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.1.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.1.0...v1.1.1)
