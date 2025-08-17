@@ -8,12 +8,13 @@ export function useLazySanctumFetch<ResT, NuxtErrorDataT = unknown, DataT = ResT
   url: string,
   options?: SanctumFetchOptions,
   asyncDataOptions?: Omit<AsyncDataOptions<ResT, DataT, PickKeys, DefaultT>, 'lazy'>,
+  key?: string,
 ): AsyncData<PickFrom<DataT, PickKeys> | DefaultT, (NuxtErrorDataT extends Error | NuxtError ? NuxtErrorDataT : NuxtError<NuxtErrorDataT>) | undefined> {
   const client = useSanctumClient()
-  const key = assembleFetchRequestKey(url, true, options)
+  const fetchKey = key ?? assembleFetchRequestKey(url, true, options)
 
   return useLazyAsyncData<ResT, NuxtErrorDataT, DataT, PickKeys, DefaultT>(
-    key,
+    fetchKey,
     () => client<ResT>(url, options as SanctumFetchOptions<'json'>),
     asyncDataOptions,
   )
