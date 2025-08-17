@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.2.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.1.2...v1.2.0)
+
+### 🚀 Enhancements
+
+- Support user-defined fetch key ([b124fa8](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b124fa8))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.1.2
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.1.1...v1.1.2)
