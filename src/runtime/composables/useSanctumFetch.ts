@@ -8,12 +8,13 @@ export function useSanctumFetch<ResT, NuxtErrorDataT = unknown, DataT = ResT, Pi
   url: string,
   options?: SanctumFetchOptions,
   asyncDataOptions?: AsyncDataOptions<ResT, DataT, PickKeys, DefaultT>,
+  key?: string,
 ): AsyncData<PickFrom<DataT, PickKeys> | DefaultT, (NuxtErrorDataT extends Error | NuxtError ? NuxtErrorDataT : NuxtError<NuxtErrorDataT>) | undefined> {
   const client = useSanctumClient()
-  const key = assembleFetchRequestKey(url, false, options)
+  const fetchKey = key ?? assembleFetchRequestKey(url, false, options)
 
   return useAsyncData<ResT, NuxtErrorDataT, DataT, PickKeys, DefaultT>(
-    key,
+    fetchKey,
     () => client<ResT>(url, options as SanctumFetchOptions<'json'>),
     asyncDataOptions,
   )
