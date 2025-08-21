@@ -1,79 +1,50 @@
+---
 name: Nuxt [Validate]
-
 env:
   node_version: 20
-
 concurrency:
   group: nuxt-auth-sanctum-ci
   cancel-in-progress: false
-
 on:
-  workflow_dispatch: # manual trigger
+  workflow_dispatch:
   pull_request:
-    branches:
-      - main
-
+    branches: [main]
 permissions:
   contents: read
-
 jobs:
   lint:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node_version }}
-
       - name: Enable corepack
         run: corepack enable
-
-      # Issue: https://github.com/cypress-io/github-action/issues/1355
-      - name: Set alternate npm integrity keys
-        run: |
-          echo COREPACK_INTEGRITY_KEYS="$(curl https://registry.npmjs.org/-/npm/v1/keys | jq -c '{npm: .keys}')" >> $GITHUB_ENV
-
       - name: Install dependencies
         run: npx nypm@latest i
-
+      - name: Build stubs
+        run: pnpm dev:prepare
       - name: Lint
         run: pnpm lint
-
-      - name: Build stubs
-        run: pnpm dev:prepare
-
       - name: Type check
         run: pnpm test:types
-
   test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node_version }}
-
       - name: Enable corepack
         run: corepack enable
-
-      # Issue: https://github.com/cypress-io/github-action/issues/1355
-      - name: Set alternate npm integrity keys
-        run: |
-          echo COREPACK_INTEGRITY_KEYS="$(curl https://registry.npmjs.org/-/npm/v1/keys | jq -c '{npm: .keys}')" >> $GITHUB_ENV
-
       - name: Install dependencies
         run: npx nypm@latest i
-
       - name: Build stubs
         run: pnpm dev:prepare
-
       - name: Test
         run: pnpm test
