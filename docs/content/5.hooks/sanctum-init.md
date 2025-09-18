@@ -1,0 +1,32 @@
+---
+description: Subscribe to hook and react to an initial user identity request.
+---
+
+# sanctum:init
+
+Our module registers a plugin which requests a user identity once an application is started. This is needed for middleware and redirects to properly function.
+
+Subscribe to the `sanctum:init` hook which triggers once the identity request is completed.
+
+```typescript [plugins/sanctum-listener.ts]
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.hook('sanctum:init', () => {
+    console.log('Sanctum init hook triggered')
+  })
+})
+```
+
+::warning
+Keep in mind, since `nuxt-auth-sanctum` is loaded before any other module/plugin, you might need to configure your own plugin and set dependencies as described in [Plugin dependencies](../advanced/plugin-dependencies.md).
+::
+
+Here is what the hook looks like
+
+```typescript
+interface RuntimeNuxtHooks {
+ /**
+  * Triggers when an initial user identity request has been made.
+  */
+ 'sanctum:init': () => HookResult
+}
+```
