@@ -37,8 +37,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   const isPageForGuestsOnly
-        = trimTrailingSlash(to.path) === loginPage
-          || to.meta.sanctum?.guestOnly === true
+    = trimTrailingSlash(to.path) === loginPage
+      || to.meta.sanctum?.guestOnly === true
 
   if (isAuthenticated.value && await checkSession()) {
     if (isPageForGuestsOnly) {
