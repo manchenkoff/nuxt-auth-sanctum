@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v1.3.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.2.0...v1.3.0)
+
+### 🚀 Enhancements
+
+- Check session existence in middleware ([217c60e](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/217c60e))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump nuxt in the npm_and_yarn group across 1 directory ([146faed](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/146faed))
+
+### 🤖 CI
+
+- Simplify publish release ([e2c8fe5](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e2c8fe5))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.2.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.1.2...v1.2.0)
