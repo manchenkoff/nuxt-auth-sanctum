@@ -6,7 +6,7 @@ import { useSanctumClient } from './useSanctumClient'
 import { useSanctumUser } from './useSanctumUser'
 import { useSanctumConfig } from './useSanctumConfig'
 import { useSanctumAppConfig } from './useSanctumAppConfig'
-import { navigateTo, useNuxtApp, useRoute, useState } from '#app'
+import { navigateTo, useCookie, useNuxtApp, useRoute, useState } from '#app'
 
 export interface SanctumAuth<T> {
   user: Ref<T | null>
@@ -15,6 +15,7 @@ export interface SanctumAuth<T> {
   login: (credentials: Record<string, unknown>, fetchIdentity?: boolean) => Promise<unknown>
   logout: () => Promise<void>
   refreshIdentity: () => Promise<void>
+  checkSession: () => Promise<boolean>
 }
 
 export type TokenResponse = {
@@ -199,6 +200,29 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))
   }
 
+  /**
+   * Validates existence of the current user session details
+   */
+  async function checkSession(): Promise<boolean> {
+    if (options.mode == 'cookie') {
+      const csrfToken = useCookie(options.csrf.cookie!, { readonly: true })
+
+      if (!csrfToken.value) {
+        return false
+      }
+    }
+
+    if (options.mode == 'token') {
+      const token = await appConfig.tokenStorage!.get(nuxtApp)
+
+      if (!token) {
+        return false
+      }
+    }
+
+    return true
+  }
+
   return {
     user,
     isAuthenticated,
@@ -206,5 +230,6 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     login,
     logout,
     refreshIdentity,
+    checkSession,
   } as SanctumAuth<T>
 }
