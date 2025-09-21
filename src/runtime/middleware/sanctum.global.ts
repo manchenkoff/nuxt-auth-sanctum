@@ -4,9 +4,9 @@ import { useSanctumAuth } from '../composables/useSanctumAuth'
 import { trimTrailingSlash } from '../utils/formatter'
 import { defineNuxtRouteMiddleware, navigateTo } from '#app'
 
-export default defineNuxtRouteMiddleware((to) => {
+export default defineNuxtRouteMiddleware(async (to) => {
   const options = useSanctumConfig()
-  const { isAuthenticated } = useSanctumAuth()
+  const { isAuthenticated, checkSession } = useSanctumAuth()
 
   const [homePage, loginPage] = [
     options.redirect.onGuestOnly,
@@ -40,7 +40,7 @@ export default defineNuxtRouteMiddleware((to) => {
         = trimTrailingSlash(to.path) === loginPage
           || to.meta.sanctum?.guestOnly === true
 
-  if (isAuthenticated.value) {
+  if (isAuthenticated.value && await checkSession()) {
     if (isPageForGuestsOnly) {
       return navigateTo(homePage, { replace: true })
     }
