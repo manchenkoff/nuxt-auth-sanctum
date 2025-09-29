@@ -6,7 +6,7 @@ import type { NuxtError } from '#app'
 
 export function useLazySanctumFetch<ResT, NuxtErrorDataT = unknown, DataT = ResT, PickKeys extends KeysOf<DataT> = KeysOf<DataT>, DefaultT = undefined>(
   url: string,
-  options?: SanctumFetchOptions,
+  options?: SanctumFetchOptions | (() => SanctumFetchOptions),
   asyncDataOptions?: Omit<AsyncDataOptions<ResT, DataT, PickKeys, DefaultT>, 'lazy'>,
   key?: string,
 ): AsyncData<PickFrom<DataT, PickKeys> | DefaultT, (NuxtErrorDataT extends Error | NuxtError ? NuxtErrorDataT : NuxtError<NuxtErrorDataT>) | undefined> {
@@ -15,7 +15,10 @@ export function useLazySanctumFetch<ResT, NuxtErrorDataT = unknown, DataT = ResT
 
   return useLazyAsyncData<ResT, NuxtErrorDataT, DataT, PickKeys, DefaultT>(
     fetchKey,
-    () => client<ResT>(url, options as SanctumFetchOptions<'json'>),
+    () => {
+      const resolvedOptions = typeof options == 'function' ? options() : options
+      return client<ResT>(url, resolvedOptions as SanctumFetchOptions<'json'>)
+    },
     asyncDataOptions,
   )
 }
