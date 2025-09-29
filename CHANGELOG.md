@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.3.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.3.0...v1.3.1)
+
+### 🩹 Fixes
+
+- Resolve reactive options in useAsyncData ([95b3166](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/95b3166))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.3.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.2.0...v1.3.0)
