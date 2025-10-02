@@ -9,18 +9,19 @@ import type { SanctumFetchOptions } from '../types/fetch'
 export function assembleFetchRequestKey(
   url: string,
   lazy: boolean,
-  options?: SanctumFetchOptions,
+  options?: SanctumFetchOptions | (() => SanctumFetchOptions),
 ): string {
   const operation = lazy ? 'lazy-fetch' : 'fetch'
+  const resolvedOptions = typeof options == 'function' ? options() : options
 
   const parts = [
     'sanctum',
     operation,
     url,
-    options?.method ?? 'get',
+    resolvedOptions?.method ?? 'get',
     JSON.stringify({
-      query: options?.query ?? {},
-      body: options?.body ?? {},
+      query: resolvedOptions?.query ?? {},
+      body: resolvedOptions?.body ?? {},
     }),
   ]
 

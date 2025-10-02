@@ -49,24 +49,29 @@ async function initialIdentityLoad(nuxtApp: NuxtApp, client: $Fetch, options: Pu
     throw new Error('`sanctum.endpoints.user` is not defined')
   }
 
-  const response = await client.raw(
-    options.endpoints.user,
-    { ignoreResponseError: true },
-  )
-
-  if (response.ok) {
-    user.value = response._data
-    return await nuxtApp.callHook('sanctum:init')
-  }
-
-  if ([401, 419].includes(response.status)) {
-    logger.debug(
-      'User is not authenticated on plugin initialization, status:',
-      response.status,
+  try {
+    const response = await client.raw(
+      options.endpoints.user,
+      { ignoreResponseError: true },
     )
+
+    if (response.ok) {
+      user.value = response._data
+      return await nuxtApp.callHook('sanctum:init')
+    }
+
+    if ([401, 419].includes(response.status)) {
+      logger.debug(
+        'User is not authenticated on plugin initialization, status:',
+        response.status,
+      )
+    }
+    else {
+      logger.error('Unable to load user identity from API', response.status)
+    }
   }
-  else {
-    logger.error('Unable to load user identity from API', response.status)
+  catch {
+    logger.error('An unexpected error occurred while fetching user identity')
   }
 }
 

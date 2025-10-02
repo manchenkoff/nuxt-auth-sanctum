@@ -59,3 +59,7 @@ For more details, check the documentation [here](https://manchenkoff.gitbook.io/
 [license-href]: https://npmjs.com/package/nuxt-auth-sanctum
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
 [nuxt-href]: https://nuxt.com
+
+### Powered by
+[![JetBrains logo.](https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg)](https://jb.gg/OpenSource)
+

@@ -1,6 +1,70 @@
 # Changelog
 
 
+## v1.3.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.3.0...v1.3.1)
+
+### 🩹 Fixes
+
+- Resolve reactive options in useAsyncData ([95b3166](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/95b3166))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
+## v1.3.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.2.0...v1.3.0)
+
+### 🚀 Enhancements
+
+- Check session existence in middleware ([217c60e](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/217c60e))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump nuxt in the npm_and_yarn group across 1 directory ([146faed](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/146faed))
+
+### 🤖 CI
+
+- Simplify publish release ([e2c8fe5](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e2c8fe5))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
+## v1.2.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.1.2...v1.2.0)
+
+### 🚀 Enhancements
+
+- Support user-defined fetch key ([b124fa8](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b124fa8))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
+## v1.1.2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.1.1...v1.1.2)
+
+### 🩹 Fixes
+
+- Handle no connection error ([5b9bb04](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5b9bb04))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @nuxt/schema from 4.0.1 to 4.0.2 ([e0f12bd](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e0f12bd))
+- **deps-dev:** Bump eslint from 9.31.0 to 9.32.0 ([66f5de9](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/66f5de9))
+- **deps-dev:** Bump @nuxt/module-builder from 1.0.1 to 1.0.2 ([f6f6d01](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/f6f6d01))
+- **deps-dev:** Bump @nuxt/eslint-config from 1.7.0 to 1.7.1 ([e48a4be](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e48a4be))
+- **deps-dev:** Bump @nuxt/kit from 4.0.1 to 4.0.2 ([206a7c5](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/206a7c5))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.1.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.1.0...v1.1.1)

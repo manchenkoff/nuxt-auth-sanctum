@@ -6,15 +6,19 @@ import type { NuxtError } from '#app'
 
 export function useSanctumFetch<ResT, NuxtErrorDataT = unknown, DataT = ResT, PickKeys extends KeysOf<DataT> = KeysOf<DataT>, DefaultT = undefined>(
   url: string,
-  options?: SanctumFetchOptions,
+  options?: SanctumFetchOptions | (() => SanctumFetchOptions),
   asyncDataOptions?: AsyncDataOptions<ResT, DataT, PickKeys, DefaultT>,
+  key?: string,
 ): AsyncData<PickFrom<DataT, PickKeys> | DefaultT, (NuxtErrorDataT extends Error | NuxtError ? NuxtErrorDataT : NuxtError<NuxtErrorDataT>) | undefined> {
   const client = useSanctumClient()
-  const key = assembleFetchRequestKey(url, false, options)
+  const fetchKey = key ?? assembleFetchRequestKey(url, false, options)
 
   return useAsyncData<ResT, NuxtErrorDataT, DataT, PickKeys, DefaultT>(
-    key,
-    () => client<ResT>(url, options as SanctumFetchOptions<'json'>),
+    fetchKey,
+    () => {
+      const clientOptions = typeof options == 'function' ? options() : options
+      return client<ResT>(url, clientOptions as SanctumFetchOptions<'json'>)
+    },
     asyncDataOptions,
   )
 }
