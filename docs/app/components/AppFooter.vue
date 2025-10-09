@@ -5,11 +5,7 @@ const { footer } = useAppConfig()
 <template>
   <UFooter>
     <template #left>
-      {{ footer.credits }} | <NuxtLink
-        to="https://github.com/manchenkoff/nuxt-auth-sanctum/blob/main/LICENSE"
-        target="_blank"
-        class="text-gray-900 dark:text-white"
-      >MIT License</NuxtLink>
+      {{ footer.credits }}
     </template>
 
     <template #right>

@@ -10,16 +10,25 @@ const route = useRoute()
 const { toc } = useAppConfig()
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
-const { data: page } = await useAsyncData(route.path, () => queryCollection('docs').path(route.path).first())
+const { data: page } = await useAsyncData(
+  route.path,
+  () => queryCollection('docs').path(route.path).first()
+)
+
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () => {
-  return queryCollectionItemSurroundings('docs', route.path, {
-    fields: ['description']
-  })
-})
+const { data: surround } = await useAsyncData(
+  `${route.path}-surround`,
+  () => {
+    return queryCollectionItemSurroundings(
+      'docs',
+      route.path,
+      { fields: ['description'] }
+    )
+  }
+)
 
 const title = page.value.seo?.title || page.value.title
 const description = page.value.seo?.description || page.value.description
@@ -31,14 +40,18 @@ useSeoMeta({
   ogDescription: description
 })
 
-const headline = computed(() => findPageHeadline(navigation?.value, page.value))
+const headline = computed(() => findPageHeadline(navigation?.value, page.value?.path))
 
-defineOgImageComponent('Docs', {
-  headline: headline.value
-})
+defineOgImageComponent(
+  'Docs',
+  {
+    headline: headline.value
+  }
+)
 
 const links = computed(() => {
   const links = []
+
   if (toc?.bottom?.edit) {
     links.push({
       icon: 'i-lucide-external-link',
@@ -48,7 +61,10 @@ const links = computed(() => {
     })
   }
 
-  return [...links, ...(toc?.bottom?.links || [])].filter(Boolean)
+  return [
+    ...links,
+    ...(toc?.bottom?.links || [])
+  ].filter(Boolean)
 })
 </script>
 
@@ -57,9 +73,16 @@ const links = computed(() => {
     <UPageHeader
       :title="page.title"
       :description="page.description"
-      :links="page.links"
       :headline="headline"
-    />
+    >
+      <template #links>
+        <UButton
+          v-for="(link, index) in page.links"
+          :key="index"
+          v-bind="link"
+        />
+      </template>
+    </UPageHeader>
 
     <UPageBody>
       <ContentRenderer

@@ -1,8 +1,17 @@
 <script lang="ts" setup>
-const props = withDefaults(defineProps<{ title?: string, description?: string, headline?: string }>(), {
-  title: 'title',
-  description: 'description'
-})
+interface ComponentProps {
+  title?: string
+  description?: string
+  headline?: string
+}
+
+const props = withDefaults(
+  defineProps<ComponentProps>(),
+  {
+    title: 'title',
+    description: 'description'
+  }
+)
 
 const title = computed(() => (props.title || '').slice(0, 60))
 const description = computed(() => (props.description || '').slice(0, 200))

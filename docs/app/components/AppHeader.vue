@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import pkg from '../../../package.json'
 import type { ContentNavigationItem } from '@nuxt/content'
 
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
@@ -18,43 +17,8 @@ const { header } = useAppConfig()
       class="w-full"
     />
 
-    <template
-      v-if="header?.logo?.dark || header?.logo?.light || header?.title"
-      #title
-    >
-      <UColorModeImage
-        v-if="header?.logo?.dark || header?.logo?.light"
-        :light="header?.logo?.light!"
-        :dark="header?.logo?.dark!"
-        :alt="header?.logo?.alt"
-        class="h-6 w-auto shrink-0"
-      />
-      <LogoPro class="w-auto h-6 shrink-0" />
-
-      <span v-if="header?.title">
-        {{ header.title }}
-      </span>
-
-      <UTooltip
-        v-if="pkg.version"
-        :text="`Latest release: v${pkg.version}`"
-      >
-        <UBadge
-          variant="subtle"
-          class="rounded font-semibold"
-        >
-          v{{ pkg.version }}
-        </UBadge>
-      </UTooltip>
-    </template>
-
-    <template
-      v-else
-      #left
-    >
-      <NuxtLink :to="header?.to || '/'">
-        <LogoPro class="w-auto h-6 shrink-0" />
-      </NuxtLink>
+    <template #title>
+      <AppLogo />
     </template>
 
     <template #right>

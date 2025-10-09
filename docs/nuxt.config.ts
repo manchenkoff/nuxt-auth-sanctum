@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
@@ -51,12 +50,12 @@ export default defineNuxtConfig({
   },
 
   llms: {
-    domain: 'https://docs-template.nuxt.dev/',
-    title: 'Nuxt Docs Template',
-    description: 'A template for building documentation with Nuxt UI Pro and Nuxt Content.',
+    domain: 'https://sanctum.manchenkoff.me',
+    title: 'Nuxt - Laravel Sanctum',
+    description: 'The only module you need to set up Laravel Sanctum authentication for Nuxt application!',
     full: {
-      title: 'Nuxt Docs Template - Full Documentation',
-      description: 'This is the full documentation for the Nuxt Docs Template.'
+      title: 'Nuxt - Laravel Sanctum Module Documentation',
+      description: 'This is the full documentation for Nuxt Laravel Sanctum module.'
     },
     sections: [
       {
@@ -67,10 +66,38 @@ export default defineNuxtConfig({
         ]
       },
       {
-        title: 'Essentials',
+        title: 'Usage',
         contentCollection: 'docs',
         contentFilters: [
-          { field: 'path', operator: 'LIKE', value: '/essentials%' }
+          { field: 'path', operator: 'LIKE', value: '/usage%' }
+        ]
+      },
+      {
+        title: 'Composables',
+        contentCollection: 'docs',
+        contentFilters: [
+          { field: 'path', operator: 'LIKE', value: '/composables%' }
+        ]
+      },
+      {
+        title: 'Middleware',
+        contentCollection: 'docs',
+        contentFilters: [
+          { field: 'path', operator: 'LIKE', value: '/middleware%' }
+        ]
+      },
+      {
+        title: 'Hooks',
+        contentCollection: 'docs',
+        contentFilters: [
+          { field: 'path', operator: 'LIKE', value: '/hooks%' }
+        ]
+      },
+      {
+        title: 'Advanced',
+        contentCollection: 'docs',
+        contentFilters: [
+          { field: 'path', operator: 'LIKE', value: '/advanced%' }
         ]
       }
     ]

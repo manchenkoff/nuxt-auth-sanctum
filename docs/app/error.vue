@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app'
 
-defineProps<{
+interface ComponentProps {
   error: NuxtError
-}>()
+}
+
+defineProps<ComponentProps>()
 
 useHead({
   htmlAttrs: {
@@ -17,9 +19,10 @@ useSeoMeta({
 })
 
 const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('docs'))
-const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs'), {
-  server: false
-})
+const { data: files } = useLazyAsyncData(
+  'search', () => queryCollectionSearchSections('docs'),
+  { server: false }
+)
 
 provide('navigation', navigation)
 </script>
