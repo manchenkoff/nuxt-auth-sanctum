@@ -1,0 +1,6 @@
+# https://yamllint.readthedocs.io/en/stable/rules.html
+extends: default
+rules:
+  document-start:
+    present: false
+  truthy: false

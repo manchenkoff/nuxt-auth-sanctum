@@ -1,0 +1,4 @@
+# https://github.com/google/yamlfmt/blob/main/docs/config-file.md
+formatter:
+  type: basic
+  include_document_start: false
