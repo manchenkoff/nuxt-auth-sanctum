@@ -1,0 +1,38 @@
+{
+  "name": "nuxt-auth-sanctum-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "dev": "nuxt dev",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "nuxt typecheck",
+    "validate": "pnpm lint && pnpm typecheck"
+  },
+  "dependencies": {
+    "@iconify-json/lucide": "^1.2.69",
+    "@iconify-json/simple-icons": "^1.2.54",
+    "@iconify-json/vscode-icons": "^1.2.31",
+    "@nuxt/content": "^3.7.1",
+    "@nuxt/image": "^1.11.0",
+    "@nuxt/ui": "^4.0.1",
+    "better-sqlite3": "^12.4.1",
+    "nuxt": "^4.1.3",
+    "nuxt-llms": "0.1.3",
+    "nuxt-og-image": "^5.1.11"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.9.0",
+    "eslint": "^9.37.0",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.1"
+  },
+  "resolutions": {
+    "unimport": "4.1.1"
+  },
+  "packageManager": "pnpm@10.18.1+sha512.77a884a165cbba2d8d1c19e3b4880eee6d2fcabd0d879121e282196b80042351d5eb3ca0935fa599da1dc51265cc68816ad2bddd2a2de5ea9fdf92adbec7cd34"
+}
