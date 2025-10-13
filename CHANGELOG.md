@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v1.4.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.3.1...v1.4.0)
+
+### 🚀 Enhancements
+
+- Added reactive for useAsyncData behind sanctumFetch ([bd94165](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/bd94165))
+- Added reactive url for useAsyncData behind sanctumFetch ([b471100](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/b471100))
+
+### 📖 Documentation
+
+- Improved nuxt content configuration and updated docs ([bf7d2e8](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/bf7d2e8))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump vue-tsc from 2.2.12 to 3.1.0 ([6401d22](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/6401d22))
+- **docs:** Fixed typo ([90b6565](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/90b6565))
+- Added yaml linter configs ([19589d0](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/19589d0))
+- **ci:** Trigger docs deployment only if changed ([c202bc3](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/c202bc3))
+- **docs:** Added section abour reactivity for fetch key/url ([81c2ca2](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/81c2ca2))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.3.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.3.0...v1.3.1)
