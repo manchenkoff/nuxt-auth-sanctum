@@ -1,5 +1,6 @@
 import { assembleFetchRequestKey } from '../utils/fetch'
 import type { SanctumFetchOptions } from '../types/fetch'
+import type { MaybeRefOrGetter } from 'vue'
 import { useLazyAsyncData, useSanctumClient } from '#imports'
 import type { AsyncData, AsyncDataOptions, KeysOf, PickFrom } from '#app/composables/asyncData'
 import type { NuxtError } from '#app'
@@ -8,7 +9,7 @@ export function useLazySanctumFetch<ResT, NuxtErrorDataT = unknown, DataT = ResT
   url: string,
   options?: SanctumFetchOptions | (() => SanctumFetchOptions),
   asyncDataOptions?: Omit<AsyncDataOptions<ResT, DataT, PickKeys, DefaultT>, 'lazy'>,
-  key?: string,
+  key?: MaybeRefOrGetter<string>,
 ): AsyncData<PickFrom<DataT, PickKeys> | DefaultT, (NuxtErrorDataT extends Error | NuxtError ? NuxtErrorDataT : NuxtError<NuxtErrorDataT>) | undefined> {
   const client = useSanctumClient()
   const fetchKey = key ?? assembleFetchRequestKey(url, true, options)
