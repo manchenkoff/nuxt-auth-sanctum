@@ -1,3 +1,4 @@
+import { type MaybeRefOrGetter, toValue } from 'vue'
 import type { SanctumFetchOptions } from '../types/fetch'
 
 /**
@@ -7,17 +8,19 @@ import type { SanctumFetchOptions } from '../types/fetch'
  * @param options Optional fetch options
  */
 export function assembleFetchRequestKey(
-  url: string,
+  url: MaybeRefOrGetter<string>,
   lazy: boolean,
-  options?: SanctumFetchOptions | (() => SanctumFetchOptions),
+  options?: MaybeRefOrGetter<SanctumFetchOptions>,
 ): string {
-  const operation = lazy ? 'lazy-fetch' : 'fetch'
-  const resolvedOptions = typeof options == 'function' ? options() : options
+  const
+    operation = lazy ? 'lazy-fetch' : 'fetch',
+    resolvedUrl = toValue(url),
+    resolvedOptions = toValue(options)
 
   const parts = [
     'sanctum',
     operation,
-    url,
+    resolvedUrl,
     resolvedOptions?.method ?? 'get',
     JSON.stringify({
       query: resolvedOptions?.query ?? {},
