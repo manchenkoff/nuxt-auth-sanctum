@@ -7,7 +7,7 @@
 
 This module provides a simple way to use Laravel Sanctum with Nuxt by leveraging cookies-based authentication. SSR-ready!
 
--   [Documentation](https://manchenkoff.gitbook.io/nuxt-auth-sanctum/)
+-   [Documentation](https://sanctum.manchenkoff.me)
 -   [Features](#features)
 -   [Quick Setup](#quick-setup)
 
@@ -23,7 +23,7 @@ This module provides a simple way to use Laravel Sanctum with Nuxt by leveraging
 
 **Note:** Before using this module, please make sure that you have already configured Laravel Sanctum on your backend. You can find more information about Laravel Sanctum [here](https://laravel.com/docs/10.x/sanctum#spa-authentication).
 
-Complete documentation - [Nuxt Auth Sanctum docs](https://manchenkoff.gitbook.io/nuxt-auth-sanctum/).
+Complete documentation - [Nuxt Auth Sanctum docs](https://sanctum.manchenkoff.me)
 
 ## Quick Setup
 
@@ -47,7 +47,7 @@ export default defineNuxtConfig({
 
 That's it! You can now use Nuxt Auth Sanctum in your Nuxt app ✨
 
-For more details, check the documentation [here](https://manchenkoff.gitbook.io/nuxt-auth-sanctum/).
+For more details, check the documentation [here](https://sanctum.manchenkoff.me)
 
 <!-- Badges -->
 
