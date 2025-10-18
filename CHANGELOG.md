@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.1-1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.1-0...v1.4.1-1)
+
+### 🩹 Fixes
+
+- Enable cookie check without reactivity ([68e13fd](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/68e13fd))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.4.1-0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.0...v1.4.1-0)
