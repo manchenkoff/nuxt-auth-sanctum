@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.4.1-0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.0...v1.4.1-0)
+
+### 🩹 Fixes
+
+- Use raw data for serialization and disable session check ([11523c2](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/11523c2))
+
+### 🏡 Chore
+
+- **docs:** Updated website url ([848e0f9](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/848e0f9))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.4.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.3.1...v1.4.0)
