@@ -12,7 +12,7 @@ export function useLazySanctumFetch<ResT, NuxtErrorDataT = unknown, DataT = ResT
   key?: MaybeRefOrGetter<string>,
 ): AsyncData<PickFrom<DataT, PickKeys> | DefaultT, (NuxtErrorDataT extends Error | NuxtError ? NuxtErrorDataT : NuxtError<NuxtErrorDataT>) | undefined> {
   const client = useSanctumClient()
-  const fetchKey = toRaw(toValue(key)) ?? assembleFetchRequestKey(url, true, options)
+  const fetchKey = key ?? assembleFetchRequestKey(url, true, options)
 
   return useLazyAsyncData<ResT, NuxtErrorDataT, DataT, PickKeys, DefaultT>(
     fetchKey,
