@@ -1,4 +1,4 @@
-import { type MaybeRefOrGetter, toValue } from 'vue'
+import { type MaybeRefOrGetter, toRaw, toValue } from 'vue'
 import type { SanctumFetchOptions } from '../types/fetch'
 
 /**
@@ -14,8 +14,8 @@ export function assembleFetchRequestKey(
 ): string {
   const
     operation = lazy ? 'lazy-fetch' : 'fetch',
-    resolvedUrl = toValue(url),
-    resolvedOptions = toValue(options)
+    resolvedUrl = toRaw(toValue(url)),
+    resolvedOptions = toRaw(toValue(options))
 
   const parts = [
     'sanctum',

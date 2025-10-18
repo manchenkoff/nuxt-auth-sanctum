@@ -22,7 +22,7 @@ export interface TokenStorage {
 export type SanctumInterceptor = (
   app: NuxtApp,
   ctx: FetchContext,
-  logger: ConsolaInstance
+  logger: ConsolaInstance,
 ) => Promise<void>
 
 /**

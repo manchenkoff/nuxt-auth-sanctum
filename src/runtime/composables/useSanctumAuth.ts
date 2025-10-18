@@ -1,5 +1,4 @@
-import { computed } from 'vue'
-import type { Ref } from 'vue'
+import { type ComputedRef, type Ref, computed, unref } from 'vue'
 import { trimTrailingSlash } from '../utils/formatter'
 import { IDENTITY_LOADED_KEY } from '../utils/constants'
 import { useSanctumClient } from './useSanctumClient'
@@ -10,7 +9,7 @@ import { navigateTo, useCookie, useNuxtApp, useRoute, useState } from '#app'
 
 export interface SanctumAuth<T> {
   user: Ref<T | null>
-  isAuthenticated: Ref<boolean>
+  isAuthenticated: ComputedRef<boolean>
   init: () => Promise<void>
   login: (credentials: Record<string, unknown>, fetchIdentity?: boolean) => Promise<unknown>
   logout: () => Promise<void>
@@ -205,9 +204,9 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
    */
   async function checkSession(): Promise<boolean> {
     if (options.mode == 'cookie') {
-      const csrfToken = useCookie(options.csrf.cookie!, { readonly: true })
+      const csrfToken = unref(useCookie(options.csrf.cookie!, { readonly: true }))
 
-      if (!csrfToken.value) {
+      if (!csrfToken) {
         return false
       }
     }
