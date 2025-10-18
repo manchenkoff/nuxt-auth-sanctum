@@ -4,11 +4,11 @@ import { useSanctumAuth } from '../composables/useSanctumAuth'
 import { trimTrailingSlash } from '../utils/formatter'
 import { defineNuxtRouteMiddleware, navigateTo, createError } from '#app'
 
-export default defineNuxtRouteMiddleware(async (to) => {
+export default defineNuxtRouteMiddleware((to) => {
   const options = useSanctumConfig()
-  const { isAuthenticated, checkSession } = useSanctumAuth()
+  const { isAuthenticated } = useSanctumAuth()
 
-  if (isAuthenticated.value && await checkSession()) {
+  if (isAuthenticated.value) {
     return
   }
 

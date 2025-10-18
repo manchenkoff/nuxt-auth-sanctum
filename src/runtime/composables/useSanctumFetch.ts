@@ -1,6 +1,6 @@
 import { assembleFetchRequestKey } from '../utils/fetch'
 import type { SanctumFetchOptions } from '../types/fetch'
-import { type MaybeRefOrGetter, toValue } from 'vue'
+import { type MaybeRefOrGetter, toRaw, toValue } from 'vue'
 import { useAsyncData, useSanctumClient } from '#imports'
 import type { AsyncData, AsyncDataOptions, KeysOf, PickFrom } from '#app/composables/asyncData'
 import type { NuxtError } from '#app'
@@ -12,14 +12,14 @@ export function useSanctumFetch<ResT, NuxtErrorDataT = unknown, DataT = ResT, Pi
   key?: MaybeRefOrGetter<string>,
 ): AsyncData<PickFrom<DataT, PickKeys> | DefaultT, (NuxtErrorDataT extends Error | NuxtError ? NuxtErrorDataT : NuxtError<NuxtErrorDataT>) | undefined> {
   const client = useSanctumClient()
-  const fetchKey = key ?? assembleFetchRequestKey(url, false, options)
+  const fetchKey = toRaw(toValue(key)) ?? assembleFetchRequestKey(url, false, options)
 
   return useAsyncData<ResT, NuxtErrorDataT, DataT, PickKeys, DefaultT>(
     fetchKey,
     () => {
       const
         resolvedUrl = toValue(url),
-        resolvedOptions = toValue(options)
+        resolvedOptions = toRaw(toValue(options))
 
       return client<ResT>(
         resolvedUrl,
