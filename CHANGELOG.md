@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.1-2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.1-1...v1.4.1-2)
+
+### 🩹 Fixes
+
+- Enable reactive resolver for fetch key ([6daa5d4](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/6daa5d4))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.4.1-1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.1-0...v1.4.1-1)
