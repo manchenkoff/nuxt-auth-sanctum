@@ -6,7 +6,7 @@ import { useCookie, useRequestHeaders, useRequestURL } from '#app'
 import type { NuxtApp } from '#app'
 
 const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch'])
-const COOKIE_OPTIONS: { readonly: true } = { readonly: true }
+const COOKIE_OPTIONS: { readonly: true, watch: false } = { readonly: true, watch: false }
 
 /**
  * Pass all cookies, headers and referrer from the client to the API

@@ -204,7 +204,12 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
    */
   async function checkSession(): Promise<boolean> {
     if (options.mode == 'cookie') {
-      const csrfToken = unref(useCookie(options.csrf.cookie!, { readonly: true }))
+      const csrfToken = unref(
+        useCookie(
+          options.csrf.cookie!,
+          { readonly: true, watch: false },
+        ),
+      )
 
       if (!csrfToken) {
         return false
