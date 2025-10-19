@@ -201,6 +201,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
 
   /**
    * Validates existence of the current user session details
+   * @deprecated This function can cause memory leaks, avoid calling it. Will be deleted in v2.0.0
    */
   async function checkSession(): Promise<boolean> {
     if (options.mode == 'cookie') {

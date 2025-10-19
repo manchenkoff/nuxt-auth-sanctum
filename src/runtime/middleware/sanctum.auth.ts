@@ -1,14 +1,15 @@
 import type { RouteLocationAsPathGeneric } from 'vue-router'
 import { useSanctumConfig } from '../composables/useSanctumConfig'
-import { useSanctumAuth } from '../composables/useSanctumAuth'
+import { useSanctumUser } from '../composables/useSanctumUser'
 import { trimTrailingSlash } from '../utils/formatter'
 import { defineNuxtRouteMiddleware, navigateTo, createError } from '#app'
+import { checkSession } from '../utils/session'
 
-export default defineNuxtRouteMiddleware((to) => {
+export default defineNuxtRouteMiddleware(async (to) => {
   const options = useSanctumConfig()
-  const { isAuthenticated } = useSanctumAuth()
+  const user = useSanctumUser()
 
-  if (isAuthenticated.value) {
+  if (user.value !== null && await checkSession()) {
     return
   }
 
@@ -27,6 +28,8 @@ export default defineNuxtRouteMiddleware((to) => {
   if (options.redirect.keepRequestedRoute) {
     redirect.query = { redirect: trimTrailingSlash(to.fullPath) }
   }
+
+  console.log(`Redirecting: ${redirect.path}`)
 
   return navigateTo(redirect, { replace: true })
 })

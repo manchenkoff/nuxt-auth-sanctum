@@ -1,12 +1,13 @@
 import type { RouteLocationAsPathGeneric } from 'vue-router'
 import { useSanctumConfig } from '../composables/useSanctumConfig'
-import { useSanctumAuth } from '../composables/useSanctumAuth'
+import { useSanctumUser } from '../composables/useSanctumUser'
 import { trimTrailingSlash } from '../utils/formatter'
 import { defineNuxtRouteMiddleware, navigateTo } from '#app'
+import { checkSession } from '../utils/session'
 
-export default defineNuxtRouteMiddleware((to) => {
+export default defineNuxtRouteMiddleware(async (to) => {
   const options = useSanctumConfig()
-  const { isAuthenticated } = useSanctumAuth()
+  const user = useSanctumUser()
 
   const [homePage, loginPage] = [
     options.redirect.onGuestOnly,
@@ -40,7 +41,7 @@ export default defineNuxtRouteMiddleware((to) => {
     = trimTrailingSlash(to.path) === loginPage
       || to.meta.sanctum?.guestOnly === true
 
-  if (isAuthenticated.value) {
+  if (user.value && await checkSession()) {
     if (isPageForGuestsOnly) {
       return navigateTo(homePage, { replace: true })
     }
