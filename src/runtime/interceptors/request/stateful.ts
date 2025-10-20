@@ -2,8 +2,7 @@ import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import type { PublicModuleOptions } from '../../types/options'
-import { useCookie, useRequestHeaders, useRequestURL } from '#app'
-import type { NuxtApp } from '#app'
+import { useCookie, useRequestHeaders, useRequestURL, refreshCookie, type NuxtApp } from '#app'
 
 const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch'])
 const COOKIE_OPTIONS: { readonly: true, watch: false } = { readonly: true, watch: false }
@@ -79,11 +78,11 @@ async function useCsrfHeader(
     throw new Error('`sanctum.csrf.header` is not defined')
   }
 
-  let csrfToken = useCookie(config.csrf.cookie, COOKIE_OPTIONS)
+  const csrfToken = useCookie(config.csrf.cookie, COOKIE_OPTIONS)
 
   if (!csrfToken.value) {
     await initCsrfCookie(config, logger)
-    csrfToken = useCookie(config.csrf.cookie, COOKIE_OPTIONS)
+    refreshCookie(config.csrf.cookie)
   }
 
   if (!csrfToken.value) {

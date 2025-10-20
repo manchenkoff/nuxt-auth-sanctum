@@ -6,6 +6,7 @@ import { useSanctumUser } from './useSanctumUser'
 import { useSanctumConfig } from './useSanctumConfig'
 import { useSanctumAppConfig } from './useSanctumAppConfig'
 import { navigateTo, useCookie, useNuxtApp, useRoute, useState } from '#app'
+import { useSanctumLogger } from '../utils/logging'
 
 export interface SanctumAuth<T> {
   user: Ref<T | null>
@@ -33,6 +34,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
   const client = useSanctumClient()
   const options = useSanctumConfig()
   const appConfig = useSanctumAppConfig()
+  const logger = useSanctumLogger(options.logLevel)
 
   const isAuthenticated = computed(() => {
     return user.value !== null
@@ -201,9 +203,12 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
 
   /**
    * Validates existence of the current user session details
-   * @deprecated This function can cause memory leaks, avoid calling it. Will be deleted in v2.0.0
    */
   async function checkSession(): Promise<boolean> {
+    if (isAuthenticated.value === false) {
+      return false
+    }
+
     if (options.mode == 'cookie') {
       const csrfToken = unref(
         useCookie(
@@ -213,7 +218,13 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       )
 
       if (!csrfToken) {
-        return false
+        try {
+          logger.debug('[sanctum] csrf cookie is outdated, refreshing identity')
+          await refreshIdentity()
+        }
+        catch {
+          logger.debug('[sanctum] unable to refresh identity on route change')
+        }
       }
     }
 
@@ -221,11 +232,17 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       const token = await appConfig.tokenStorage!.get(nuxtApp)
 
       if (!token) {
-        return false
+        try {
+          logger.debug('[sanctum] csrf token is outdated, refreshing identity')
+          await refreshIdentity()
+        }
+        catch {
+          logger.debug('[sanctum] unable to refresh identity on route change')
+        }
       }
     }
 
-    return true
+    return isAuthenticated.value
   }
 
   return {
