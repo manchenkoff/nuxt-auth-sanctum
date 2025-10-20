@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.4.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.1-4...v1.4.1)
+
+### 🩹 Fixes
+
+- Avoid memory leak on session check and prevent infinite loop ([0d7ca68](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/0d7ca68))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.4.1-4
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.1-3...v1.4.1-4)
