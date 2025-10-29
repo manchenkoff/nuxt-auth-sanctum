@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v1.4.2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.1...v1.4.2)
+
 ## v1.4.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.1-4...v1.4.1)
