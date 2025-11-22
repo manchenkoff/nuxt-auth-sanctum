@@ -16,19 +16,7 @@ import type { ConsolaInstance } from 'consola'
 import type { SanctumAppConfig } from '${getRelativePath('./runtime/types/config.ts')}';
 import type { SanctumGlobalMiddlewarePageMeta } from '${getRelativePath('./runtime/types/meta.ts')}';
 
-declare module 'nuxt/schema' {
-  interface AppConfig {
-    sanctum?: SanctumAppConfig
-  }
-  interface AppConfigInput {
-    sanctum?: SanctumAppConfig
-  }
-}
-
 declare module '@nuxt/schema' {
-  interface AppConfig {
-    sanctum?: SanctumAppConfig
-  }
   interface AppConfigInput {
     sanctum?: SanctumAppConfig
   }
