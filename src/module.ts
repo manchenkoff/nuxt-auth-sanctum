@@ -21,9 +21,6 @@ export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: MODULE_NAME,
     configKey: 'sanctum',
-    compatibility: {
-      nuxt: '>=3.17.0',
-    },
   },
 
   defaults: defaultModuleOptions,
