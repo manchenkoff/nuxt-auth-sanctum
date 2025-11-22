@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v1.4.3
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.2...v1.4.3)
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @nuxt/devtools from 2.7.0 to 3.0.1 ([ae873cf](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/ae873cf))
+- **docs:** Updated readme ([a68d9a6](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/a68d9a6))
+- Remove outdated type augmentation ([5df0223](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/5df0223))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.4.2
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.1...v1.4.2)
