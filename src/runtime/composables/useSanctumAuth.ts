@@ -7,13 +7,14 @@ import { useSanctumConfig } from './useSanctumConfig'
 import { useSanctumAppConfig } from './useSanctumAppConfig'
 import { navigateTo, useCookie, useNuxtApp, useRoute, useState } from '#app'
 import { useSanctumLogger } from '../utils/logging'
+import type { SanctumFetchOptions } from '../types/fetch'
 
 export interface SanctumAuth<T> {
   user: Ref<T | null>
   isAuthenticated: ComputedRef<boolean>
   init: () => Promise<void>
-  login: (credentials: Record<string, unknown>, fetchIdentity?: boolean) => Promise<unknown>
-  logout: () => Promise<void>
+  login: (credentials: Record<string, unknown>, fetchIdentity?: boolean, options?: SanctumFetchOptions) => Promise<unknown>
+  logout: (options?: SanctumFetchOptions) => Promise<void>
   refreshIdentity: () => Promise<void>
   checkSession: () => Promise<boolean>
 }
@@ -32,9 +33,9 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
 
   const user = useSanctumUser<T>()
   const client = useSanctumClient()
-  const options = useSanctumConfig()
+  const config = useSanctumConfig()
   const appConfig = useSanctumAppConfig()
-  const logger = useSanctumLogger(options.logLevel)
+  const logger = useSanctumLogger(config.logLevel)
 
   const isAuthenticated = computed(() => {
     return user.value !== null
@@ -64,7 +65,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
    * Fetches the user object from the API and sets it to the current state
    */
   async function refreshIdentity() {
-    user.value = await client<T>(options.endpoints.user!)
+    user.value = await client<T>(config.endpoints.user!)
     await nuxtApp.callHook('sanctum:refresh')
   }
 
@@ -73,43 +74,50 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
    *
    * @param credentials Credentials to pass to the login endpoint
    * @param fetchIdentity Determines whether user identity should be fetched on successful response
+   * @param options Additional fetch options
    */
-  async function login(credentials: Record<string, unknown>, fetchIdentity: boolean = true): Promise<unknown> {
+  async function login(credentials: Record<string, unknown>, fetchIdentity: boolean = true, options: SanctumFetchOptions = {}): Promise<unknown> {
     const currentRoute = useRoute()
     const currentPath = trimTrailingSlash(currentRoute.path)
 
     if (isAuthenticated.value) {
-      if (!options.redirectIfAuthenticated) {
+      if (!config.redirectIfAuthenticated) {
         throw new Error('User is already authenticated')
       }
 
       if (
-        options.redirect.onLogin === false
-        || options.redirect.onLogin === currentPath
+        config.redirect.onLogin === false
+        || config.redirect.onLogin === currentPath
       ) {
         return
       }
 
-      if (options.redirect.onLogin === undefined) {
+      if (config.redirect.onLogin === undefined) {
         throw new Error('`sanctum.redirect.onLogin` is not defined')
       }
 
-      const redirectUrl = options.redirect.onLogin as string
+      const redirectUrl = config.redirect.onLogin as string
 
       await nuxtApp.callHook('sanctum:redirect', redirectUrl)
       await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))
     }
 
-    if (options.endpoints.login === undefined) {
+    if (config.endpoints.login === undefined) {
       throw new Error('`sanctum.endpoints.login` is not defined')
     }
 
-    const response = await client<TokenResponse>(options.endpoints.login, {
+    const fetchOptions = {
       method: 'post',
+      ...options,
       body: credentials,
-    })
+    }
 
-    if (options.mode === 'token') {
+    const response = await client<TokenResponse>(
+      config.endpoints.login,
+      fetchOptions as SanctumFetchOptions<'json', unknown>,
+    )
+
+    if (config.mode === 'token') {
       if (appConfig.tokenStorage === undefined) {
         throw new Error('`sanctum.tokenStorage` is not defined in app.config.ts')
       }
@@ -127,7 +135,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
 
     await nuxtApp.callHook('sanctum:login')
 
-    if (options.redirect.keepRequestedRoute) {
+    if (config.redirect.keepRequestedRoute) {
       const requestedRoute = currentRoute.query.redirect as string | undefined
 
       if (requestedRoute && requestedRoute !== currentPath) {
@@ -138,17 +146,17 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     }
 
     if (
-      options.redirect.onLogin === false
-      || currentRoute.path === options.redirect.onLogin
+      config.redirect.onLogin === false
+      || currentRoute.path === config.redirect.onLogin
     ) {
       return response
     }
 
-    if (options.redirect.onLogin === undefined) {
+    if (config.redirect.onLogin === undefined) {
       throw new Error('`sanctum.redirect.onLogin` is not defined')
     }
 
-    const redirectUrl = options.redirect.onLogin as string
+    const redirectUrl = config.redirect.onLogin as string
 
     await nuxtApp.callHook('sanctum:redirect', redirectUrl)
     await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))
@@ -158,8 +166,9 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
 
   /**
    * Calls the logout endpoint and clears the user object
+   * @param options Additional fetch options
    */
-  async function logout() {
+  async function logout(options: SanctumFetchOptions = {}): Promise<void> {
     if (!isAuthenticated.value) {
       throw new Error('User is not authenticated')
     }
@@ -167,16 +176,21 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     const currentRoute = useRoute()
     const currentPath = trimTrailingSlash(currentRoute.path)
 
-    if (options.endpoints.logout === undefined) {
+    if (config.endpoints.logout === undefined) {
       throw new Error('`sanctum.endpoints.logout` is not defined')
     }
 
-    await client(options.endpoints.logout, { method: 'post' })
+    const fetchOptions = {
+      method: 'post',
+      ...options,
+    }
+
+    await client(config.endpoints.logout, fetchOptions)
 
     user.value = null
     await nuxtApp.callHook('sanctum:logout')
 
-    if (options.mode === 'token') {
+    if (config.mode === 'token') {
       if (appConfig.tokenStorage === undefined) {
         throw new Error('`sanctum.tokenStorage` is not defined in app.config.ts')
       }
@@ -185,17 +199,17 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     }
 
     if (
-      options.redirect.onLogout === false
-      || currentPath === options.redirect.onLogout
+      config.redirect.onLogout === false
+      || currentPath === config.redirect.onLogout
     ) {
       return
     }
 
-    if (options.redirect.onLogout === undefined) {
+    if (config.redirect.onLogout === undefined) {
       throw new Error('`sanctum.redirect.onLogout` is not defined')
     }
 
-    const redirectUrl = options.redirect.onLogout as string
+    const redirectUrl = config.redirect.onLogout as string
 
     await nuxtApp.callHook('sanctum:redirect', redirectUrl)
     await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))
@@ -209,10 +223,10 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       return false
     }
 
-    if (options.mode == 'cookie') {
+    if (config.mode == 'cookie') {
       const csrfToken = unref(
         useCookie(
-          options.csrf.cookie!,
+          config.csrf.cookie!,
           { readonly: true, watch: false },
         ),
       )
@@ -228,7 +242,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
       }
     }
 
-    if (options.mode == 'token') {
+    if (config.mode == 'token') {
       const token = await appConfig.tokenStorage!.get(nuxtApp)
 
       if (!token) {
