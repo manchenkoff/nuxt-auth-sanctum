@@ -39,14 +39,14 @@
     "release": "npm run validate && npm run prepack && changelogen --release && npm publish && git push --follow-tags"
   },
   "dependencies": {
-    "@nuxt/kit": "^4.2.1",
     "defu": "^6.1.4",
     "ofetch": "^1.5.1",
     "pathe": "^2.0.3"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^3.1.0",
-    "@nuxt/eslint-config": "^1.10.0",
+    "@nuxt/devtools": "^3.1.1",
+    "@nuxt/eslint-config": "^1.11.0",
+    "@nuxt/kit": "^4.2.1",
     "@nuxt/module-builder": "^1.0.2",
     "@nuxt/schema": "^4.2.1",
     "@nuxt/test-utils": "^3.20.1",
@@ -55,11 +55,11 @@
     "eslint": "^9.39.1",
     "nuxt": "^4.2.1",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.13",
-    "vue": "^3.5.24",
+    "vitest": "^4.0.15",
+    "vue": "^3.5.25",
     "vue-tsc": "^3.1.5"
   },
-  "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd",
+  "packageManager": "pnpm@10.24.0",
   "pnpm": {
     "onlyBuiltDependencies": [
       "@parcel/watcher",
