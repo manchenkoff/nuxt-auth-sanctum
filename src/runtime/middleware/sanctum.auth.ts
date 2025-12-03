@@ -1,14 +1,13 @@
 import type { RouteLocationAsPathGeneric } from 'vue-router'
 import { useSanctumConfig } from '../composables/useSanctumConfig'
-import { useSanctumAuth } from '../composables/useSanctumAuth'
 import { trimTrailingSlash } from '../utils/formatter'
 import { defineNuxtRouteMiddleware, navigateTo, createError } from '#app'
+import { isUserSessionActive } from '../utils/session'
 
 export default defineNuxtRouteMiddleware(async (to) => {
   const options = useSanctumConfig()
-  const { checkSession } = useSanctumAuth()
 
-  if (await checkSession()) {
+  if (await isUserSessionActive()) {
     return
   }
 
