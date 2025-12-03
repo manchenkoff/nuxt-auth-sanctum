@@ -41,7 +41,7 @@ const { isAuthenticated, logout } = useSanctumAuth()
 
     <button
       v-if="isAuthenticated"
-      @click="logout"
+      @click="() => logout()"
     >
       Logout
     </button>
