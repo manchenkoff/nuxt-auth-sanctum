@@ -1,12 +1,11 @@
-import { type ComputedRef, type Ref, computed, unref } from 'vue'
+import { type ComputedRef, type Ref, computed } from 'vue'
 import { trimTrailingSlash } from '../utils/formatter'
 import { IDENTITY_LOADED_KEY } from '../utils/constants'
 import { useSanctumClient } from './useSanctumClient'
 import { useSanctumUser } from './useSanctumUser'
 import { useSanctumConfig } from './useSanctumConfig'
 import { useSanctumAppConfig } from './useSanctumAppConfig'
-import { navigateTo, useCookie, useNuxtApp, useRoute, useState } from '#app'
-import { useSanctumLogger } from '../utils/logging'
+import { navigateTo, useNuxtApp, useRoute, useState } from '#app'
 import type { SanctumFetchOptions } from '../types/fetch'
 
 export interface SanctumAuth<T> {
@@ -16,7 +15,6 @@ export interface SanctumAuth<T> {
   login: (credentials: Record<string, unknown>, fetchIdentity?: boolean, options?: SanctumFetchOptions) => Promise<unknown>
   logout: (options?: SanctumFetchOptions) => Promise<void>
   refreshIdentity: () => Promise<void>
-  checkSession: () => Promise<boolean>
 }
 
 export type TokenResponse = {
@@ -35,7 +33,6 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
   const client = useSanctumClient()
   const config = useSanctumConfig()
   const appConfig = useSanctumAppConfig()
-  const logger = useSanctumLogger(config.logLevel)
 
   const isAuthenticated = computed(() => {
     return user.value !== null
@@ -215,50 +212,6 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))
   }
 
-  /**
-   * Validates existence of the current user session details
-   */
-  async function checkSession(): Promise<boolean> {
-    if (isAuthenticated.value === false) {
-      return false
-    }
-
-    if (config.mode == 'cookie') {
-      const csrfToken = unref(
-        useCookie(
-          config.csrf.cookie!,
-          { readonly: true, watch: false },
-        ),
-      )
-
-      if (!csrfToken) {
-        try {
-          logger.debug('[sanctum] csrf cookie is outdated, refreshing identity')
-          await refreshIdentity()
-        }
-        catch {
-          logger.debug('[sanctum] unable to refresh identity on route change')
-        }
-      }
-    }
-
-    if (config.mode == 'token') {
-      const token = await appConfig.tokenStorage!.get(nuxtApp)
-
-      if (!token) {
-        try {
-          logger.debug('[sanctum] csrf token is outdated, refreshing identity')
-          await refreshIdentity()
-        }
-        catch {
-          logger.debug('[sanctum] unable to refresh identity on route change')
-        }
-      }
-    }
-
-    return isAuthenticated.value
-  }
-
   return {
     user,
     isAuthenticated,
@@ -266,6 +219,5 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     login,
     logout,
     refreshIdentity,
-    checkSession,
   } as SanctumAuth<T>
 }
