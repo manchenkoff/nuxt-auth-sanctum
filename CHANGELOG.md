@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v2.0.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.3...v2.0.0)
+
+### 🚀 Enhancements
+
+- Add optional fetch options to login/logout methods ([981d5cc](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/981d5cc))
+- ⚠️  Migrate to useFetch composable ([25f9af5](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/25f9af5))
+- ⚠️  Removed checkSession from public scope ([ac34929](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/ac34929))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump vue from 3.5.24 to 3.5.25 ([7700fa7](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/7700fa7))
+- **deps-dev:** Bump vitest from 4.0.13 to 4.0.14 ([f9474dd](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/f9474dd))
+- **deps-dev:** Bump @nuxt/eslint-config from 1.10.0 to 1.11.0 ([3a24c01](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/3a24c01))
+- **deps-dev:** Bump @nuxt/devtools from 3.1.0 to 3.1.1 ([d7e0f2b](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/d7e0f2b))
+- **docs:** Updated info about useSanctumAuth composable ([34c54c7](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/34c54c7))
+- **docs:** Updated info about useSanctumAuth composable ([f092852](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/f092852))
+- **docs:** Adjusted composables description ([8c958e2](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/8c958e2))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Migrate to useFetch composable ([25f9af5](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/25f9af5))
+- ⚠️  Removed checkSession from public scope ([ac34929](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/ac34929))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v1.4.3
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.2...v1.4.3)
