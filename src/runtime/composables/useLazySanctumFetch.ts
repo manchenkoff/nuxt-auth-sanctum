@@ -1,31 +1,15 @@
-import { assembleFetchRequestKey } from '../utils/fetch'
-import type { SanctumFetchOptions } from '../types/fetch'
-import { type MaybeRefOrGetter, toRaw, toValue } from 'vue'
-import { useLazyAsyncData, useSanctumClient } from '#imports'
-import type { AsyncData, AsyncDataOptions, KeysOf, PickFrom } from '#app/composables/asyncData'
-import type { NuxtError } from '#app'
+import { type UseFetchOptions, useLazyFetch } from '#app'
+import type { MaybeRefOrGetter } from 'vue'
+import { useSanctumClient } from '../composables/useSanctumClient'
+import type { SanctumFetchResponse } from '../types/fetch'
 
-export function useLazySanctumFetch<ResT, NuxtErrorDataT = unknown, DataT = ResT, PickKeys extends KeysOf<DataT> = KeysOf<DataT>, DefaultT = undefined>(
+export function useLazySanctumFetch<T>(
   url: MaybeRefOrGetter<string>,
-  options?: MaybeRefOrGetter<SanctumFetchOptions>,
-  asyncDataOptions?: Omit<AsyncDataOptions<ResT, DataT, PickKeys, DefaultT>, 'lazy'>,
-  key?: MaybeRefOrGetter<string>,
-): AsyncData<PickFrom<DataT, PickKeys> | DefaultT, (NuxtErrorDataT extends Error | NuxtError ? NuxtErrorDataT : NuxtError<NuxtErrorDataT>) | undefined> {
-  const client = useSanctumClient()
-  const fetchKey = key ?? assembleFetchRequestKey(url, true, options)
+  options?: Omit<UseFetchOptions<T>, 'lazy'>,
+): SanctumFetchResponse<T> {
+  const client = useSanctumClient() as typeof $fetch
+  const params = { ...options, $fetch: client } as UseFetchOptions<T>
 
-  return useLazyAsyncData<ResT, NuxtErrorDataT, DataT, PickKeys, DefaultT>(
-    fetchKey,
-    () => {
-      const
-        resolvedUrl = toValue(url),
-        resolvedOptions = toRaw(toValue(options))
-
-      return client<ResT>(
-        resolvedUrl,
-        resolvedOptions as SanctumFetchOptions<'json'>,
-      )
-    },
-    asyncDataOptions,
-  )
+  // @ts-expect-error unable to satisfy params<T>
+  return useLazyFetch<T>(url, params)
 }
