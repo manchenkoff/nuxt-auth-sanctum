@@ -1,10 +1,12 @@
 import { appendResponseHeader, defineEventHandler, getRequestHeaders, getQuery, setResponseStatus } from 'h3'
 import type { H3Event, EventHandlerRequest, HTTPMethod } from 'h3'
-import { $fetch, type FetchResponse } from 'ofetch'
+import { $fetch, type FetchResponse, type FetchContext } from 'ofetch'
 import { useSanctumLogger } from '../../utils/logging'
 import { determineCredentialsMode } from '../../utils/credentials'
 import type { ModuleOptions } from '../../types/options'
 import { useRuntimeConfig } from '#imports'
+import type { ConsolaInstance } from 'consola'
+import { useNitroApp } from 'nitropack/runtime'
 
 const METHODS_WITH_BODY: HTTPMethod[] = ['POST', 'PUT', 'PATCH', 'DELETE']
 const HEADERS_TO_IGNORE = ['content-length', 'content-encoding', 'transfer-encoding']
@@ -17,7 +19,7 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
 
   logger.debug(`[sanctum] proxying request to ${endpoint}`)
 
-  const response = await proxyRequest(event, endpoint)
+  const response = await proxyRequest(event, endpoint, logger)
 
   prepareResponse(event, response)
 
@@ -30,19 +32,17 @@ function assembleEndpoint(event: H3Event<EventHandlerRequest>, baseUrl: string):
   return `${baseUrl}/${event.context.params?._}`
 }
 
-function buildHeaders(event: H3Event<EventHandlerRequest>): HeadersInit {
-  return {
-    accept: 'application/json',
-    ...getRequestHeaders(event),
-  }
-}
+async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: string, logger: ConsolaInstance): Promise<FetchResponse<unknown>> {
+  const nitroApp = useNitroApp()
 
-async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: string): Promise<FetchResponse<unknown>> {
   const
     method = event.method,
     query = getQuery(event),
     body = METHODS_WITH_BODY.includes(method) ? event.node.req : undefined,
-    headers = buildHeaders(event)
+    headers = {
+      accept: 'application/json',
+      ...getRequestHeaders(event),
+    }
 
   return await $fetch.raw(endpoint, {
     method: method,
@@ -51,6 +51,9 @@ async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: strin
     credentials: determineCredentialsMode(),
     headers: headers,
     ignoreResponseError: true,
+    async onRequest(context: FetchContext): Promise<void> {
+      await nitroApp.hooks.callHook('sanctum:proxy:request', context, logger)
+    },
   })
 }
 
