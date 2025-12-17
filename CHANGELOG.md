@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v2.1.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.0.0...v2.1.0)
+
+### 🚀 Enhancements
+
+- Added server hook for proxy request ([1ac5481](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/1ac5481))
+
+### 🏡 Chore
+
+- Minor refactoring for proxy endpoint ([8074e14](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/8074e14))
+- Added playground example for nitro hook plugin ([dbd2b85](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/dbd2b85))
+- **docs:** Added description for proxy hook ([dd2d1ce](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/dd2d1ce))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v2.0.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v1.4.3...v2.0.0)
