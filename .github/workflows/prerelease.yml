@@ -1,10 +1,9 @@
 name: Nuxt [Pre-Release]
 env:
-  node_version: 20
+  node_version: 24
+  node_registry: https://registry.npmjs.org/
   changelog_user: Github CI
   changelog_email: artem@manchenkoff.me
-  NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
-  NODE_REGISTRY: https://registry.npmjs.org/
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 concurrency:
   group: nuxt-auth-sanctum-prerelease
@@ -43,7 +42,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node_version }}
-          registry-url: ${{ env.NODE_REGISTRY }}
+          registry-url: ${{ env.node_registry }}
       - name: Enable corepack
         run: corepack enable
       - name: Install dependencies

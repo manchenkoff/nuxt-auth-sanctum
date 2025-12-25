@@ -1,6 +1,6 @@
 name: Nuxt [Validate]
 env:
-  node_version: 20
+  node_version: 24
 concurrency:
   group: nuxt-auth-sanctum-ci
   cancel-in-progress: false

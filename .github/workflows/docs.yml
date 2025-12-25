@@ -1,6 +1,6 @@
 name: Nuxt [Docs]
 env:
-  node_version: 20
+  node_version: 24
 concurrency:
   group: "pages"
   cancel-in-progress: false
