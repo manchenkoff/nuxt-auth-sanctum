@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v2.1.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.1.0...v2.1.1)
+
+### 🩹 Fixes
+
+- Use new release pipeline workflow ([0beadd5](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/0beadd5))
+- **proxy:** Use runtime-agnostic readBody for v8-engine compatibility ([47d6523](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/47d6523))
+
+### ❤️ Contributors
+
+- Derrick Obedgiu <derrickobedgiu@gmail.com>
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v2.1.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.0.0...v2.1.0)
