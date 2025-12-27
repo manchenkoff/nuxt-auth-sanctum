@@ -1,4 +1,4 @@
-import { appendResponseHeader, defineEventHandler, getRequestHeaders, getQuery, setResponseStatus } from 'h3'
+import { appendResponseHeader, defineEventHandler, getRequestHeaders, getQuery, setResponseStatus, readBody } from 'h3'
 import type { H3Event, EventHandlerRequest, HTTPMethod } from 'h3'
 import { $fetch, type FetchResponse, type FetchContext } from 'ofetch'
 import { useSanctumLogger } from '../../utils/logging'
@@ -38,7 +38,7 @@ async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: strin
   const
     method = event.method,
     query = getQuery(event),
-    body = METHODS_WITH_BODY.includes(method) ? event.node.req : undefined,
+    body = METHODS_WITH_BODY.includes(method) ? await readBody(event) : undefined,
     headers = {
       accept: 'application/json',
       ...getRequestHeaders(event),
