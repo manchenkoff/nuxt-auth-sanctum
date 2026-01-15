@@ -49,17 +49,17 @@
     "@nuxt/kit": "^4.2.2",
     "@nuxt/module-builder": "^1.0.2",
     "@nuxt/schema": "^4.2.2",
-    "@nuxt/test-utils": "^3.21.0",
-    "@types/node": "^25.0.3",
+    "@nuxt/test-utils": "^3.23.0",
+    "@types/node": "^25.0.9",
     "changelogen": "^0.6.2",
     "eslint": "^9.39.2",
     "nuxt": "^4.2.2",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.16",
+    "vitest": "^4.0.17",
     "vue": "^3.5.26",
-    "vue-tsc": "^3.2.1"
+    "vue-tsc": "^3.2.2"
   },
-  "packageManager": "pnpm@10.26.2",
+  "packageManager": "pnpm@10.28.0",
   "pnpm": {
     "onlyBuiltDependencies": [
       "@parcel/watcher",
