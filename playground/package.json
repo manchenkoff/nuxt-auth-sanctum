@@ -9,6 +9,6 @@
   },
   "devDependencies": {
     "nuxt": "latest",
-    "vue": "^3.5.20"
+    "vue": "^3.5.26"
   }
 }
