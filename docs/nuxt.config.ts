@@ -12,6 +12,18 @@ export default defineNuxtConfig({
     enabled: true
   },
 
+  app: {
+    head: {
+      script: [
+        {
+          src: 'https://media.bitterbrains.com/main.js?from=ARTEM&type=top',
+          defer: true,
+          async: true
+        }
+      ]
+    }
+  },
+
   css: ['~/assets/css/main.css'],
 
   content: {
