@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v2.1.2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.1.1...v2.1.2)
+
+### 🩹 Fixes
+
+- Do not read body on multipart requests ([fcbff01](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/fcbff01))
+
+### 🏡 Chore
+
+- Bump packages ([dda16b8](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/dda16b8))
+- Bump packages ([15dc3b5](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/15dc3b5))
+- Added certificated.dev banner ([e951e56](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/e951e56))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v2.1.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.1.0...v2.1.1)
