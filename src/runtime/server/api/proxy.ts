@@ -1,4 +1,4 @@
-import { appendResponseHeader, defineEventHandler, getRequestHeaders, getQuery, setResponseStatus, readBody } from 'h3'
+import { appendResponseHeader, defineEventHandler, getRequestHeader, getRequestHeaders, getQuery, setResponseStatus, readBody } from 'h3'
 import type { H3Event, EventHandlerRequest, HTTPMethod } from 'h3'
 import { $fetch, type FetchResponse, type FetchContext } from 'ofetch'
 import { useSanctumLogger } from '../../utils/logging'
@@ -38,7 +38,7 @@ async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: strin
   const
     method = event.method,
     query = getQuery(event),
-    body = METHODS_WITH_BODY.includes(method) ? await readBody(event) : undefined,
+    body = await getBody(event),
     headers = {
       accept: 'application/json',
       ...getRequestHeaders(event),
@@ -55,6 +55,20 @@ async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: strin
       await nitroApp.hooks.callHook('sanctum:proxy:request', context, logger)
     },
   })
+}
+
+async function getBody(event: H3Event<EventHandlerRequest>) {
+  if (!METHODS_WITH_BODY.includes(event.method)) {
+    return Promise.resolve(undefined)
+  }
+
+  const contentType = getRequestHeader(event, 'content-type')
+
+  if (contentType?.includes('multipart/form-data')) {
+    return Promise.resolve(event.node.req)
+  }
+
+  return readBody(event)
 }
 
 function prepareResponse(event: H3Event<EventHandlerRequest>, response: FetchResponse<unknown>): void {
