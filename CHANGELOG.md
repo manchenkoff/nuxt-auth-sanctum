@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v2.1.3
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.1.2...v2.1.3)
+
+### 🩹 Fixes
+
+- **proxy:** Prevent readBody crash on empty DELETE requests ([2ef0977](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/2ef0977))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @types/node from 25.0.9 to 25.1.0 ([888afbe](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/888afbe))
+- **deps-dev:** Bump @nuxt/schema from 4.2.2 to 4.3.0 ([dadb7ab](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/dadb7ab))
+- **deps-dev:** Bump vitest from 4.0.17 to 4.0.18 ([2b8df57](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/2b8df57))
+- **deps-dev:** Bump vue-tsc from 3.2.2 to 3.2.4 ([14f3b99](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/14f3b99))
+- **deps-dev:** Bump nuxt from 4.2.2 to 4.3.0 ([327ac03](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/327ac03))
+- Fix lints ([7d13b94](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/7d13b94))
+
+### ❤️ Contributors
+
+- Derrick Obedgiu <derrickobedgiu@gmail.com>
+
 ## v2.1.2
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.1.1...v2.1.2)
