@@ -36,13 +36,13 @@ async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: strin
   const nitroApp = useNitroApp()
 
   const
-    method = event.method,
-    query = getQuery(event),
-    body = await getBody(event),
-    headers = {
-      accept: 'application/json',
-      ...getRequestHeaders(event),
-    }
+      method = event.method,
+      query = getQuery(event),
+      body = await getBody(event),
+      headers = {
+        accept: 'application/json',
+        ...getRequestHeaders(event),
+      }
 
   return await $fetch.raw(endpoint, {
     method: method,
@@ -59,6 +59,12 @@ async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: strin
 
 async function getBody(event: H3Event<EventHandlerRequest>) {
   if (!METHODS_WITH_BODY.includes(event.method)) {
+    return Promise.resolve(undefined)
+  }
+
+  const contentLength = getRequestHeader(event, 'content-length')
+
+  if (!contentLength || contentLength === '0') {
     return Promise.resolve(undefined)
   }
 
