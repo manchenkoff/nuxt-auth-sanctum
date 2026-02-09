@@ -62,6 +62,12 @@ async function getBody(event: H3Event<EventHandlerRequest>) {
     return Promise.resolve(undefined)
   }
 
+  const contentLength = getRequestHeader(event, 'content-length')
+
+  if (!contentLength || contentLength === '0') {
+    return Promise.resolve(undefined)
+  }
+
   const contentType = getRequestHeader(event, 'content-type')
 
   if (contentType?.includes('multipart/form-data')) {
