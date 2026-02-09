@@ -36,13 +36,13 @@ async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: strin
   const nitroApp = useNitroApp()
 
   const
-      method = event.method,
-      query = getQuery(event),
-      body = await getBody(event),
-      headers = {
-        accept: 'application/json',
-        ...getRequestHeaders(event),
-      }
+    method = event.method,
+    query = getQuery(event),
+    body = await getBody(event),
+    headers = {
+      accept: 'application/json',
+      ...getRequestHeaders(event),
+    }
 
   return await $fetch.raw(endpoint, {
     method: method,
