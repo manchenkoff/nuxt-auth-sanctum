@@ -691,8 +691,8 @@ packages:
     resolution: {integrity: sha512-5XUvZuffe3KetyhbWwd4n2ktd7wraocCYw10tlM+/u/95iAz29GjNiuNxbCD1T6Bn1MyGc4QLVNKOWhzJkVFAw==}
     engines: {node: ^14.16.0 || >=16.0.0}
 
-  '@netlify/open-api@2.47.0':
-    resolution: {integrity: sha512-jU2zBJVoVaFxyTVgSvDI6lbqv26ODz78yfCLSEdbtCTe5so+nsYep6Y0bNvazryhVrPjuLOutr+vyt78WQWm2A==}
+  '@netlify/open-api@2.49.0':
+    resolution: {integrity: sha512-zr8dElQUsZo+gqZh3SA2NYv44IKaASwYBC97pO7sPI9GKaDW6dbeJ8P+fOI3VuQaodQSuIcyda0sM3dZAyqHnA==}
     engines: {node: '>=14.8.0'}
 
   '@netlify/runtime-utils@1.3.1':
@@ -3067,9 +3067,10 @@ packages:
   h3@1.15.5:
     resolution: {integrity: sha512-xEyq3rSl+dhGX2Lm0+eFQIAzlDN6Fs0EcC4f7BNUmzaRX/PTzeuM+Tr2lHB8FoXggsQIeXLj8EDVgs5ywxyxmg==}
 
-  h3@2.0.1-rc.11:
-    resolution: {integrity: sha512-2myzjCqy32c1As9TjZW9fNZXtLqNedjFSrdFy2AjFBQQ3LzrnGoDdFDYfC0tV2e4vcyfJ2Sfo/F6NQhO2Ly/Mw==}
+  h3@2.0.1-rc.14:
+    resolution: {integrity: sha512-163qbGmTr/9rqQRNuqMqtgXnOUAkE4KTdauiC9y0E5iG1I65kte9NyfWvZw5RTDMt6eY+DtyoNzrQ9wA2BfvGQ==}
     engines: {node: '>=20.11.1'}
+    hasBin: true
     peerDependencies:
       crossws: ^0.4.1
     peerDependenciesMeta:
@@ -3515,8 +3516,8 @@ packages:
     engines: {node: ^18 || >=20}
     hasBin: true
 
-  nanotar@0.2.0:
-    resolution: {integrity: sha512-9ca1h0Xjvo9bEkE4UOxgAzLV0jHKe6LMaxo37ND2DAhhAtd0j8pR1Wxz+/goMrZO8AEZTWCmyaOsFI/W5AdpCQ==}
+  nanotar@0.2.1:
+    resolution: {integrity: sha512-MUrzzDUcIOPbv7ubhDV/L4CIfVTATd9XhDE2ixFeCrM5yp9AlzUpn91JrnN0HD6hksdxvz9IW9aKANz0Bta0GA==}
 
   napi-postinstall@0.3.4:
     resolution: {integrity: sha512-PHI5f1O0EP5xJ9gQmFGMS6IZcrVvTjpXjz7Na41gTE7eE2hK11lg04CECCYEEjdc17EV4DO+fkGEtt7TpTaTiQ==}
@@ -4001,8 +4002,8 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  qs@6.14.1:
-    resolution: {integrity: sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==}
+  qs@6.14.2:
+    resolution: {integrity: sha512-V/yCWTTF7VJ9hIh18Ugr2zhJMP01MY7c5kh4J870L7imm6/DIzBsNLTXzMwUA3yZ5b/KBqLx8Kp3uRvd7xSe3Q==}
     engines: {node: '>=0.6'}
 
   quansync@0.2.11:
@@ -4269,6 +4270,11 @@ packages:
 
   srvx@0.10.1:
     resolution: {integrity: sha512-A//xtfak4eESMWWydSRFUVvCTQbSwivnGCEf8YGPe2eHU0+Z6znfUTCPF0a7oV3sObSOcrXHlL6Bs9vVctfXdg==}
+    engines: {node: '>=20.16.0'}
+    hasBin: true
+
+  srvx@0.11.4:
+    resolution: {integrity: sha512-m/2p87bqWZ94xpRN06qNBwh0xq/D0dXajnvPDSHFqrTogxuTWYNP1UHz6Cf+oY7D+NPLY35TJAp4ESIKn0WArQ==}
     engines: {node: '>=20.16.0'}
     hasBin: true
 
@@ -5504,7 +5510,7 @@ snapshots:
       write-file-atomic: 6.0.0
     optional: true
 
-  '@netlify/open-api@2.47.0':
+  '@netlify/open-api@2.49.0':
     optional: true
 
   '@netlify/runtime-utils@1.3.1':
@@ -5928,7 +5934,7 @@ snapshots:
       fake-indexeddb: 6.2.5
       get-port-please: 3.2.0
       h3: 1.15.5
-      h3-next: h3@2.0.1-rc.11
+      h3-next: h3@2.0.1-rc.14
       local-pkg: 1.1.2
       magic-string: 0.30.21
       node-fetch-native: 1.6.7
@@ -8118,10 +8124,10 @@ snapshots:
       ufo: 1.6.3
       uncrypto: 0.1.3
 
-  h3@2.0.1-rc.11:
+  h3@2.0.1-rc.14:
     dependencies:
       rou3: 0.7.12
-      srvx: 0.10.1
+      srvx: 0.11.4
 
   has-flag@4.0.0: {}
 
@@ -8516,7 +8522,7 @@ snapshots:
 
   nanoid@5.1.6: {}
 
-  nanotar@0.2.0: {}
+  nanotar@0.2.1: {}
 
   napi-postinstall@0.3.4: {}
 
@@ -8524,12 +8530,12 @@ snapshots:
 
   netlify@13.3.5:
     dependencies:
-      '@netlify/open-api': 2.47.0
+      '@netlify/open-api': 2.49.0
       lodash-es: 4.17.23
       micro-api-client: 3.3.0
       node-fetch: 3.3.2
       p-wait-for: 5.0.2
-      qs: 6.14.1
+      qs: 6.14.2
     optional: true
 
   nitropack@2.13.1(@netlify/blobs@9.1.2):
@@ -8711,7 +8717,7 @@ snapshots:
       knitwork: 1.3.0
       magic-string: 0.30.21
       mlly: 1.8.0
-      nanotar: 0.2.0
+      nanotar: 0.2.1
       nypm: 0.6.4
       ofetch: 1.5.1
       ohash: 2.0.11
@@ -9228,7 +9234,7 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  qs@6.14.1:
+  qs@6.14.2:
     dependencies:
       side-channel: 1.1.0
     optional: true
@@ -9548,6 +9554,8 @@ snapshots:
   speakingurl@14.0.1: {}
 
   srvx@0.10.1: {}
+
+  srvx@0.11.4: {}
 
   stable-hash-x@0.2.0: {}
 
