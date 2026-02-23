@@ -1,6 +1,14 @@
-import { appendResponseHeader, defineEventHandler, getRequestHeader, getRequestHeaders, getQuery, setResponseStatus, readBody } from 'h3'
-import type { H3Event, EventHandlerRequest, HTTPMethod } from 'h3'
-import { $fetch, type FetchResponse, type FetchContext } from 'ofetch'
+import type { EventHandlerRequest, H3Event, HTTPMethod } from 'h3'
+import {
+  appendResponseHeader,
+  defineEventHandler,
+  getQuery,
+  getRequestHeader,
+  getRequestHeaders,
+  readBody,
+  setResponseStatus,
+} from 'h3'
+import { $fetch, type FetchContext, type FetchResponse } from 'ofetch'
 import { useSanctumLogger } from '../../utils/logging'
 import { determineCredentialsMode } from '../../utils/credentials'
 import type { ModuleOptions } from '../../types/options'
@@ -10,6 +18,18 @@ import { useNitroApp } from 'nitropack/runtime'
 
 const METHODS_WITH_BODY: HTTPMethod[] = ['POST', 'PUT', 'PATCH', 'DELETE']
 const HEADERS_TO_IGNORE = ['content-length', 'content-encoding', 'transfer-encoding']
+
+// Hop-by-hop headers dürfen nicht weitergereicht werden (undici wirft sonst UND_ERR_INVALID_ARG)
+const HOP_BY_HOP_HEADERS = [
+  'connection',
+  'upgrade',
+  'keep-alive',
+  'proxy-authenticate',
+  'proxy-authorization',
+  'te',
+  'trailer',
+  'transfer-encoding',
+]
 
 export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) => {
   const config = useRuntimeConfig().sanctum as ModuleOptions
@@ -29,7 +49,31 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
 })
 
 function assembleEndpoint(event: H3Event<EventHandlerRequest>, baseUrl: string): string {
-  return `${baseUrl}/${event.context.params?._}`
+  const cleanedBase = (baseUrl || '').replace(/\/+$/, '')
+  const cleanedPath = String(event.context.params?._ || '').replace(/^\/+/, '')
+  return cleanedBase ? `${cleanedBase}/${cleanedPath}` : `/${cleanedPath}`
+}
+
+function sanitizeProxyRequestHeaders(
+  rawHeaders: ReturnType<typeof getRequestHeaders>,
+): Record<string, string | string[] | undefined> {
+  const headers: Record<string, string | string[] | undefined> = { ...rawHeaders }
+
+  for (const key of Object.keys(headers)) {
+    const lower = key.toLowerCase()
+    if (HOP_BY_HOP_HEADERS.includes(lower)) {
+      delete headers[key]
+    }
+  }
+
+  for (const key of Object.keys(headers)) {
+    const lower = key.toLowerCase()
+    if (lower === 'host' || lower === 'content-length' || lower === 'accept-encoding') {
+      delete headers[key]
+    }
+  }
+
+  return headers
 }
 
 async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: string, logger: ConsolaInstance): Promise<FetchResponse<unknown>> {
@@ -41,7 +85,7 @@ async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: strin
     body = await getBody(event),
     headers = {
       accept: 'application/json',
-      ...getRequestHeaders(event),
+      ...sanitizeProxyRequestHeaders(getRequestHeaders(event)),
     }
 
   return await $fetch.raw(endpoint, {
@@ -79,7 +123,13 @@ async function getBody(event: H3Event<EventHandlerRequest>) {
 
 function prepareResponse(event: H3Event<EventHandlerRequest>, response: FetchResponse<unknown>): void {
   response.headers.forEach((value, key) => {
-    if (HEADERS_TO_IGNORE.includes(key.toLowerCase())) {
+    const lower = key.toLowerCase()
+
+    if (HEADERS_TO_IGNORE.includes(lower)) {
+      return
+    }
+
+    if (HOP_BY_HOP_HEADERS.includes(lower)) {
       return
     }
 
