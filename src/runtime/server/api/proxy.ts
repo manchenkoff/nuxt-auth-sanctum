@@ -19,7 +19,6 @@ import { useNitroApp } from 'nitropack/runtime'
 const METHODS_WITH_BODY: HTTPMethod[] = ['POST', 'PUT', 'PATCH', 'DELETE']
 const HEADERS_TO_IGNORE = ['content-length', 'content-encoding', 'transfer-encoding']
 
-// Hop-by-hop headers dürfen nicht weitergereicht werden (undici wirft sonst UND_ERR_INVALID_ARG)
 const HOP_BY_HOP_HEADERS = [
   'connection',
   'upgrade',
