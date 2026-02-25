@@ -17,9 +17,9 @@ import type { ConsolaInstance } from 'consola'
 import { useNitroApp } from 'nitropack/runtime'
 
 const METHODS_WITH_BODY: HTTPMethod[] = ['POST', 'PUT', 'PATCH', 'DELETE']
-const HEADERS_TO_IGNORE = ['content-length', 'content-encoding', 'transfer-encoding']
+const RESPONSE_HEADERS_TO_IGNORE = ['content-length', 'content-encoding', 'transfer-encoding']
 
-const HOP_BY_HOP_HEADERS = [
+const REQUEST_HEADERS_TO_IGNORE = [
   'connection',
   'upgrade',
   'keep-alive',
@@ -28,6 +28,9 @@ const HOP_BY_HOP_HEADERS = [
   'te',
   'trailer',
   'transfer-encoding',
+  'host',
+  'content-length',
+  'accept-encoding',
 ]
 
 export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) => {
@@ -60,14 +63,7 @@ function sanitizeProxyRequestHeaders(
 
   for (const key of Object.keys(headers)) {
     const lower = key.toLowerCase()
-    if (HOP_BY_HOP_HEADERS.includes(lower)) {
-      delete headers[key]
-    }
-  }
-
-  for (const key of Object.keys(headers)) {
-    const lower = key.toLowerCase()
-    if (lower === 'host' || lower === 'content-length' || lower === 'accept-encoding') {
+    if (REQUEST_HEADERS_TO_IGNORE.includes(lower)) {
       delete headers[key]
     }
   }
@@ -124,11 +120,11 @@ function prepareResponse(event: H3Event<EventHandlerRequest>, response: FetchRes
   response.headers.forEach((value, key) => {
     const lower = key.toLowerCase()
 
-    if (HEADERS_TO_IGNORE.includes(lower)) {
+    if (RESPONSE_HEADERS_TO_IGNORE.includes(lower)) {
       return
     }
 
-    if (HOP_BY_HOP_HEADERS.includes(lower)) {
+    if (REQUEST_HEADERS_TO_IGNORE.includes(lower)) {
       return
     }
 
