@@ -1,4 +1,4 @@
-import type { EventHandlerRequest, H3Event, HTTPMethod } from 'h3'
+import type { EventHandlerRequest, H3Event, HTTPMethod, RequestHeaders } from 'h3'
 import {
   appendResponseHeader,
   defineEventHandler,
@@ -11,13 +11,13 @@ import {
 import { $fetch, type FetchContext, type FetchResponse } from 'ofetch'
 import { useSanctumLogger } from '../../utils/logging'
 import { determineCredentialsMode } from '../../utils/credentials'
+import { trimTrailingSlash } from '../utils/formatter'
 import type { ModuleOptions } from '../../types/options'
 import { useRuntimeConfig } from '#imports'
 import type { ConsolaInstance } from 'consola'
 import { useNitroApp } from 'nitropack/runtime'
 
 const METHODS_WITH_BODY: HTTPMethod[] = ['POST', 'PUT', 'PATCH', 'DELETE']
-const RESPONSE_HEADERS_TO_IGNORE = ['content-length', 'content-encoding', 'transfer-encoding']
 
 const REQUEST_HEADERS_TO_IGNORE = [
   'connection',
@@ -31,6 +31,11 @@ const REQUEST_HEADERS_TO_IGNORE = [
   'host',
   'content-length',
   'accept-encoding',
+]
+
+const RESPONSE_HEADERS_TO_IGNORE = [
+  ...REQUEST_HEADERS_TO_IGNORE,
+  'content-encoding',
 ]
 
 export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) => {
@@ -51,24 +56,27 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
 })
 
 function assembleEndpoint(event: H3Event<EventHandlerRequest>, baseUrl: string): string {
-  const cleanedBase = (baseUrl || '').replace(/\/+$/, '')
-  const cleanedPath = String(event.context.params?._ || '').replace(/^\/+/, '')
-  return cleanedBase ? `${cleanedBase}/${cleanedPath}` : `/${cleanedPath}`
-}
+  const
+    base = trimTrailingSlash(baseUrl),
+    path = trimTrailingSlash(event.context.params?._ || '')
 
-function sanitizeProxyRequestHeaders(
-  rawHeaders: ReturnType<typeof getRequestHeaders>,
-): Record<string, string | string[] | undefined> {
-  const headers: Record<string, string | string[] | undefined> = { ...rawHeaders }
-
-  for (const key of Object.keys(headers)) {
-    const lower = key.toLowerCase()
-    if (REQUEST_HEADERS_TO_IGNORE.includes(lower)) {
-      delete headers[key]
-    }
+  if (!base) {
+    throw new Error('[sanctum] serverProxy.baseUrl is not configured')
   }
 
-  return headers
+  if (path.length === 0) {
+    return base
+  }
+
+  return `${base}/${path}`
+}
+
+function dropProxyHeaders(headers: RequestHeaders): RequestHeaders {
+  const filteredHeaders = Object
+    .entries(headers)
+    .filter(([name]) => !REQUEST_HEADERS_TO_IGNORE.includes(name.toLowerCase()))
+
+  return Object.fromEntries(filteredHeaders)
 }
 
 async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: string, logger: ConsolaInstance): Promise<FetchResponse<unknown>> {
@@ -80,7 +88,7 @@ async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: strin
     body = await getBody(event),
     headers = {
       accept: 'application/json',
-      ...sanitizeProxyRequestHeaders(getRequestHeaders(event)),
+      ...dropProxyHeaders(getRequestHeaders(event)),
     }
 
   return await $fetch.raw(endpoint, {
@@ -118,13 +126,7 @@ async function getBody(event: H3Event<EventHandlerRequest>) {
 
 function prepareResponse(event: H3Event<EventHandlerRequest>, response: FetchResponse<unknown>): void {
   response.headers.forEach((value, key) => {
-    const lower = key.toLowerCase()
-
-    if (RESPONSE_HEADERS_TO_IGNORE.includes(lower)) {
-      return
-    }
-
-    if (REQUEST_HEADERS_TO_IGNORE.includes(lower)) {
+    if (RESPONSE_HEADERS_TO_IGNORE.includes(key.toLowerCase())) {
       return
     }
 
