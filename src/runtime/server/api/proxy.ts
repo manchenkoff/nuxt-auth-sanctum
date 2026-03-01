@@ -1,15 +1,42 @@
-import { appendResponseHeader, defineEventHandler, getRequestHeader, getRequestHeaders, getQuery, setResponseStatus, readBody } from 'h3'
-import type { H3Event, EventHandlerRequest, HTTPMethod } from 'h3'
-import { $fetch, type FetchResponse, type FetchContext } from 'ofetch'
+import type { EventHandlerRequest, H3Event, HTTPMethod, RequestHeaders } from 'h3'
+import {
+  appendResponseHeader,
+  defineEventHandler,
+  getQuery,
+  getRequestHeader,
+  getRequestHeaders,
+  readBody,
+  setResponseStatus,
+} from 'h3'
+import { $fetch, type FetchContext, type FetchResponse } from 'ofetch'
 import { useSanctumLogger } from '../../utils/logging'
 import { determineCredentialsMode } from '../../utils/credentials'
+import { trimTrailingSlash } from '../utils/formatter'
 import type { ModuleOptions } from '../../types/options'
 import { useRuntimeConfig } from '#imports'
 import type { ConsolaInstance } from 'consola'
 import { useNitroApp } from 'nitropack/runtime'
 
 const METHODS_WITH_BODY: HTTPMethod[] = ['POST', 'PUT', 'PATCH', 'DELETE']
-const HEADERS_TO_IGNORE = ['content-length', 'content-encoding', 'transfer-encoding']
+
+const REQUEST_HEADERS_TO_IGNORE = [
+  'connection',
+  'upgrade',
+  'keep-alive',
+  'proxy-authenticate',
+  'proxy-authorization',
+  'te',
+  'trailer',
+  'transfer-encoding',
+  'host',
+  'content-length',
+  'accept-encoding',
+]
+
+const RESPONSE_HEADERS_TO_IGNORE = [
+  ...REQUEST_HEADERS_TO_IGNORE,
+  'content-encoding',
+]
 
 export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) => {
   const config = useRuntimeConfig().sanctum as ModuleOptions
@@ -29,7 +56,27 @@ export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) =>
 })
 
 function assembleEndpoint(event: H3Event<EventHandlerRequest>, baseUrl: string): string {
-  return `${baseUrl}/${event.context.params?._}`
+  const
+    base = trimTrailingSlash(baseUrl),
+    path = trimTrailingSlash(event.context.params?._ || '')
+
+  if (!base) {
+    throw new Error('[sanctum] serverProxy.baseUrl is not configured')
+  }
+
+  if (path.length === 0) {
+    return base
+  }
+
+  return `${base}/${path}`
+}
+
+function dropProxyHeaders(headers: RequestHeaders): RequestHeaders {
+  const filteredHeaders = Object
+    .entries(headers)
+    .filter(([name]) => !REQUEST_HEADERS_TO_IGNORE.includes(name.toLowerCase()))
+
+  return Object.fromEntries(filteredHeaders)
 }
 
 async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: string, logger: ConsolaInstance): Promise<FetchResponse<unknown>> {
@@ -41,7 +88,7 @@ async function proxyRequest(event: H3Event<EventHandlerRequest>, endpoint: strin
     body = await getBody(event),
     headers = {
       accept: 'application/json',
-      ...getRequestHeaders(event),
+      ...dropProxyHeaders(getRequestHeaders(event)),
     }
 
   return await $fetch.raw(endpoint, {
@@ -79,7 +126,7 @@ async function getBody(event: H3Event<EventHandlerRequest>) {
 
 function prepareResponse(event: H3Event<EventHandlerRequest>, response: FetchResponse<unknown>): void {
   response.headers.forEach((value, key) => {
-    if (HEADERS_TO_IGNORE.includes(key.toLowerCase())) {
+    if (RESPONSE_HEADERS_TO_IGNORE.includes(key.toLowerCase())) {
       return
     }
 
