@@ -11,7 +11,7 @@ import {
 import { $fetch, type FetchContext, type FetchResponse } from 'ofetch'
 import { useSanctumLogger } from '../../utils/logging'
 import { determineCredentialsMode } from '../../utils/credentials'
-import { trimTrailingSlash } from '../utils/formatter'
+import { trimTrailingSlash } from '../../utils/formatter'
 import type { ModuleOptions } from '../../types/options'
 import { useRuntimeConfig } from '#imports'
 import type { ConsolaInstance } from 'consola'
