@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v2.2.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.1.3...v2.2.0)
+
+### 🚀 Enhancements
+
+- Sanitize proxy request headers to exclude hop-by-hop ([#525](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/525))
+
+### 📖 Documentation
+
+- Added plugin-based approach for token storage ([#539](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/539))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @types/node from 25.1.0 to 25.3.3 ([#534](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/534))
+- **deps-dev:** Bump @nuxt/kit from 4.2.2 to 4.3.1 ([#537](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/537))
+- **deps-dev:** Bump nuxt from 4.3.0 to 4.3.1 ([#538](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/538))
+- **deps-dev:** Bump @nuxt/test-utils from 3.23.0 to 4.0.0 ([#535](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/535))
+- **deps-dev:** Bump @nuxt/devtools from 3.1.1 to 3.2.2 ([#536](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/536))
+
+### ❤️ Contributors
+
+- Ahoiroman <roman.lossin@icloud.com>
+- Artem Manchenkov ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v2.1.3
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.1.2...v2.1.3)
