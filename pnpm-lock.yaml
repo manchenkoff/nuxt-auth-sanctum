@@ -2798,8 +2798,8 @@ packages:
     resolution: {integrity: sha512-f7ccFPK3SXFHpx15UIGyRJ/FJQctuKZ0zVuN3frBo4HnK3cay9VEW0R6yPYFHC0AgqhukPzKjq22t5DmAyqGyw==}
     engines: {node: '>=16'}
 
-  flatted@3.3.4:
-    resolution: {integrity: sha512-3+mMldrTAPdta5kjX2G2J7iX4zxtnwpdA8Tr2ZSjkyPSanvbZAcy6flmtnXbEybHrDcU9641lxrMfFuUxVz9vA==}
+  flatted@3.4.1:
+    resolution: {integrity: sha512-IxfVbRFVlV8V/yRaGzk0UVIcsKKHMSfYw66T/u4nTwlWteQePsxe//LjudR1AMX4tZW3WFCh3Zqa/sjlqpbURQ==}
 
   foreground-child@3.3.1:
     resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
@@ -7521,10 +7521,10 @@ snapshots:
 
   flat-cache@4.0.1:
     dependencies:
-      flatted: 3.3.4
+      flatted: 3.4.1
       keyv: 4.5.4
 
-  flatted@3.3.4: {}
+  flatted@3.4.1: {}
 
   foreground-child@3.3.1:
     dependencies:
