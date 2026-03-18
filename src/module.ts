@@ -27,35 +27,41 @@ export default defineNuxtModule<ModuleOptions>({
 
   setup(_options, _nuxt) {
     const resolver = createResolver(import.meta.url)
+
+    const sanctumPublicConfig = defu(
+      _nuxt.options.runtimeConfig.public.sanctum,
+      _options,
+    )
+
+    const { serverProxy: _, ...sanctumClientConfig } = sanctumPublicConfig
+
     const sanctumConfig = defu(
+      _nuxt.options.runtimeConfig.sanctum,
       _nuxt.options.runtimeConfig.public.sanctum,
       _options,
     )
 
     _nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
+
     _nuxt.options.runtimeConfig.sanctum = sanctumConfig
+    _nuxt.options.runtimeConfig.public.sanctum = sanctumClientConfig
 
-    const publicSanctumConfig = { ...sanctumConfig }
-    // @ts-expect-error force delete non-optional key
-    delete publicSanctumConfig.serverProxy
-
-    _nuxt.options.runtimeConfig.public.sanctum = publicSanctumConfig
-
-    const logger = useLogger(MODULE_NAME, {
-      level: sanctumConfig.logLevel,
-    })
+    const logger = useLogger(MODULE_NAME, { level: sanctumConfig.logLevel })
 
     addPlugin(resolver.resolve('./runtime/plugin'), { append: sanctumConfig.appendPlugin })
     addImportsDir(resolver.resolve('./runtime/composables'))
 
     if (sanctumConfig.globalMiddleware.enabled) {
-      addRouteMiddleware({
-        name: 'sanctum:auth:global',
-        path: resolver.resolve('./runtime/middleware/sanctum.global'),
-        global: true,
-      }, {
-        prepend: sanctumConfig.globalMiddleware.prepend,
-      })
+      addRouteMiddleware(
+        {
+          name: 'sanctum:auth:global',
+          path: resolver.resolve('./runtime/middleware/sanctum.global'),
+          global: true,
+        },
+        {
+          prepend: sanctumConfig.globalMiddleware.prepend,
+        },
+      )
 
       logger.info('Sanctum module initialized with global middleware')
     }
