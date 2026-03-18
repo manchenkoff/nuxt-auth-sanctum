@@ -188,11 +188,7 @@ export const useSanctumAuth = <T>(): SanctumAuth<T> => {
     await nuxtApp.callHook('sanctum:logout')
 
     if (config.mode === 'token') {
-      if (appConfig.tokenStorage === undefined) {
-        throw new Error('`sanctum.tokenStorage` is not defined in app.config.ts')
-      }
-
-      await appConfig.tokenStorage.set(nuxtApp, undefined)
+      await appConfig.tokenStorage!.set(nuxtApp, undefined)
     }
 
     if (
