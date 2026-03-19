@@ -1,5 +1,6 @@
 import type { $Fetch } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
+import type { TokenStorage } from './types/config'
 import { createHttpClient } from './httpFactory'
 import { useSanctumUser } from './composables/useSanctumUser'
 import { useSanctumConfig } from './composables/useSanctumConfig'
@@ -7,23 +8,28 @@ import { useSanctumAppConfig } from './composables/useSanctumAppConfig'
 import type { PublicModuleOptions } from './types/options'
 import { IDENTITY_LOADED_KEY } from './utils/constants'
 import { useSanctumLogger } from './utils/logging'
-import { defineNuxtPlugin, updateAppConfig, useState } from '#app'
+import { defineNuxtPlugin, useState } from '#app'
 import type { NuxtApp } from '#app'
 
-async function setupDefaultTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstance) {
-  logger.debug(
-    'Token storage is not defined, switch to default cookie storage',
-  )
+async function resolveTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstance): Promise<TokenStorage> {
+  let appConfig = useSanctumAppConfig()
+
+  if (appConfig.tokenStorage) {
+    return appConfig.tokenStorage
+  }
+
+  await nuxtApp.callHook('sanctum:storage:token')
+
+  appConfig = useSanctumAppConfig()
+
+  if (appConfig.tokenStorage) {
+    return appConfig.tokenStorage
+  }
+
+  logger.debug('Token storage is not defined, switch to default cookie storage')
 
   const defaultStorage = await import('./storages/cookieTokenStorage')
-
-  nuxtApp.runWithContext(() => {
-    updateAppConfig({
-      sanctum: {
-        tokenStorage: defaultStorage.cookieTokenStorage,
-      },
-    })
-  })
+  return defaultStorage.cookieTokenStorage
 }
 
 async function initialIdentityLoad(nuxtApp: NuxtApp, client: $Fetch, options: PublicModuleOptions, logger: ConsolaInstance) {
@@ -80,12 +86,16 @@ export default defineNuxtPlugin({
   async setup(_nuxtApp) {
     const nuxtApp = _nuxtApp as NuxtApp
     const options = useSanctumConfig()
-    const appConfig = useSanctumAppConfig()
     const logger = useSanctumLogger(options.logLevel)
     const client = createHttpClient(nuxtApp, logger)
 
-    if (options.mode === 'token' && !appConfig.tokenStorage) {
-      await setupDefaultTokenStorage(nuxtApp, logger)
+    if (options.mode === 'token') {
+      nuxtApp.hook(
+        'page:loading:start',
+        async () => {
+          await resolveTokenStorage(nuxtApp, logger)
+        },
+      )
     }
 
     if (options.client.initialRequest) {
@@ -93,7 +103,8 @@ export default defineNuxtPlugin({
         'page:loading:start',
         async () => {
           await initialIdentityLoad(nuxtApp, client, options, logger)
-        })
+        },
+      )
     }
 
     return {

@@ -67,6 +67,11 @@ declare module '#app' {
      * Triggers on every server response.
      */
     'sanctum:response': (app: NuxtApp, ctx: FetchContext, logger: ConsolaInstance) => HookResult
+    /**
+     * Triggers to register custom token storage.
+     * Call useSanctumTokenStorage() inside this hook.
+     */
+    'sanctum:storage:token': () => HookResult
   }
 }
 
