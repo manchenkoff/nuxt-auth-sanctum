@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v2.3.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.2.0...v2.3.0)
+
+### 🚀 Enhancements
+
+- Added token storage hook ([#553](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/553))
+- Split server and client configs ([#552](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/552))
+
+### ❤️ Contributors
+
+- Artem Manchenkov ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v2.2.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.1.3...v2.2.0)
