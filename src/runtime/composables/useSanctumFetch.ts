@@ -1,15 +1,9 @@
-import { type UseFetchOptions, useFetch } from '#app'
-import type { MaybeRefOrGetter } from 'vue'
 import { useSanctumClient } from '../composables/useSanctumClient'
-import type { SanctumFetchResponse } from '../types/fetch'
+import type { useFetch } from '#imports'
+import { createUseFetch } from '#imports'
 
-export function useSanctumFetch<T>(
-  url: MaybeRefOrGetter<string>,
-  options?: UseFetchOptions<T>,
-): SanctumFetchResponse<T> {
-  const client = useSanctumClient() as typeof $fetch
-  const params = { ...options, $fetch: client } as UseFetchOptions<T>
+export const useSanctumFetch: typeof useFetch = createUseFetch((opts) => {
+  opts.$fetch = useSanctumClient() as typeof $fetch
 
-  // @ts-expect-error unable to satisfy params<T>
-  return useFetch<T>(url, params)
-}
+  return opts
+})
