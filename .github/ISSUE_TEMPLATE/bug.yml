@@ -1,0 +1,107 @@
+name: Bug Report
+description: Report a bug or incorrect behaviour
+title: "[bug] name"
+labels: bug
+assignees: manchenkoff
+body:
+  - id: problem_statement
+    type: textarea
+    attributes:
+      label: Describe the bug
+      description: Provide a clear and concise description of the bug
+      placeholder: The feature X might be broken when I do Y
+    validations:
+      required: true
+  - id: expected_behaviour
+    type: textarea
+    attributes:
+      label: Expected behaviour
+      description: Provide a clear description of what you expected to happen
+      placeholder: When I do X, I expect Y to happen
+    validations:
+      required: true
+  - id: actual_behaviour
+    type: textarea
+    attributes:
+      label: Actual behaviour
+      description: Provide a concise description of what actually happened
+      placeholder: When I do X, Y happens instead
+    validations:
+      required: true
+  - id: runtime
+    type: dropdown
+    attributes:
+      label: Runtime
+      description: Choose affected runtimes
+      options:
+        - Client side (CSR)
+        - Server side (SSR)
+        - Both
+      default: 0
+    validations:
+      required: true
+  - id: environment
+    type: dropdown
+    attributes:
+      label: Environment
+      description: Choose affected environments
+      options:
+        - Development (local)
+        - Production
+        - Both
+      default: 1
+    validations:
+      required: true
+  - id: reproduction
+    type: textarea
+    attributes:
+      label: Reproduction steps
+      description: |
+        Please explain how to reproduce the bug,
+        ideally with a minimal code example or repository
+      placeholder: |
+        1. Do X
+        2. Do Y
+        3. See Z happening
+    validations:
+      required: false
+  - id: nuxt_version
+    type: input
+    attributes:
+      label: Nuxt version
+      description: Version of the Nuxt framework
+      placeholder: 4.2.1
+    validations:
+      required: true
+  - id: module_version
+    type: input
+    attributes:
+      label: Module version
+      description: Version of the module installed
+      placeholder: 1.0.1
+    validations:
+      required: true
+  - id: config_example
+    type: textarea
+    attributes:
+      label: Module config
+      description: Provide your `nuxt.config.ts` contents
+      render: typescript
+    validations:
+      required: false
+  - type: upload
+    id: file_upload
+    attributes:
+      label: File Upload
+      description: Attach a file to this issue (screenshot, log file, etc.)
+    validations:
+      required: false
+  - id: investigation
+    type: checkboxes
+    attributes:
+      label: Initial investigation
+      options:
+        - label: I have checked the documentation, no solution found
+          required: true
+        - label: I have checked the troubleshooting guide, did not help
+          required: true

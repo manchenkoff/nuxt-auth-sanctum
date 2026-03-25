@@ -1,0 +1,41 @@
+name: Feature Request
+description: Suggest an idea for this project
+title: "[feature] name"
+labels: enhancement
+assignees: manchenkoff
+body:
+  - id: feature_description
+    type: textarea
+    attributes:
+      label: Describe the feature
+      description: Provide a detailed description of the functionality
+      value: |
+        It would be nice to have a way to ...
+    validations:
+      required: true
+  - id: proposed_solution
+    type: textarea
+    attributes:
+      label: Proposed solution
+      description: Describe the solution you would like to see
+      placeholder: I think this can be implemented in the way...
+    validations:
+      required: false
+  - id: alternative_solution
+    type: textarea
+    attributes:
+      label: Alternatives
+      description: Describe alternatives you have considered
+      placeholder: Another option would be...
+    validations:
+      required: false
+  - id: ready_to_contribute
+    type: checkboxes
+    attributes:
+      label: Do you want to contribute?
+      description: |
+        Check this box if you are happy to implement this yourself
+        once we have a plan
+      options:
+        - label: "Yes"
+          required: false
