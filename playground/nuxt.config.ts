@@ -2,10 +2,7 @@ export default defineNuxtConfig({
   modules: ['../src/module'],
   ssr: true,
   devtools: { enabled: true },
-  future: {
-    compatibilityVersion: 4,
-  },
-  compatibilityDate: '2024-09-28',
+  compatibilityDate: '2026-03-24',
   sanctum: {
     baseUrl: '/api/sanctum',
     mode: 'cookie',
