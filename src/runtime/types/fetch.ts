@@ -1,5 +1,4 @@
-import type { MappedResponseType, FetchRequest, Fetch, FetchOptions, FetchResponse, ResponseType, $Fetch, FetchError } from 'ofetch'
-import type { AsyncData, KeysOf, PickFrom } from '#app/composables/asyncData'
+import type { MappedResponseType, FetchRequest, Fetch, FetchOptions, FetchResponse, ResponseType, $Fetch } from 'ofetch'
 
 export type SanctumFetchOptions<R extends ResponseType = ResponseType, T = unknown> = Omit<
   FetchOptions<R, T>,
@@ -18,5 +17,3 @@ export interface SanctumFetch extends $Fetch {
   raw<T = unknown, R extends ResponseType = 'json'>(request: FetchRequest, options?: SanctumFetchOptions<R>): Promise<FetchResponse<MappedResponseType<R, T>>>
   native: Fetch
 }
-
-export type SanctumFetchResponse<T> = AsyncData<PickFrom<T, KeysOf<T>> | undefined, FetchError | undefined>
