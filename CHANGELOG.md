@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v2.3.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.3.0...v2.3.1)
+
+### 🩹 Fixes
+
+- Typo in Configuration.md ([#569](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/569))
+
+### 🏡 Chore
+
+- Updated issue templates ([53a4323](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/53a4323))
+- Added error logs for debugging ([#570](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/570))
+
+### ❤️ Contributors
+
+- Artem Manchenkov ([@manchenkoff](https://github.com/manchenkoff))
+- EtienneHosman ([@EtienneHosman](https://github.com/EtienneHosman))
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v2.3.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.2.0...v2.3.0)
