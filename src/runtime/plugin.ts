@@ -73,11 +73,17 @@ async function initialIdentityLoad(nuxtApp: NuxtApp, client: $Fetch, options: Pu
       )
     }
     else {
-      logger.error('Unable to load user identity from API', response.status)
+      logger.error(
+        'Unable to load user identity from API',
+        { status: response.status },
+      )
     }
   }
-  catch {
-    logger.error('An unexpected error occurred while fetching user identity')
+  catch (err) {
+    logger.error(
+      'An unexpected error occurred while fetching user identity',
+      { reason: err },
+    )
   }
 }
 
