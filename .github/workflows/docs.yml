@@ -19,18 +19,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v5
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.node_version }}
-      - name: Enable corepack
-        run: corepack enable
+          cache: pnpm
       - name: Install dependencies
-        working-directory: ./docs
-        run: npx nypm@latest i
+        run: pnpm install
       - name: Validate
         working-directory: ./docs
-        run: pnpm validate
+        run: pnpm lint
       - name: Generate documentation
         run: pnpm generate
         working-directory: ./docs

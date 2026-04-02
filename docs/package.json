@@ -10,8 +10,7 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "typecheck": "nuxt typecheck",
-    "validate": "pnpm lint && pnpm typecheck"
+    "upgrade": "pnpm self-update && npx nuxt upgrade --dedupe && pnpm up && pnpm lint"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.101",
@@ -27,6 +26,7 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
+    "@takumi-rs/core": "^0.73.1",
     "eslint": "^10.1.0",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.6"
@@ -34,5 +34,5 @@
   "resolutions": {
     "unimport": "4.1.1"
   },
-  "packageManager": "pnpm@10.32.1"
+  "packageManager": "pnpm@10.33.0"
 }

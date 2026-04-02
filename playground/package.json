@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",
-    "generate": "nuxi generate"
+    "generate": "nuxi generate",
+    "upgrade": "pnpm self-update && npx nuxt upgrade --dedupe && pnpm up"
   },
   "devDependencies": {
     "nuxt": "latest",

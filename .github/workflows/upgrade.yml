@@ -1,0 +1,91 @@
+name: Upgrade Dependencies
+
+env:
+  node_version: 24
+  git_email: artem@manchenkoff.me
+  git_name: manchenkoff
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [".", "docs", "playground"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.project }}
+        run: npx nypm@latest i
+
+      - name: Upgrade
+        working-directory: ${{ matrix.project }}
+        run: pnpm upgrade
+
+      - name: Check for changes
+        id: changed
+        run: |
+          echo "DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+          PROJECT_NAME="${{ matrix.project }}"
+          if [ "$PROJECT_NAME" = "." ]; then
+            PROJECT_NAME="root"
+          fi
+          echo "project_name=$PROJECT_NAME" >> $GITHUB_ENV
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Configure git
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          git config --global user.email "${{ env.git_email }}"
+          git config --global user.name "${{ env.git_name }}"
+
+      - name: Create branch and commit
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          BRANCH="deps/bump-${DATE}-${{ env.project_name }}"
+          git checkout -b "$BRANCH"
+          git add -A
+          git commit -m "chore: upgrade ${{ env.project_name }} dependencies"
+
+      - name: Push changes
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          BRANCH="deps/bump-${DATE}-${{ env.project_name }}"
+          git push origin :$BRANCH || true
+          git push -u origin HEAD
+
+      - name: Create Pull Request
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          gh pr create \
+            --base main \
+            --head deps/bump-${DATE}-${{ env.project_name }} \
+            --title "deps: ${{ env.project_name }} weekly dependency bump" \
+            --body "Automated dependency upgrade for ${{ env.project_name }}. Please review before merging." \
+            --assignee manchenkoff
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

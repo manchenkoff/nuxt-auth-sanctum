@@ -5,7 +5,6 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
-  compatibilityDate: '2024-09-28',
   sanctum: {
     baseUrl: '/api/sanctum',
     mode: 'cookie',
