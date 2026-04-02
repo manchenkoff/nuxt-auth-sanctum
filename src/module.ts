@@ -14,8 +14,8 @@ import { registerTypeTemplates } from './templates'
 
 const MODULE_NAME = 'nuxt-auth-sanctum'
 
-export type ModuleRuntimeConfig = { sanctum: ModuleOptions }
-export type ModulePublicRuntimeConfig = { sanctum: PublicModuleOptions }
+export type ModuleRuntimeConfig = { sanctum: Partial<ModuleOptions> }
+export type ModulePublicRuntimeConfig = { sanctum: Partial<PublicModuleOptions> }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
