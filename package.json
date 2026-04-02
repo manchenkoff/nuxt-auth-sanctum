@@ -40,7 +40,7 @@
     "upgrade": "pnpm self-update && npx nuxt upgrade --dedupe && pnpm up && pnpm dev:prepare && pnpm validate"
   },
   "dependencies": {
-    "defu": "^6.1.4",
+    "defu": "^6.1.6",
     "ofetch": "^1.5.1",
     "pathe": "^2.0.3"
   },
