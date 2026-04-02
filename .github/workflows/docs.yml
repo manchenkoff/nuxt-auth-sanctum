@@ -27,6 +27,7 @@ jobs:
           node-version: ${{ env.node_version }}
           cache: pnpm
       - name: Install dependencies
+        working-directory: ./docs
         run: pnpm install
       - name: Validate
         working-directory: ./docs
