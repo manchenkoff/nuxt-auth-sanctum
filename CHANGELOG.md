@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v2.3.2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.3.1...v2.3.2)
+
+### 🩹 Fixes
+
+- Fallback to default token storage in both csr and ssr ([#580](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/580))
+- Allow partial override for runtime config ([#579](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/579))
+- Deduplicate fetch requests using key ([#581](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/581))
+
+### 🏡 Chore
+
+- Upgraded nuxt and content setup ([ad62713](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/ad62713))
+- Upgraded nuxt and content setup ([bb7e9a2](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/bb7e9a2))
+
+### ❤️ Contributors
+
+- Artem Manchenkov ([@manchenkoff](https://github.com/manchenkoff))
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v2.3.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.3.0...v2.3.1)
