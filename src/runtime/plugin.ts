@@ -1,15 +1,16 @@
 import type { $Fetch } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
-import type { TokenStorage } from './types/config'
-import { createHttpClient } from './httpFactory'
-import { useSanctumUser } from './composables/useSanctumUser'
-import { useSanctumConfig } from './composables/useSanctumConfig'
-import { useSanctumAppConfig } from './composables/useSanctumAppConfig'
-import type { PublicModuleOptions } from './types/options'
-import { IDENTITY_LOADED_KEY } from './utils/constants'
-import { useSanctumLogger } from './utils/logging'
-import { defineNuxtPlugin, useState } from '#app'
 import type { NuxtApp } from '#app'
+import type { PublicModuleOptions } from './types/options'
+import type { TokenStorage } from './types/config'
+import { IDENTITY_LOADED_KEY } from './utils/constants'
+import { createHttpClient } from './httpFactory'
+import { defineNuxtPlugin, useState } from '#app'
+import { useSanctumAppConfig } from './composables/useSanctumAppConfig'
+import { useSanctumConfig } from './composables/useSanctumConfig'
+import { useSanctumLogger } from './utils/logging'
+import { useSanctumTokenStorage } from './composables/useSanctumTokenStorage'
+import { useSanctumUser } from './composables/useSanctumUser'
 
 async function resolveTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstance): Promise<TokenStorage> {
   let appConfig = useSanctumAppConfig()
@@ -20,7 +21,7 @@ async function resolveTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstance): P
 
   await nuxtApp.callHook('sanctum:storage:token')
 
-  appConfig = useSanctumAppConfig()
+  appConfig = await nuxtApp.runWithContext(() => useSanctumAppConfig())
 
   if (appConfig.tokenStorage) {
     return appConfig.tokenStorage
@@ -99,7 +100,8 @@ export default defineNuxtPlugin({
       nuxtApp.hook(
         'page:loading:start',
         async () => {
-          await resolveTokenStorage(nuxtApp, logger)
+          const tokenStorage = await resolveTokenStorage(nuxtApp, logger)
+          await nuxtApp.runWithContext(() => useSanctumTokenStorage(tokenStorage))
         },
       )
     }
