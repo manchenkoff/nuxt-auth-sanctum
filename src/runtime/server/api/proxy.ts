@@ -5,6 +5,7 @@ import {
   getQuery,
   getRequestHeader,
   getRequestHeaders,
+  getRequestWebStream,
   readBody,
   setResponseStatus,
 } from 'h3'
@@ -118,7 +119,7 @@ async function getBody(event: H3Event<EventHandlerRequest>) {
   const contentType = getRequestHeader(event, 'content-type')
 
   if (contentType?.includes('multipart/form-data')) {
-    return Promise.resolve(event.node.req)
+    return getRequestWebStream(event)
   }
 
   return readBody(event)
