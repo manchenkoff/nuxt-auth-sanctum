@@ -5,8 +5,8 @@ import {
   getQuery,
   getRequestHeader,
   getRequestHeaders,
+  getRequestWebStream,
   readBody,
-  readRawBody,
   setResponseStatus,
 } from 'h3'
 import { $fetch, type FetchContext, type FetchResponse } from 'ofetch'
@@ -119,7 +119,7 @@ async function getBody(event: H3Event<EventHandlerRequest>) {
   const contentType = getRequestHeader(event, 'content-type')
 
   if (contentType?.includes('multipart/form-data')) {
-    return await readRawBody(event, false)
+    return getRequestWebStream(event)
   }
 
   return readBody(event)
