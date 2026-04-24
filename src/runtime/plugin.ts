@@ -11,6 +11,7 @@ import { useSanctumConfig } from './composables/useSanctumConfig'
 import { useSanctumLogger } from './utils/logging'
 import { useSanctumTokenStorage } from './composables/useSanctumTokenStorage'
 import { useSanctumUser } from './composables/useSanctumUser'
+import { isServerRuntime } from './utils/runtime'
 
 async function resolveTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstance): Promise<TokenStorage> {
   let appConfig = useSanctumAppConfig()
@@ -93,7 +94,7 @@ export default defineNuxtPlugin({
   async setup(_nuxtApp) {
     const nuxtApp = _nuxtApp as NuxtApp
     const options = useSanctumConfig()
-    const logger = useSanctumLogger(options.logLevel)
+    const logger = useSanctumLogger(options.logLevel, isServerRuntime())
     const client = createHttpClient(nuxtApp, logger)
 
     if (options.mode === 'token') {

@@ -4,6 +4,7 @@ import { useSanctumLogger } from '../utils/logging'
 import { useSanctumConfig } from '../composables/useSanctumConfig'
 import { useSanctumAppConfig } from '../composables/useSanctumAppConfig'
 import { useSanctumAuth } from '../composables/useSanctumAuth'
+import { isServerRuntime } from './runtime'
 
 /**
  * Validates existence of the current user session details
@@ -18,7 +19,7 @@ export async function isUserSessionActive(): Promise<boolean> {
     return false
   }
 
-  const logger = useSanctumLogger(options.logLevel)
+  const logger = useSanctumLogger(options.logLevel, isServerRuntime())
 
   if (options.mode == 'cookie') {
     const csrfToken = unref(

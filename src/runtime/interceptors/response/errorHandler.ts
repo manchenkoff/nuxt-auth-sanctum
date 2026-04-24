@@ -4,6 +4,7 @@ import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import { useSanctumUser } from '../../composables/useSanctumUser'
 import { navigateTo } from '#app'
 import type { NuxtApp } from '#app'
+import { isServerRuntime } from '../../utils/runtime'
 
 /**
  * Handles error responses from the API.
@@ -34,9 +35,9 @@ export async function handleResponseError(
     }
 
     if (
-      import.meta.client
-        && options.redirectIfUnauthenticated
-        && options.redirect.onAuthOnly
+      isServerRuntime() === false
+      && options.redirectIfUnauthenticated
+      && options.redirect.onAuthOnly
     ) {
       const redirectUrl = options.redirect.onAuthOnly
 

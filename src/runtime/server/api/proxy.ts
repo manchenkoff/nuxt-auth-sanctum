@@ -17,6 +17,7 @@ import type { ModuleOptions } from '../../types/options'
 import { useRuntimeConfig } from '#imports'
 import type { ConsolaInstance } from 'consola'
 import { useNitroApp } from 'nitropack/runtime'
+import { isServerRuntime } from '../../utils/runtime'
 
 const METHODS_WITH_BODY: HTTPMethod[] = ['POST', 'PUT', 'PATCH', 'DELETE']
 
@@ -41,7 +42,7 @@ const RESPONSE_HEADERS_TO_IGNORE = [
 
 export default defineEventHandler(async (event: H3Event<EventHandlerRequest>) => {
   const config = useRuntimeConfig().sanctum as ModuleOptions
-  const logger = useSanctumLogger(config.logLevel)
+  const logger = useSanctumLogger(config.logLevel, isServerRuntime())
 
   const endpoint = assembleEndpoint(event, config.serverProxy.baseUrl)
 
