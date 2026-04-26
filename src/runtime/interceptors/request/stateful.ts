@@ -3,6 +3,7 @@ import type { ConsolaInstance } from 'consola'
 import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import type { PublicModuleOptions } from '../../types/options'
 import { useCookie, useRequestHeaders, useRequestURL, refreshCookie, type NuxtApp } from '#app'
+import { isServerRuntime } from '../../utils/runtime'
 
 const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch'])
 const COOKIE_OPTIONS: { readonly: true, watch: false } = { readonly: true, watch: false }
@@ -114,7 +115,7 @@ export async function setStatefulParams(
 
   const method = ctx.options.method?.toLowerCase() ?? 'get'
 
-  if (import.meta.server) {
+  if (isServerRuntime()) {
     useClientHeaders(
       ctx.options.headers,
       config,

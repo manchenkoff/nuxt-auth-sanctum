@@ -7,11 +7,11 @@ export default defineNuxtPlugin((nuxtApp) => {
     console.log('Sanctum request error hook triggered', context)
   })
 
-  nuxtApp.hook('sanctum:request', (nuxtApp, context, logger) => {
+  nuxtApp.hook('sanctum:request', (_nuxtApp, context, logger) => {
     logger.info('Sanctum request hook triggered', context.request)
   })
 
-  nuxtApp.hook('sanctum:response', (nuxtApp, context, logger) => {
+  nuxtApp.hook('sanctum:response', (_nuxtApp, context, logger) => {
     logger.info('Sanctum response hook triggered', context.request)
   })
 

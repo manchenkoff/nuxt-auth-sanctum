@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v2.3.3
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.3.2...v2.3.3)
+
+### 🩹 Fixes
+
+- **proxy:** Use runtime-agnostic readRawBody for multipart file uploads ([#582](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/582))
+
+### 🏡 Chore
+
+- **ci:** Upgraded action versions ([daffcee](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/daffcee))
+
+### ❤️ Contributors
+
+- Derrick Obedgiu <derrickobedgiu@gmail.com>
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v2.3.2
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.3.1...v2.3.2)

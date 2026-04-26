@@ -3,6 +3,7 @@ import type { ConsolaInstance } from 'consola'
 import type { PublicModuleOptions } from '../../types/options'
 import { useRequestURL } from '#app'
 import type { NuxtApp } from '#app'
+import { isServerRuntime } from '../../utils/runtime'
 
 type HeaderValidator = (headers: Headers, config: PublicModuleOptions, logger: ConsolaInstance) => void
 
@@ -108,7 +109,7 @@ export async function validateResponseHeaders(
   ctx: FetchContext,
   logger: ConsolaInstance,
 ): Promise<void> {
-  if (import.meta.client) {
+  if (isServerRuntime() === false) {
     logger.debug('[response] skipping headers validation on CSR')
     return
   }
