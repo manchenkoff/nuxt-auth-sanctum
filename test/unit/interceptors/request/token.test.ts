@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { setTokenHeader } from '../../../../src/runtime/interceptors/request/token'
 import { createAppMock, createLoggerMock, createMock } from '../../../helpers/mocks'
-import { TEST_CONFIG } from '../../../helpers/constants'
 import type { FetchContext } from 'ofetch'
 
 const {
@@ -90,7 +89,7 @@ describe('request interceptors', () => {
     it('sets Bearer token in authorization header', async () => {
       useSanctumConfigMock.mockReturnValue({ mode: 'token' })
       useSanctumAppConfigMock.mockReturnValue({
-        tokenStorage: { get: vi.fn().mockResolvedValue(TEST_CONFIG.AUTH_TOKEN) } as unknown,
+        tokenStorage: { get: vi.fn().mockResolvedValue('auth_token') } as unknown,
       })
 
       const mockApp = createAppMock()
@@ -104,7 +103,7 @@ describe('request interceptors', () => {
 
       await setTokenHeader(mockApp, ctx, mockLogger)
 
-      expect(ctx.options.headers?.get('Authorization')).toBe(`Bearer ${TEST_CONFIG.AUTH_TOKEN}`)
+      expect(ctx.options.headers?.get('Authorization')).toBe(`Bearer auth_token`)
       expect(mockLogger.debug).toHaveBeenCalledWith(expect.stringContaining('[request] added Authorization token header'))
     })
   })

@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { validateResponseHeaders } from '../../../../src/runtime/interceptors/response/validation'
 import { createAppMock, createLoggerMock, createMock } from '../../../helpers/mocks'
-import { TEST_CONFIG, COMMON_HEADERS } from '../../../helpers/constants'
 import type { FetchContext } from 'ofetch'
 
 const {
@@ -68,7 +67,7 @@ describe('response interceptors', () => {
 
     it('passes validation when all headers are present', async () => {
       isServerRuntimeMock.mockReturnValue(true)
-      useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
       useRuntimeConfigMock.mockReturnValue({
         sanctum: {
           mode: 'cookie',
@@ -81,10 +80,10 @@ describe('response interceptors', () => {
       const ctx = createMock<FetchContext>({
         response: {
           headers: new Headers({
-            [COMMON_HEADERS.SET_COOKIE]: 'header_value',
-            [COMMON_HEADERS.CONTENT_TYPE]: 'application/json',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_CREDENTIALS]: 'true',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_ORIGIN]: TEST_CONFIG.CUSTOM_ORIGIN,
+            ['set-cookie']: 'header_value',
+            ['content-type']: 'application/json',
+            ['access-control-allow-credentials']: 'true',
+            ['access-control-allow-origin']: 'http://custom-origin.dev',
           }),
         },
       })
@@ -96,7 +95,7 @@ describe('response interceptors', () => {
 
     it('writes warning if cookie header is missing [cookie mode]', async () => {
       isServerRuntimeMock.mockReturnValue(true)
-      useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
       useRuntimeConfigMock.mockReturnValue({
         sanctum: {
           mode: 'cookie',
@@ -109,9 +108,9 @@ describe('response interceptors', () => {
       const ctx = createMock<FetchContext>({
         response: {
           headers: new Headers({
-            [COMMON_HEADERS.CONTENT_TYPE]: 'application/json',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_CREDENTIALS]: 'true',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_ORIGIN]: TEST_CONFIG.CUSTOM_ORIGIN,
+            ['content-type']: 'application/json',
+            ['access-control-allow-credentials']: 'true',
+            ['access-control-allow-origin']: 'http://custom-origin.dev',
           }),
         },
       })
@@ -123,7 +122,7 @@ describe('response interceptors', () => {
 
     it('does not validate cookie header [token mode]', async () => {
       isServerRuntimeMock.mockReturnValue(true)
-      useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
       useRuntimeConfigMock.mockReturnValue({
         sanctum: {
           mode: 'token',
@@ -136,9 +135,9 @@ describe('response interceptors', () => {
       const ctx = createMock<FetchContext>({
         response: {
           headers: new Headers({
-            [COMMON_HEADERS.CONTENT_TYPE]: 'application/json',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_CREDENTIALS]: 'true',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_ORIGIN]: TEST_CONFIG.CUSTOM_ORIGIN,
+            ['content-type']: 'application/json',
+            ['access-control-allow-credentials']: 'true',
+            ['access-control-allow-origin']: 'http://custom-origin.dev',
           }),
         },
       })
@@ -150,7 +149,7 @@ describe('response interceptors', () => {
 
     it('writes warning if content-type header is missing', async () => {
       isServerRuntimeMock.mockReturnValue(true)
-      useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
       useRuntimeConfigMock.mockReturnValue({
         sanctum: {
           mode: 'cookie',
@@ -163,9 +162,9 @@ describe('response interceptors', () => {
       const ctx = createMock<FetchContext>({
         response: {
           headers: new Headers({
-            [COMMON_HEADERS.SET_COOKIE]: 'header_value',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_CREDENTIALS]: 'true',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_ORIGIN]: TEST_CONFIG.CUSTOM_ORIGIN,
+            ['set-cookie']: 'header_value',
+            ['access-control-allow-credentials']: 'true',
+            ['access-control-allow-origin']: 'http://custom-origin.dev',
           }),
         },
       })
@@ -177,7 +176,7 @@ describe('response interceptors', () => {
 
     it('writes debug if content-type header is not JSON', async () => {
       isServerRuntimeMock.mockReturnValue(true)
-      useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
       useRuntimeConfigMock.mockReturnValue({
         sanctum: {
           mode: 'cookie',
@@ -190,10 +189,10 @@ describe('response interceptors', () => {
       const ctx = createMock<FetchContext>({
         response: {
           headers: new Headers({
-            [COMMON_HEADERS.SET_COOKIE]: 'header_value',
-            [COMMON_HEADERS.CONTENT_TYPE]: 'unknown',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_CREDENTIALS]: 'true',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_ORIGIN]: TEST_CONFIG.CUSTOM_ORIGIN,
+            ['set-cookie']: 'header_value',
+            ['content-type']: 'unknown',
+            ['access-control-allow-credentials']: 'true',
+            ['access-control-allow-origin']: 'http://custom-origin.dev',
           }),
         },
       })
@@ -206,7 +205,7 @@ describe('response interceptors', () => {
 
     it('writes warning if credentials header is missing [cookie mode]', async () => {
       isServerRuntimeMock.mockReturnValue(true)
-      useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
       useRuntimeConfigMock.mockReturnValue({
         sanctum: {
           mode: 'cookie',
@@ -219,9 +218,9 @@ describe('response interceptors', () => {
       const ctx = createMock<FetchContext>({
         response: {
           headers: new Headers({
-            [COMMON_HEADERS.SET_COOKIE]: 'header_value',
-            [COMMON_HEADERS.CONTENT_TYPE]: 'application/json',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_ORIGIN]: TEST_CONFIG.CUSTOM_ORIGIN,
+            ['set-cookie']: 'header_value',
+            ['content-type']: 'application/json',
+            ['access-control-allow-origin']: 'http://custom-origin.dev',
           }),
         },
       })
@@ -234,7 +233,7 @@ describe('response interceptors', () => {
 
     it('writes warning if credentials header is disabled [cookie mode]', async () => {
       isServerRuntimeMock.mockReturnValue(true)
-      useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
       useRuntimeConfigMock.mockReturnValue({
         sanctum: {
           mode: 'cookie',
@@ -247,10 +246,10 @@ describe('response interceptors', () => {
       const ctx = createMock<FetchContext>({
         response: {
           headers: new Headers({
-            [COMMON_HEADERS.SET_COOKIE]: 'header_value',
-            [COMMON_HEADERS.CONTENT_TYPE]: 'application/json',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_CREDENTIALS]: 'false',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_ORIGIN]: TEST_CONFIG.CUSTOM_ORIGIN,
+            ['set-cookie']: 'header_value',
+            ['content-type']: 'application/json',
+            ['access-control-allow-credentials']: 'false',
+            ['access-control-allow-origin']: 'http://custom-origin.dev',
           }),
         },
       })
@@ -263,7 +262,7 @@ describe('response interceptors', () => {
 
     it('skips validation of credentials header [token mode]', async () => {
       isServerRuntimeMock.mockReturnValue(true)
-      useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
       useRuntimeConfigMock.mockReturnValue({
         sanctum: {
           mode: 'token',
@@ -276,9 +275,9 @@ describe('response interceptors', () => {
       const ctx = createMock<FetchContext>({
         response: {
           headers: new Headers({
-            [COMMON_HEADERS.SET_COOKIE]: 'header_value',
-            [COMMON_HEADERS.CONTENT_TYPE]: 'application/json',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_ORIGIN]: TEST_CONFIG.CUSTOM_ORIGIN,
+            ['set-cookie']: 'header_value',
+            ['content-type']: 'application/json',
+            ['access-control-allow-origin']: 'http://custom-origin.dev',
           }),
         },
       })
@@ -291,7 +290,7 @@ describe('response interceptors', () => {
 
     it('writes warning if origin header is missing', async () => {
       isServerRuntimeMock.mockReturnValue(true)
-      useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
       useRuntimeConfigMock.mockReturnValue({
         sanctum: {
           mode: 'cookie',
@@ -304,9 +303,9 @@ describe('response interceptors', () => {
       const ctx = createMock<FetchContext>({
         response: {
           headers: new Headers({
-            [COMMON_HEADERS.SET_COOKIE]: 'header_value',
-            [COMMON_HEADERS.CONTENT_TYPE]: 'application/json',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_CREDENTIALS]: 'true',
+            ['set-cookie']: 'header_value',
+            ['content-type']: 'application/json',
+            ['access-control-allow-credentials']: 'true',
           }),
         },
       })
@@ -314,12 +313,12 @@ describe('response interceptors', () => {
       await validateResponseHeaders(mockApp, ctx, mockLogger)
 
       expect(useRuntimeConfigMock).toHaveBeenCalled()
-      expect(mockLogger.warn).toHaveBeenCalledWith(`[response] 'access-control-allow-origin' header is missing or invalid (expected: ${TEST_CONFIG.CUSTOM_ORIGIN}, got: null)`)
+      expect(mockLogger.warn).toHaveBeenCalledWith(`[response] 'access-control-allow-origin' header is missing or invalid (expected: http://custom-origin.dev, got: null)`)
     })
 
     it('writes warning if origin header does not include request origin', async () => {
       isServerRuntimeMock.mockReturnValue(true)
-      useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
       useRuntimeConfigMock.mockReturnValue({
         sanctum: {
           mode: 'cookie',
@@ -332,10 +331,10 @@ describe('response interceptors', () => {
       const ctx = createMock<FetchContext>({
         response: {
           headers: new Headers({
-            [COMMON_HEADERS.SET_COOKIE]: 'header_value',
-            [COMMON_HEADERS.CONTENT_TYPE]: 'application/json',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_CREDENTIALS]: 'true',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_ORIGIN]: 'http://another-host.dev',
+            ['set-cookie']: 'header_value',
+            ['content-type']: 'application/json',
+            ['access-control-allow-credentials']: 'true',
+            ['access-control-allow-origin']: 'http://another-host.dev',
           }),
         },
       })
@@ -343,12 +342,12 @@ describe('response interceptors', () => {
       await validateResponseHeaders(mockApp, ctx, mockLogger)
 
       expect(useRuntimeConfigMock).toHaveBeenCalled()
-      expect(mockLogger.warn).toHaveBeenCalledWith(`[response] 'access-control-allow-origin' header is missing or invalid (expected: ${TEST_CONFIG.CUSTOM_ORIGIN}, got: http://another-host.dev)`)
+      expect(mockLogger.warn).toHaveBeenCalledWith(`[response] 'access-control-allow-origin' header is missing or invalid (expected: http://custom-origin.dev, got: http://another-host.dev)`)
     })
 
     it('writes warning if origin header does not include origin from config', async () => {
       isServerRuntimeMock.mockReturnValue(true)
-      useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
       useRuntimeConfigMock.mockReturnValue({
         sanctum: {
           mode: 'cookie',
@@ -368,10 +367,10 @@ describe('response interceptors', () => {
       const ctx = createMock<FetchContext>({
         response: {
           headers: new Headers({
-            [COMMON_HEADERS.SET_COOKIE]: 'header_value',
-            [COMMON_HEADERS.CONTENT_TYPE]: 'application/json',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_CREDENTIALS]: 'true',
-            [COMMON_HEADERS.ACCESS_CONTROL_ALLOW_ORIGIN]: 'http://another-host.dev',
+            ['set-cookie']: 'header_value',
+            ['content-type']: 'application/json',
+            ['access-control-allow-credentials']: 'true',
+            ['access-control-allow-origin']: 'http://another-host.dev',
           }),
         },
       })
