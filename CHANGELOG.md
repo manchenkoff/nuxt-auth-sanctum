@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v2.3.4
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.3.3...v2.3.4)
+
+### 🩹 Fixes
+
+- Use correct config in logger and improve docs about env overrides ([#605](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/605))
+
+### 📖 Documentation
+
+- Clarify SSR environment variable requirements for baseUrl ([#595](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/595))
+
+### 🏡 Chore
+
+- **test:** Added module unit tests ([#602](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/602))
+
+### ❤️ Contributors
+
+- Artem Manchenkov ([@manchenkoff](https://github.com/manchenkoff))
+- Derrick Obedgiu <derrickobedgiu@gmail.com>
+
 ## v2.3.3
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.3.2...v2.3.3)
