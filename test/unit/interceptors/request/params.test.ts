@@ -1,9 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { setRequestParams } from '../../../../src/runtime/interceptors/request/params'
-import { createMock } from '../../../helpers/mocks'
+import { createAppMock, createLoggerMock, createMock } from '../../../helpers/mocks'
 import type { FetchContext } from 'ofetch'
-import type { NuxtApp } from '#app'
-import type { ConsolaInstance } from 'consola'
 
 describe('request interceptors', () => {
   beforeEach(() => {
@@ -12,8 +10,8 @@ describe('request interceptors', () => {
 
   describe('setRequestParams', () => {
     it('sets application/json accept header if not set', async () => {
-      const mockApp = createMock<NuxtApp>()
-      const mockLogger = createMock<ConsolaInstance>({ debug: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         options: {
@@ -29,8 +27,8 @@ describe('request interceptors', () => {
     })
 
     it('does not override existing accept header', async () => {
-      const mockApp = createMock<NuxtApp>()
-      const mockLogger = createMock<ConsolaInstance>({ debug: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         options: {
@@ -46,8 +44,8 @@ describe('request interceptors', () => {
     })
 
     it('updates FormData body on PUT requests', async () => {
-      const mockApp = createMock<NuxtApp>()
-      const mockLogger = createMock<ConsolaInstance>({ debug: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const formData = new FormData()
       formData.append('name', 'test')
@@ -68,8 +66,8 @@ describe('request interceptors', () => {
     })
 
     it('does not modify non-FormData PUT body', async () => {
-      const mockApp = createMock<NuxtApp>()
-      const mockLogger = createMock<ConsolaInstance>({ debug: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         options: {

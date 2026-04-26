@@ -1,18 +1,18 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { validateResponseHeaders } from '../../../../src/runtime/interceptors/response/validation'
-import { createMock } from '../../../helpers/mocks'
+import { createAppMock, createLoggerMock, createMock } from '../../../helpers/mocks'
 import { TEST_CONFIG, COMMON_HEADERS } from '../../../helpers/constants'
-import type { NuxtApp } from '#app'
-import type { ConsolaInstance } from 'consola'
 import type { FetchContext } from 'ofetch'
 
 const {
   isServerRuntimeMock,
   useRequestURLMock,
+  useRuntimeConfigMock,
 } = vi.hoisted(() => {
   return {
     isServerRuntimeMock: vi.fn(),
     useRequestURLMock: vi.fn(),
+    useRuntimeConfigMock: vi.fn(),
   }
 })
 
@@ -26,6 +26,11 @@ vi.mock(
   () => ({ useRequestURL: useRequestURLMock }),
 )
 
+vi.mock(
+  '#imports',
+  () => ({ useRuntimeConfig: useRuntimeConfigMock }),
+)
+
 describe('response interceptors', () => {
   beforeEach(() => {
     vi.clearAllMocks()
@@ -35,8 +40,8 @@ describe('response interceptors', () => {
     it('skips validation in CSR mode', async () => {
       isServerRuntimeMock.mockReturnValue(false)
 
-      const mockApp = createMock<NuxtApp>({})
-      const mockLogger = createMock<ConsolaInstance>({ debug: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({})
 
@@ -47,16 +52,12 @@ describe('response interceptors', () => {
 
     it('writes warning log on empty headers', async () => {
       isServerRuntimeMock.mockReturnValue(true)
-
-      const mockApp = createMock<NuxtApp>({
-        $config: {
-          public: {
-            sanctum: {},
-          },
-        },
+      useRuntimeConfigMock.mockReturnValue({
+        sanctum: {},
       })
 
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({})
 
@@ -68,18 +69,14 @@ describe('response interceptors', () => {
     it('passes validation when all headers are present', async () => {
       isServerRuntimeMock.mockReturnValue(true)
       useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
-
-      const mockApp = createMock<NuxtApp>({
-        $config: {
-          public: {
-            sanctum: {
-              mode: 'token',
-            },
-          },
+      useRuntimeConfigMock.mockReturnValue({
+        sanctum: {
+          mode: 'cookie',
         },
       })
 
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         response: {
@@ -100,18 +97,14 @@ describe('response interceptors', () => {
     it('writes warning if cookie header is missing [cookie mode]', async () => {
       isServerRuntimeMock.mockReturnValue(true)
       useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
-
-      const mockApp = createMock<NuxtApp>({
-        $config: {
-          public: {
-            sanctum: {
-              mode: 'cookie',
-            },
-          },
+      useRuntimeConfigMock.mockReturnValue({
+        sanctum: {
+          mode: 'cookie',
         },
       })
 
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         response: {
@@ -131,18 +124,14 @@ describe('response interceptors', () => {
     it('does not validate cookie header [token mode]', async () => {
       isServerRuntimeMock.mockReturnValue(true)
       useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
-
-      const mockApp = createMock<NuxtApp>({
-        $config: {
-          public: {
-            sanctum: {
-              mode: 'token',
-            },
-          },
+      useRuntimeConfigMock.mockReturnValue({
+        sanctum: {
+          mode: 'token',
         },
       })
 
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         response: {
@@ -162,18 +151,14 @@ describe('response interceptors', () => {
     it('writes warning if content-type header is missing', async () => {
       isServerRuntimeMock.mockReturnValue(true)
       useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
-
-      const mockApp = createMock<NuxtApp>({
-        $config: {
-          public: {
-            sanctum: {
-              mode: 'cookie',
-            },
-          },
+      useRuntimeConfigMock.mockReturnValue({
+        sanctum: {
+          mode: 'cookie',
         },
       })
 
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         response: {
@@ -193,18 +178,14 @@ describe('response interceptors', () => {
     it('writes debug if content-type header is not JSON', async () => {
       isServerRuntimeMock.mockReturnValue(true)
       useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
-
-      const mockApp = createMock<NuxtApp>({
-        $config: {
-          public: {
-            sanctum: {
-              mode: 'cookie',
-            },
-          },
+      useRuntimeConfigMock.mockReturnValue({
+        sanctum: {
+          mode: 'cookie',
         },
       })
 
-      const mockLogger = createMock<ConsolaInstance>({ debug: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         response: {
@@ -219,24 +200,21 @@ describe('response interceptors', () => {
 
       await validateResponseHeaders(mockApp, ctx, mockLogger)
 
+      expect(useRuntimeConfigMock).toHaveBeenCalled()
       expect(mockLogger.debug).toHaveBeenCalledWith(`[response] 'content-type' is present in response but different (expected: application/json, got: unknown)`)
     })
 
     it('writes warning if credentials header is missing [cookie mode]', async () => {
       isServerRuntimeMock.mockReturnValue(true)
       useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
-
-      const mockApp = createMock<NuxtApp>({
-        $config: {
-          public: {
-            sanctum: {
-              mode: 'cookie',
-            },
-          },
+      useRuntimeConfigMock.mockReturnValue({
+        sanctum: {
+          mode: 'cookie',
         },
       })
 
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         response: {
@@ -250,24 +228,21 @@ describe('response interceptors', () => {
 
       await validateResponseHeaders(mockApp, ctx, mockLogger)
 
+      expect(useRuntimeConfigMock).toHaveBeenCalled()
       expect(mockLogger.warn).toHaveBeenCalledWith(`[response] 'access-control-allow-credentials' header is missing or invalid (expected: true, got: null)`)
     })
 
     it('writes warning if credentials header is disabled [cookie mode]', async () => {
       isServerRuntimeMock.mockReturnValue(true)
       useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
-
-      const mockApp = createMock<NuxtApp>({
-        $config: {
-          public: {
-            sanctum: {
-              mode: 'cookie',
-            },
-          },
+      useRuntimeConfigMock.mockReturnValue({
+        sanctum: {
+          mode: 'cookie',
         },
       })
 
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         response: {
@@ -282,24 +257,21 @@ describe('response interceptors', () => {
 
       await validateResponseHeaders(mockApp, ctx, mockLogger)
 
+      expect(useRuntimeConfigMock).toHaveBeenCalled()
       expect(mockLogger.warn).toHaveBeenCalledWith(`[response] 'access-control-allow-credentials' header is missing or invalid (expected: true, got: false)`)
     })
 
     it('skips validation of credentials header [token mode]', async () => {
       isServerRuntimeMock.mockReturnValue(true)
       useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
-
-      const mockApp = createMock<NuxtApp>({
-        $config: {
-          public: {
-            sanctum: {
-              mode: 'token',
-            },
-          },
+      useRuntimeConfigMock.mockReturnValue({
+        sanctum: {
+          mode: 'token',
         },
       })
 
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         response: {
@@ -313,24 +285,21 @@ describe('response interceptors', () => {
 
       await validateResponseHeaders(mockApp, ctx, mockLogger)
 
+      expect(useRuntimeConfigMock).toHaveBeenCalled()
       expect(mockLogger.warn).not.toHaveBeenCalled()
     })
 
     it('writes warning if origin header is missing', async () => {
       isServerRuntimeMock.mockReturnValue(true)
       useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
-
-      const mockApp = createMock<NuxtApp>({
-        $config: {
-          public: {
-            sanctum: {
-              mode: 'cookie',
-            },
-          },
+      useRuntimeConfigMock.mockReturnValue({
+        sanctum: {
+          mode: 'cookie',
         },
       })
 
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         response: {
@@ -344,24 +313,21 @@ describe('response interceptors', () => {
 
       await validateResponseHeaders(mockApp, ctx, mockLogger)
 
+      expect(useRuntimeConfigMock).toHaveBeenCalled()
       expect(mockLogger.warn).toHaveBeenCalledWith(`[response] 'access-control-allow-origin' header is missing or invalid (expected: ${TEST_CONFIG.CUSTOM_ORIGIN}, got: null)`)
     })
 
     it('writes warning if origin header does not include request origin', async () => {
       isServerRuntimeMock.mockReturnValue(true)
       useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
-
-      const mockApp = createMock<NuxtApp>({
-        $config: {
-          public: {
-            sanctum: {
-              mode: 'cookie',
-            },
-          },
+      useRuntimeConfigMock.mockReturnValue({
+        sanctum: {
+          mode: 'cookie',
         },
       })
 
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         response: {
@@ -376,25 +342,28 @@ describe('response interceptors', () => {
 
       await validateResponseHeaders(mockApp, ctx, mockLogger)
 
+      expect(useRuntimeConfigMock).toHaveBeenCalled()
       expect(mockLogger.warn).toHaveBeenCalledWith(`[response] 'access-control-allow-origin' header is missing or invalid (expected: ${TEST_CONFIG.CUSTOM_ORIGIN}, got: http://another-host.dev)`)
     })
 
     it('writes warning if origin header does not include origin from config', async () => {
       isServerRuntimeMock.mockReturnValue(true)
       useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRuntimeConfigMock.mockReturnValue({
+        sanctum: {
+          mode: 'cookie',
+          origin: 'http://sanctum-host.dev',
+        },
 
-      const mockApp = createMock<NuxtApp>({
-        $config: {
-          public: {
-            sanctum: {
-              mode: 'cookie',
-              origin: 'http://sanctum-host.dev',
-            },
+        public: {
+          sanctum: {
+            origin: 'http://client-sanctum-host.dev',
           },
         },
       })
 
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({
         response: {
@@ -409,6 +378,7 @@ describe('response interceptors', () => {
 
       await validateResponseHeaders(mockApp, ctx, mockLogger)
 
+      expect(useRuntimeConfigMock).toHaveBeenCalled()
       expect(mockLogger.warn).toHaveBeenCalledWith(`[response] 'access-control-allow-origin' header is missing or invalid (expected: http://sanctum-host.dev, got: http://another-host.dev)`)
     })
   })

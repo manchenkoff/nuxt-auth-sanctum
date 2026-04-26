@@ -4,6 +4,7 @@ import type { PublicModuleOptions } from '../../types/options'
 import { useRequestURL } from '#app'
 import type { NuxtApp } from '#app'
 import { isServerRuntime } from '../../utils/runtime'
+import { useSanctumConfig } from '../../composables/useSanctumConfig'
 
 type HeaderValidator = (headers: Headers, config: PublicModuleOptions, logger: ConsolaInstance) => void
 
@@ -114,7 +115,7 @@ export async function validateResponseHeaders(
     return
   }
 
-  const config = app.$config.public.sanctum as PublicModuleOptions
+  const config = useSanctumConfig()
   const headers = ctx.response?.headers
 
   if (!headers) {
