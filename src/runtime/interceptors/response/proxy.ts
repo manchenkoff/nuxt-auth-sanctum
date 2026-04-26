@@ -6,6 +6,7 @@ import type { ConsolaInstance } from 'consola'
 import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import { navigateTo, useRequestEvent } from '#app'
 import type { NuxtApp } from '#app'
+import { isServerRuntime } from '../../utils/runtime'
 
 const ServerCookieName = 'set-cookie'
 
@@ -131,7 +132,7 @@ export async function proxyResponseHeaders(
     return
   }
 
-  if (import.meta.server) {
+  if (isServerRuntime()) {
     appendServerResponseHeaders(app, ctx, logger)
   }
 
