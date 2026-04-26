@@ -1,9 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { handleResponseError } from '../../../../src/runtime/interceptors/response/errorHandler'
-import { createMock } from '../../../helpers/mocks'
+import { createAppMock, createLoggerMock, createMock } from '../../../helpers/mocks'
 import { TEST_CONFIG } from '../../../helpers/constants'
-import type { NuxtApp } from '#app'
-import type { ConsolaInstance } from 'consola'
 import type { FetchContext } from 'ofetch'
 
 const {
@@ -44,8 +42,8 @@ describe('response interceptors', () => {
 
   describe('handleResponseError', () => {
     it('writes warning on 419 response', async () => {
-      const mockApp = createMock<NuxtApp>()
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
       const ctx = createMock<FetchContext>({ response: { status: 419 } })
 
       await handleResponseError(mockApp, ctx, mockLogger)
@@ -58,8 +56,8 @@ describe('response interceptors', () => {
 
       useSanctumUserMock.mockReturnValue(mockUser)
 
-      const mockApp = createMock<NuxtApp>()
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
       const ctx = createMock<FetchContext>({ response: { status: 401 } })
 
       await handleResponseError(mockApp, ctx, mockLogger)
@@ -73,8 +71,8 @@ describe('response interceptors', () => {
 
       useSanctumUserMock.mockReturnValue(mockUser)
 
-      const mockApp = createMock<NuxtApp>()
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
       const ctx = createMock<FetchContext>({ response: { status: 401 } })
 
       await handleResponseError(mockApp, ctx, mockLogger)
@@ -93,12 +91,8 @@ describe('response interceptors', () => {
 
       isServerRuntimeMock.mockReturnValue(false)
 
-      const mockApp = createMock<NuxtApp>({
-        callHook: vi.fn().mockResolvedValue(undefined),
-        runWithContext: vi.fn(fn => fn()),
-      })
-
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
       const ctx = createMock<FetchContext>({ response: { status: 401 } })
 
       await handleResponseError(mockApp, ctx, mockLogger)
@@ -117,12 +111,8 @@ describe('response interceptors', () => {
 
       isServerRuntimeMock.mockReturnValue(true)
 
-      const mockApp = createMock<NuxtApp>({
-        callHook: vi.fn(),
-        runWithContext: vi.fn(fn => fn()),
-      })
-
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({ response: { status: 401 } })
 
@@ -138,8 +128,8 @@ describe('response interceptors', () => {
 
       useSanctumUserMock.mockReturnValue(mockUser)
 
-      const mockApp = createMock<NuxtApp>()
-      const mockLogger = createMock<ConsolaInstance>({ warn: vi.fn() })
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
 
       const ctx = createMock<FetchContext>({ response: { status: 500 } })
 
