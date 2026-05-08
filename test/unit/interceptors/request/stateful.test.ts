@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { setStatefulParams } from '../../../../src/runtime/interceptors/request/stateful'
 import { createAppMock, createLoggerMock, createMock } from '../../../helpers/mocks'
-import { TEST_CONFIG, HTTP_METHODS_REQUIRING_CSRF } from '../../../helpers/constants'
 import type { FetchContext } from 'ofetch'
 
 const {
@@ -87,7 +86,7 @@ describe('request interceptors', () => {
     it('appends client headers in SSR [cookie, user-agent, origin]', async () => {
       useSanctumConfigMock.mockReturnValue({
         mode: 'cookie',
-        origin: TEST_CONFIG.CUSTOM_ORIGIN,
+        origin: 'http://custom-origin.dev',
       })
       isServerRuntimeMock.mockReturnValue(true)
       useRequestHeadersMock.mockReturnValue({
@@ -109,8 +108,8 @@ describe('request interceptors', () => {
 
       expect(ctx.options.headers).toStrictEqual(
         new Headers({
-          'Referer': TEST_CONFIG.CUSTOM_ORIGIN,
-          'Origin': TEST_CONFIG.CUSTOM_ORIGIN,
+          'Referer': 'http://custom-origin.dev',
+          'Origin': 'http://custom-origin.dev',
           'Cookie': 'random-cookie=value',
           'User-Agent': 'random-user-agent',
         }),
@@ -132,7 +131,7 @@ describe('request interceptors', () => {
         'cookie': 'random-cookie=value',
         'user-agent': 'random-user-agent',
       })
-      useRequestURLMock.mockReturnValue({ origin: TEST_CONFIG.CUSTOM_ORIGIN })
+      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
 
       const mockApp = createAppMock()
       const mockLogger = createLoggerMock()
@@ -148,8 +147,8 @@ describe('request interceptors', () => {
 
       expect(ctx.options.headers).toStrictEqual(
         new Headers({
-          'Referer': TEST_CONFIG.CUSTOM_ORIGIN,
-          'Origin': TEST_CONFIG.CUSTOM_ORIGIN,
+          'Referer': 'http://custom-origin.dev',
+          'Origin': 'http://custom-origin.dev',
           'Cookie': 'random-cookie=value',
           'User-Agent': 'random-user-agent',
         }),
@@ -164,17 +163,17 @@ describe('request interceptors', () => {
       )
     })
 
-    describe.each(HTTP_METHODS_REQUIRING_CSRF)('appends CSRF for %s method', (method) => {
+    describe.each(['POST', 'PUT', 'PATCH', 'DELETE'])('appends CSRF for %s method', (method) => {
       it(`appends CSRF for ${method} method`, async () => {
         useSanctumConfigMock.mockReturnValue({
           mode: 'cookie',
           csrf: {
-            cookie: TEST_CONFIG.CSRF_COOKIE_NAME,
-            header: TEST_CONFIG.CSRF_HEADER_NAME,
+            cookie: 'cookie_name',
+            header: 'header_name',
           },
         })
         isServerRuntimeMock.mockReturnValue(false)
-        useCookieMock.mockReturnValue({ value: TEST_CONFIG.CSRF_TOKEN })
+        useCookieMock.mockReturnValue({ value: 'csrf-token-cookie-value' })
 
         const mockApp = createAppMock()
         const mockLogger = createLoggerMock()
@@ -190,7 +189,7 @@ describe('request interceptors', () => {
 
         expect(ctx.options.headers).toStrictEqual(
           new Headers({
-            [TEST_CONFIG.CSRF_HEADER_NAME]: TEST_CONFIG.CSRF_TOKEN,
+            ['header_name']: 'csrf-token-cookie-value',
           }),
         )
 
@@ -198,7 +197,7 @@ describe('request interceptors', () => {
         expect(useRequestHeadersMock).not.toHaveBeenCalled()
         expect(useRequestURLMock).not.toHaveBeenCalled()
         expect(useCookieMock).toHaveBeenCalledWith(
-          TEST_CONFIG.CSRF_COOKIE_NAME,
+          'cookie_name',
           { readonly: true, watch: false },
         )
         expect(mockLogger.debug).toHaveBeenCalledWith('[request] added header_name header')
@@ -239,7 +238,7 @@ describe('request interceptors', () => {
       useSanctumConfigMock.mockReturnValue({
         mode: 'cookie',
         csrf: {
-          cookie: TEST_CONFIG.CSRF_COOKIE_NAME,
+          cookie: 'cookie_name',
           header: undefined,
         },
       })
@@ -268,13 +267,13 @@ describe('request interceptors', () => {
     it('requests CSRF token if not fetched yet', async () => {
       useSanctumConfigMock.mockReturnValue({
         mode: 'cookie',
-        baseUrl: TEST_CONFIG.CUSTOM_BASE_URL,
+        baseUrl: 'http://remote-host.dev',
         csrf: {
-          cookie: TEST_CONFIG.CSRF_COOKIE_NAME,
-          header: TEST_CONFIG.CSRF_HEADER_NAME,
+          cookie: 'cookie_name',
+          header: 'header_name',
         },
         endpoints: {
-          csrf: TEST_CONFIG.CSRF_ENDPOINT,
+          csrf: '/api/token',
         },
       })
       isServerRuntimeMock.mockReturnValue(false)
@@ -298,7 +297,7 @@ describe('request interceptors', () => {
 
       expect(ctx.options.headers).toStrictEqual(
         new Headers({
-          [TEST_CONFIG.CSRF_HEADER_NAME]: 'token-value',
+          ['header_name']: 'token-value',
         }),
       )
 
@@ -306,15 +305,15 @@ describe('request interceptors', () => {
       expect(useRequestHeadersMock).not.toHaveBeenCalled()
       expect(useRequestURLMock).not.toHaveBeenCalled()
       expect(useCookieMock).toHaveBeenCalledWith(
-        TEST_CONFIG.CSRF_COOKIE_NAME,
+        'cookie_name',
         { readonly: true, watch: false },
       )
-      expect(fetchMock).toHaveBeenCalledWith(TEST_CONFIG.CSRF_ENDPOINT, {
-        baseURL: TEST_CONFIG.CUSTOM_BASE_URL,
+      expect(fetchMock).toHaveBeenCalledWith('/api/token', {
+        baseURL: 'http://remote-host.dev',
         credentials: 'include',
       })
       expect(mockLogger.debug).toHaveBeenCalledWith('[request] CSRF cookie has been initialized')
-      expect(refreshCookieMock).toHaveBeenCalledWith(TEST_CONFIG.CSRF_COOKIE_NAME)
+      expect(refreshCookieMock).toHaveBeenCalledWith('cookie_name')
       expect(mockLogger.warn).not.toHaveBeenCalled()
       expect(mockLogger.debug).toHaveBeenCalledWith('[request] added header_name header')
     })
@@ -323,8 +322,8 @@ describe('request interceptors', () => {
       useSanctumConfigMock.mockReturnValue({
         mode: 'cookie',
         csrf: {
-          cookie: TEST_CONFIG.CSRF_COOKIE_NAME,
-          header: TEST_CONFIG.CSRF_HEADER_NAME,
+          cookie: 'cookie_name',
+          header: 'header_name',
         },
         endpoints: {
           csrf: undefined,
@@ -351,7 +350,7 @@ describe('request interceptors', () => {
       expect(useRequestHeadersMock).not.toHaveBeenCalled()
       expect(useRequestURLMock).not.toHaveBeenCalled()
       expect(useCookieMock).toHaveBeenCalledWith(
-        TEST_CONFIG.CSRF_COOKIE_NAME,
+        'cookie_name',
         { readonly: true, watch: false },
       )
       expect(refreshCookieMock).not.toHaveBeenCalled()
@@ -361,13 +360,13 @@ describe('request interceptors', () => {
     it('writes warning if no CSRF token returned from API', async () => {
       useSanctumConfigMock.mockReturnValue({
         mode: 'cookie',
-        baseUrl: TEST_CONFIG.CUSTOM_BASE_URL,
+        baseUrl: 'http://remote-host.dev',
         csrf: {
-          cookie: TEST_CONFIG.CSRF_COOKIE_NAME,
-          header: TEST_CONFIG.CSRF_HEADER_NAME,
+          cookie: 'cookie_name',
+          header: 'header_name',
         },
         endpoints: {
-          csrf: TEST_CONFIG.CSRF_ENDPOINT,
+          csrf: '/api/token',
         },
       })
       isServerRuntimeMock.mockReturnValue(false)
@@ -389,15 +388,15 @@ describe('request interceptors', () => {
       expect(useRequestHeadersMock).not.toHaveBeenCalled()
       expect(useRequestURLMock).not.toHaveBeenCalled()
       expect(useCookieMock).toHaveBeenCalledWith(
-        TEST_CONFIG.CSRF_COOKIE_NAME,
+        'cookie_name',
         { readonly: true, watch: false },
       )
-      expect(fetchMock).toHaveBeenCalledWith(TEST_CONFIG.CSRF_ENDPOINT, {
-        baseURL: TEST_CONFIG.CUSTOM_BASE_URL,
+      expect(fetchMock).toHaveBeenCalledWith('/api/token', {
+        baseURL: 'http://remote-host.dev',
         credentials: 'include',
       })
       expect(mockLogger.debug).toHaveBeenCalledWith('[request] CSRF cookie has been initialized')
-      expect(refreshCookieMock).toHaveBeenCalledWith(TEST_CONFIG.CSRF_COOKIE_NAME)
+      expect(refreshCookieMock).toHaveBeenCalledWith('cookie_name')
       expect(mockLogger.warn).toHaveBeenCalledWith('cookie_name cookie is missing, unable to set header_name header')
       expect(mockLogger.debug).not.toHaveBeenCalledWith('[request] added header_name header')
     })

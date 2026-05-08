@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { handleResponseError } from '../../../../src/runtime/interceptors/response/errorHandler'
 import { createAppMock, createLoggerMock, createMock } from '../../../helpers/mocks'
-import { TEST_CONFIG } from '../../../helpers/constants'
 import type { FetchContext } from 'ofetch'
 
 const {
@@ -84,7 +83,7 @@ describe('response interceptors', () => {
     it('redirects on client for 401 with redirect enabled', async () => {
       useSanctumConfigMock.mockReturnValue({
         redirectIfUnauthenticated: true,
-        redirect: { onAuthOnly: TEST_CONFIG.REDIRECT_LOGIN },
+        redirect: { onAuthOnly: '/login' },
       })
 
       useSanctumUserMock.mockReturnValue({ value: { id: 1 } })
@@ -97,14 +96,14 @@ describe('response interceptors', () => {
 
       await handleResponseError(mockApp, ctx, mockLogger)
 
-      expect(mockApp.callHook).toHaveBeenCalledWith('sanctum:redirect', TEST_CONFIG.REDIRECT_LOGIN)
-      expect(navigateToMock).toHaveBeenCalledWith(TEST_CONFIG.REDIRECT_LOGIN)
+      expect(mockApp.callHook).toHaveBeenCalledWith('sanctum:redirect', '/login')
+      expect(navigateToMock).toHaveBeenCalledWith('/login')
     })
 
     it('skips redirect on server for 401', async () => {
       useSanctumConfigMock.mockReturnValue({
         redirectIfUnauthenticated: true,
-        redirect: { onAuthOnly: TEST_CONFIG.REDIRECT_LOGIN },
+        redirect: { onAuthOnly: '/login' },
       })
 
       useSanctumUserMock.mockReturnValue({ value: { id: 1 } })
