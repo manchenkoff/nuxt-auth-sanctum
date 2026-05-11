@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "nuxt-sanctum-token",
+  "scripts": {
+    "build": "nuxt build",
+    "test:types": "nuxt prepare && npx vue-tsc -b --noEmit"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "nuxt": "latest",
+    "vue": "^3.5.32"
+  }
+}

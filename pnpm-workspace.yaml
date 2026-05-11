@@ -1,5 +1,6 @@
 packages:
   - '.'
+  - 'test/fixtures/*'
 
 allowBuilds:
   '@parcel/watcher': true
