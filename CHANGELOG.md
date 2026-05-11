@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v2.3.5
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.3.4...v2.3.5)
+
+### 🩹 Fixes
+
+- Handle origin and referrer in any mode ([#620](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/620))
+
+### 🏡 Chore
+
+- **test:** Added module composable tests ([#615](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/615))
+- **test:** Added module e2e and utils tests ([#619](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/619))
+- **ci:** Install playwright for e2e tests ([58f9282](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/58f9282))
+
+### ❤️ Contributors
+
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+- Artem Manchenkov ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v2.3.4
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.3.3...v2.3.4)
