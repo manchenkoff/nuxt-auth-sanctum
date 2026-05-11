@@ -1,6 +1,7 @@
 import type { SanctumInterceptor } from '../types/config'
 import { setRequestParams } from './request/params'
 import { setStatefulParams } from './request/stateful'
+import { setRequestOrigin } from './request/cors'
 import { setTokenHeader } from './request/token'
 import { logRequestHeaders } from './request/logging'
 import { proxyResponseHeaders } from './response/proxy'
@@ -11,6 +12,7 @@ import { handleResponseError } from './response/errorHandler'
 const [request, response, responseError] = [
   [
     setRequestParams,
+    setRequestOrigin,
     setStatefulParams,
     setTokenHeader,
     logRequestHeaders,

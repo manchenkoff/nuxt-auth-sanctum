@@ -7,7 +7,6 @@ const {
   useSanctumConfigMock,
   isServerRuntimeMock,
   useRequestHeadersMock,
-  useRequestURLMock,
   useCookieMock,
   refreshCookieMock,
   fetchMock,
@@ -16,7 +15,6 @@ const {
     useSanctumConfigMock: vi.fn(),
     isServerRuntimeMock: vi.fn(),
     useRequestHeadersMock: vi.fn(),
-    useRequestURLMock: vi.fn(),
     useCookieMock: vi.fn(),
     refreshCookieMock: vi.fn(),
     fetchMock: vi.fn(),
@@ -37,7 +35,6 @@ vi.mock(
   '#app',
   () => ({
     useRequestHeaders: useRequestHeadersMock,
-    useRequestURL: useRequestURLMock,
     useCookie: useCookieMock,
     refreshCookie: refreshCookieMock,
   }),
@@ -83,10 +80,9 @@ describe('request interceptors', () => {
       expect(mockLogger.debug).not.toHaveBeenCalled()
     })
 
-    it('appends client headers in SSR [cookie, user-agent, origin]', async () => {
+    it('appends client headers in SSR [cookie, user-agent]', async () => {
       useSanctumConfigMock.mockReturnValue({
         mode: 'cookie',
-        origin: 'http://custom-origin.dev',
       })
       isServerRuntimeMock.mockReturnValue(true)
       useRequestHeadersMock.mockReturnValue({
@@ -108,8 +104,6 @@ describe('request interceptors', () => {
 
       expect(ctx.options.headers).toStrictEqual(
         new Headers({
-          'Referer': 'http://custom-origin.dev',
-          'Origin': 'http://custom-origin.dev',
           'Cookie': 'random-cookie=value',
           'User-Agent': 'random-user-agent',
         }),
@@ -117,49 +111,9 @@ describe('request interceptors', () => {
 
       expect(isServerRuntimeMock).toHaveBeenCalled()
       expect(useRequestHeadersMock).toHaveBeenCalledWith(['cookie', 'user-agent'])
-      expect(useRequestURLMock).not.toHaveBeenCalled()
       expect(mockLogger.debug).toHaveBeenCalledWith(
         '[request] added client headers to server request',
-        ['Referer', 'Origin', 'Cookie', 'User-Agent'],
-      )
-    })
-
-    it('appends request origin if not provided', async () => {
-      useSanctumConfigMock.mockReturnValue({ mode: 'cookie' })
-      isServerRuntimeMock.mockReturnValue(true)
-      useRequestHeadersMock.mockReturnValue({
-        'cookie': 'random-cookie=value',
-        'user-agent': 'random-user-agent',
-      })
-      useRequestURLMock.mockReturnValue({ origin: 'http://custom-origin.dev' })
-
-      const mockApp = createAppMock()
-      const mockLogger = createLoggerMock()
-
-      const ctx = createMock<FetchContext>({
-        options: {
-          method: undefined,
-          headers: new Headers(),
-        },
-      })
-
-      await setStatefulParams(mockApp, ctx, mockLogger)
-
-      expect(ctx.options.headers).toStrictEqual(
-        new Headers({
-          'Referer': 'http://custom-origin.dev',
-          'Origin': 'http://custom-origin.dev',
-          'Cookie': 'random-cookie=value',
-          'User-Agent': 'random-user-agent',
-        }),
-      )
-
-      expect(isServerRuntimeMock).toHaveBeenCalled()
-      expect(useRequestHeadersMock).toHaveBeenCalledWith(['cookie', 'user-agent'])
-      expect(useRequestURLMock).toHaveBeenCalled()
-      expect(mockLogger.debug).toHaveBeenCalledWith(
-        '[request] added client headers to server request',
-        ['Referer', 'Origin', 'Cookie', 'User-Agent'],
+        ['Cookie', 'User-Agent'],
       )
     })
 
@@ -195,7 +149,6 @@ describe('request interceptors', () => {
 
         expect(isServerRuntimeMock).toHaveBeenCalled()
         expect(useRequestHeadersMock).not.toHaveBeenCalled()
-        expect(useRequestURLMock).not.toHaveBeenCalled()
         expect(useCookieMock).toHaveBeenCalledWith(
           'cookie_name',
           { readonly: true, watch: false },
@@ -230,7 +183,6 @@ describe('request interceptors', () => {
 
       expect(isServerRuntimeMock).toHaveBeenCalled()
       expect(useRequestHeadersMock).not.toHaveBeenCalled()
-      expect(useRequestURLMock).not.toHaveBeenCalled()
       expect(mockLogger.debug).not.toHaveBeenCalled()
     })
 
@@ -260,7 +212,6 @@ describe('request interceptors', () => {
 
       expect(isServerRuntimeMock).toHaveBeenCalled()
       expect(useRequestHeadersMock).not.toHaveBeenCalled()
-      expect(useRequestURLMock).not.toHaveBeenCalled()
       expect(mockLogger.debug).not.toHaveBeenCalled()
     })
 
@@ -303,7 +254,6 @@ describe('request interceptors', () => {
 
       expect(isServerRuntimeMock).toHaveBeenCalled()
       expect(useRequestHeadersMock).not.toHaveBeenCalled()
-      expect(useRequestURLMock).not.toHaveBeenCalled()
       expect(useCookieMock).toHaveBeenCalledWith(
         'cookie_name',
         { readonly: true, watch: false },
@@ -348,7 +298,6 @@ describe('request interceptors', () => {
 
       expect(isServerRuntimeMock).toHaveBeenCalled()
       expect(useRequestHeadersMock).not.toHaveBeenCalled()
-      expect(useRequestURLMock).not.toHaveBeenCalled()
       expect(useCookieMock).toHaveBeenCalledWith(
         'cookie_name',
         { readonly: true, watch: false },
@@ -386,7 +335,6 @@ describe('request interceptors', () => {
 
       expect(isServerRuntimeMock).toHaveBeenCalled()
       expect(useRequestHeadersMock).not.toHaveBeenCalled()
-      expect(useRequestURLMock).not.toHaveBeenCalled()
       expect(useCookieMock).toHaveBeenCalledWith(
         'cookie_name',
         { readonly: true, watch: false },
