@@ -29,6 +29,8 @@ jobs:
         run: pnpm install
       - name: Prepare stubs
         run: pnpm dev:prepare
+      - name: Install Playwright
+        run: pnpm exec playwright install chromium --with-deps
       - name: Validate package
         run: pnpm validate
   publish:
