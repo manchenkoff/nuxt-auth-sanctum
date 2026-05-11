@@ -2,7 +2,7 @@ import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import type { PublicModuleOptions } from '../../types/options'
-import { useCookie, useRequestHeaders, useRequestURL, refreshCookie, type NuxtApp } from '#app'
+import { useCookie, useRequestHeaders, refreshCookie, type NuxtApp } from '#app'
 import { isServerRuntime } from '../../utils/runtime'
 
 const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch'])
@@ -20,11 +20,8 @@ function useClientHeaders(
   logger: ConsolaInstance,
 ): void {
   const clientHeaders = useRequestHeaders(['cookie', 'user-agent'])
-  const origin = config.origin ?? useRequestURL().origin
 
   const headersToAdd = {
-    Referer: origin,
-    Origin: origin,
     ...(clientHeaders.cookie && { Cookie: clientHeaders.cookie }),
     ...(clientHeaders['user-agent'] && { 'User-Agent': clientHeaders['user-agent'] }),
   }
