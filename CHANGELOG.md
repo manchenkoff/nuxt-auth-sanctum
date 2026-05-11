@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.0.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.3.5...v3.0.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Switch to nuxt native fetch factory ([#567](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/567))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Switch to nuxt native fetch factory ([#567](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/567))
+
+### ❤️ Contributors
+
+- Artem Manchenkov ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v2.3.5
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.3.4...v2.3.5)
