@@ -14,15 +14,15 @@
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.111",
-    "@iconify-json/simple-icons": "^1.2.84",
-    "@iconify-json/vscode-icons": "^1.2.53",
+    "@iconify-json/simple-icons": "^1.2.85",
+    "@iconify-json/vscode-icons": "^1.2.54",
     "@nuxt/content": "^3.14.0",
     "@nuxt/image": "^2.0.0",
-    "@nuxt/ui": "^4.8.1",
+    "@nuxt/ui": "^4.8.2",
     "better-sqlite3": "^12.10.0",
-    "nuxt": "^4.4.6",
+    "nuxt": "^4.4.7",
     "nuxt-llms": "0.2.0",
-    "nuxt-og-image": "^6.5.1"
+    "nuxt-og-image": "^6.5.2"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
