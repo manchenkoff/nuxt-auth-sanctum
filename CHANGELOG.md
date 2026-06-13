@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.1.0
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v3.0.0...v3.1.0)
+
+### 🚀 Enhancements
+
+- Keep current route in redirect on 401 API response ([#646](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/646))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump vitest from 4.1.7 to 4.1.8 ([#639](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/639))
+- **deps-dev:** Bump vue-tsc from 3.3.2 to 3.3.3 ([#640](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/640))
+
+### ❤️ Contributors
+
+- Artem Manchenkov ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v3.0.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v2.3.5...v3.0.0)
