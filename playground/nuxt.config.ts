@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     logLevel: 4,
     redirect: {
       keepRequestedRoute: true,
+      keepRouteOnUnauthenticated: true,
       onAuthOnly: '/login',
       onGuestOnly: '/profile',
       onLogin: '/welcome',

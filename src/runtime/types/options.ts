@@ -66,6 +66,11 @@ export interface RedirectOptions {
    */
   keepRequestedRoute: boolean
   /**
+   * Determines whether to keep the current route when redirecting on 401 responses.
+   * @default false
+   */
+  keepRouteOnUnauthenticated: boolean
+  /**
    * Route to redirect to when the user is authenticated.
    * If set to false, do nothing.
    * @default '/'

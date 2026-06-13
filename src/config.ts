@@ -22,6 +22,7 @@ export const defaultModuleOptions: ModuleOptions = {
   },
   redirect: {
     keepRequestedRoute: false,
+    keepRouteOnUnauthenticated: false,
     onLogin: '/',
     onLogout: '/',
     onAuthOnly: '/login',
