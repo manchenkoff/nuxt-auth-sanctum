@@ -27,6 +27,7 @@ describe('default config', () => {
       },
       redirect: {
         keepRequestedRoute: false,
+        keepRouteOnUnauthenticated: false,
         onLogin: '/',
         onLogout: '/',
         onAuthOnly: '/login',

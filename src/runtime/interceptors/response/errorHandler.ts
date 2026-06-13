@@ -1,10 +1,12 @@
 import type { FetchContext, FetchResponse } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
+import type { RouteLocationAsPathGeneric } from 'vue-router'
 import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import { useSanctumUser } from '../../composables/useSanctumUser'
-import { navigateTo } from '#app'
+import { navigateTo, useRouter } from '#app'
 import type { NuxtApp } from '#app'
 import { isServerRuntime } from '../../utils/runtime'
+import { trimTrailingSlash } from '../../utils/formatter'
 
 /**
  * Handles error responses from the API.
@@ -20,6 +22,7 @@ export async function handleResponseError(
 ): Promise<void> {
   const options = useSanctumConfig()
   const user = useSanctumUser()
+  const router = useRouter()
 
   const response = context.response as FetchResponse<unknown>
 
@@ -39,10 +42,16 @@ export async function handleResponseError(
       && options.redirectIfUnauthenticated
       && options.redirect.onAuthOnly
     ) {
-      const redirectUrl = options.redirect.onAuthOnly
+      const redirect: RouteLocationAsPathGeneric = { path: options.redirect.onAuthOnly }
 
-      await nuxtApp.callHook('sanctum:redirect', redirectUrl)
-      await nuxtApp.runWithContext(async () => await navigateTo(redirectUrl))
+      if (options.redirect.keepRouteOnUnauthenticated) {
+        const currentPath = router.currentRoute.value.fullPath
+
+        redirect.query = { redirect: trimTrailingSlash(currentPath) }
+      }
+
+      await nuxtApp.callHook('sanctum:redirect', router.resolve(redirect).fullPath)
+      await nuxtApp.runWithContext(async () => await navigateTo(redirect))
     }
   }
 }
