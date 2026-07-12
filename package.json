@@ -53,18 +53,18 @@
     "@nuxt/schema": "^4.4.8",
     "@nuxt/test-utils": "^4.0.3",
     "@playwright/test": "^1.61.1",
-    "@types/node": "^26.1.0",
+    "@types/node": "^26.1.1",
     "@vue/test-utils": "^2.4.11",
     "changelogen": "^0.6.2",
     "consola": "^3.4.2",
-    "eslint": "^10.6.0",
+    "eslint": "^10.7.0",
     "h3": "1.15.11",
     "happy-dom": "^20.10.6",
     "nuxt": "^4.4.8",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.9",
+    "vitest": "^4.1.10",
     "vue": "^3.5.39",
-    "vue-tsc": "^3.3.6"
+    "vue-tsc": "^3.3.7"
   },
   "packageManager": "pnpm@11.6.0"
 }
