@@ -1,5 +1,6 @@
 {
   "files": [],
+  "include": ["app/**/*.vue"],
   "references": [
     { "path": "./.nuxt/tsconfig.app.json" },
     { "path": "./.nuxt/tsconfig.server.json" },
