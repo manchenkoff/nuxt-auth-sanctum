@@ -91,13 +91,13 @@ function stubConfigMock(overrides: Partial<ModuleOptions> = {}): void {
 }
 
 describe('useSanctumAuth', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks()
 
     useSanctumConfigMock.mockReset().mockReturnValue(CONFIG)
     useSanctumUser().value = null
     useState('sanctum.user.loaded').value = false
-    useRouter().replace('/')
+    await useRouter().replace('/')
   })
 
   it('user - returns null when user is not set', () => {
