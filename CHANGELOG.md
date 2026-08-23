@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v3.1.1
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v3.1.0...v3.1.1)
+
+### 🩹 Fixes
+
+- Prevent race-condition on csrf cookie refresh ([#688](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/688))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump @types/node from 25.9.4 to 26.0.1 ([#657](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/657))
+- **deps-dev:** Bump vue-tsc from 3.3.5 to 3.3.6 ([#658](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/658))
+- Fixed docs pipeline ([151c333](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/151c333))
+- **test:** Use async for router checks ([7f485e1](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/7f485e1))
+
+### ❤️ Contributors
+
+- Artem Manchenkov ([@manchenkoff](https://github.com/manchenkoff))
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v3.1.0
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v3.0.0...v3.1.0)
