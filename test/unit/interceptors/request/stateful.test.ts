@@ -258,11 +258,59 @@ describe('request interceptors', () => {
         'cookie_name',
         { readonly: true, watch: false },
       )
+      expect(useCookieMock).toHaveBeenCalledTimes(2)
       expect(fetchMock).toHaveBeenCalledWith('/api/token', {
         baseURL: 'http://remote-host.dev',
         credentials: 'include',
       })
       expect(mockLogger.debug).toHaveBeenCalledWith('[request] CSRF cookie has been initialized')
+      expect(refreshCookieMock).toHaveBeenCalledWith('cookie_name')
+      expect(mockLogger.warn).not.toHaveBeenCalled()
+      expect(mockLogger.debug).toHaveBeenCalledWith('[request] added header_name header')
+    })
+
+    it('re-reads CSRF cookie after initialization', async () => {
+      useSanctumConfigMock.mockReturnValue({
+        mode: 'cookie',
+        baseUrl: 'http://remote-host.dev',
+        csrf: {
+          cookie: 'cookie_name',
+          header: 'header_name',
+        },
+        endpoints: {
+          csrf: '/api/token',
+        },
+      })
+      isServerRuntimeMock.mockReturnValue(false)
+      useCookieMock
+        .mockReturnValueOnce({ value: undefined })
+        .mockReturnValueOnce({ value: 'fresh-token-value' })
+
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
+
+      const ctx = createMock<FetchContext>({
+        options: {
+          method: 'delete',
+          headers: new Headers(),
+        },
+      })
+
+      await setStatefulParams(mockApp, ctx, mockLogger)
+
+      expect(ctx.options.headers).toStrictEqual(
+        new Headers({
+          ['header_name']: 'fresh-token-value',
+        }),
+      )
+
+      expect(isServerRuntimeMock).toHaveBeenCalled()
+      expect(useRequestHeadersMock).not.toHaveBeenCalled()
+      expect(useCookieMock).toHaveBeenCalledTimes(2)
+      expect(fetchMock).toHaveBeenCalledWith('/api/token', {
+        baseURL: 'http://remote-host.dev',
+        credentials: 'include',
+      })
       expect(refreshCookieMock).toHaveBeenCalledWith('cookie_name')
       expect(mockLogger.warn).not.toHaveBeenCalled()
       expect(mockLogger.debug).toHaveBeenCalledWith('[request] added header_name header')
@@ -339,6 +387,7 @@ describe('request interceptors', () => {
         'cookie_name',
         { readonly: true, watch: false },
       )
+      expect(useCookieMock).toHaveBeenCalledTimes(2)
       expect(fetchMock).toHaveBeenCalledWith('/api/token', {
         baseURL: 'http://remote-host.dev',
         credentials: 'include',

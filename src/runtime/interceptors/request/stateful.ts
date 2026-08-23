@@ -76,11 +76,13 @@ async function useCsrfHeader(
     throw new Error('`sanctum.csrf.header` is not defined')
   }
 
-  const csrfToken = useCookie(config.csrf.cookie, COOKIE_OPTIONS)
+  let csrfToken = useCookie(config.csrf.cookie, COOKIE_OPTIONS)
 
   if (!csrfToken.value) {
     await initCsrfCookie(config, logger)
     refreshCookie(config.csrf.cookie)
+    // new ref to avoid async race-condition
+    csrfToken = useCookie(config.csrf.cookie, COOKIE_OPTIONS)
   }
 
   if (!csrfToken.value) {
