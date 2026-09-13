@@ -4,6 +4,7 @@ import { useSanctumConfig } from '../../composables/useSanctumConfig'
 import type { PublicModuleOptions } from '../../types/options'
 import { useCookie, useRequestHeaders, refreshCookie, type NuxtApp } from '#app'
 import { isServerRuntime } from '../../utils/runtime'
+import { initCsrfCookie } from '../../utils/cookies'
 
 const SECURE_METHODS = new Set(['post', 'delete', 'put', 'patch'])
 const COOKIE_OPTIONS: { readonly: true, watch: false } = { readonly: true, watch: false }
@@ -34,27 +35,6 @@ function useClientHeaders(
     '[request] added client headers to server request',
     Object.keys(headersToAdd),
   )
-}
-
-/**
- * Request a new CSRF cookie from the API
- * @param config Module configuration
- * @param logger Logger instance
- */
-async function initCsrfCookie(
-  config: PublicModuleOptions,
-  logger: ConsolaInstance,
-): Promise<void> {
-  if (config.endpoints.csrf === undefined) {
-    throw new Error('`sanctum.endpoints.csrf` is not defined')
-  }
-
-  await $fetch(config.endpoints.csrf, {
-    baseURL: config.baseUrl,
-    credentials: 'include',
-  })
-
-  logger.debug('[request] CSRF cookie has been initialized')
 }
 
 /**

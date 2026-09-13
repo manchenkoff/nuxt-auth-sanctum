@@ -9,12 +9,14 @@ const {
   useRequestEventMock,
   navigateToMock,
   isServerRuntimeMock,
+  useStateMock,
 } = vi.hoisted(() => {
   return {
     useSanctumConfigMock: vi.fn(),
     useRequestEventMock: vi.fn(),
     navigateToMock: vi.fn(),
     isServerRuntimeMock: vi.fn(),
+    useStateMock: vi.fn(),
   }
 })
 
@@ -33,6 +35,7 @@ vi.mock(
   () => ({
     useRequestEvent: useRequestEventMock,
     navigateTo: navigateToMock,
+    useState: useStateMock,
   }),
 )
 
@@ -213,17 +216,55 @@ describe('response interceptors', () => {
       expect(mockApp.callHook).not.toHaveBeenCalledWith()
       expect(mockApp.runWithContext).not.toHaveBeenCalled()
       expect(mockLogger.debug).toHaveBeenCalledWith(`[response] no cookies to pass to the client [${ctx.request}]`)
-      expect(mockLogger.debug).toHaveBeenCalledWith(
-        '[response] pass cookies from server to client response',
-        [
-          'event-cookie-name',
-        ],
-      )
-      expect(mockEvent.node.res.setHeader).toHaveBeenCalledWith(
+      expect(mockEvent.node.res.setHeader).not.toHaveBeenCalled()
+    })
+
+    it('stashes cookies for client replay when the event response is already handled', async () => {
+      useSanctumConfigMock.mockReturnValue({ mode: 'cookie' })
+      isServerRuntimeMock.mockReturnValue(true)
+
+      const mockEvent = createMock<H3Event<EventHandlerRequest>>({
+        handled: true,
+        node: {
+          res: {
+            getHeaders: vi.fn().mockReturnValue({}),
+            setHeader: vi.fn(),
+          },
+        },
+      })
+
+      useRequestEventMock.mockReturnValue(mockEvent)
+
+      const pendingCookies = { value: [] as string[] }
+      useStateMock.mockReturnValue(pendingCookies)
+
+      const mockApp = createAppMock()
+      const mockLogger = createLoggerMock()
+
+      const ctx = createMock<FetchContext>({
+        response: {
+          headers: new Headers({
+            'set-cookie': 'response-cookie-name=value-two',
+          }),
+        },
+      })
+
+      await proxyResponseHeaders(mockApp, ctx, mockLogger)
+
+      expect(isServerRuntimeMock).toHaveBeenCalled()
+      expect(useRequestEventMock).toHaveBeenCalledWith(mockApp)
+      expect(navigateToMock).not.toHaveBeenCalled()
+      expect(mockApp.callHook).not.toHaveBeenCalledWith()
+      expect(mockApp.runWithContext).not.toHaveBeenCalled()
+      expect(mockEvent.node.res.setHeader).not.toHaveBeenCalledWith(
         'set-cookie',
-        [
-          'event-cookie-name=value-one',
-        ],
+        expect.anything(),
+      )
+      expect(pendingCookies.value).toStrictEqual([
+        'response-cookie-name=value-two',
+      ])
+      expect(mockLogger.warn).toHaveBeenCalledWith(
+        '[response] response headers are already sent, cookies will be replayed on the client',
       )
     })
 

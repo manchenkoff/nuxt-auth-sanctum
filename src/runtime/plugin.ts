@@ -12,6 +12,7 @@ import { useSanctumLogger } from './utils/logging'
 import { useSanctumTokenStorage } from './composables/useSanctumTokenStorage'
 import { useSanctumUser } from './composables/useSanctumUser'
 import { isServerRuntime } from './utils/runtime'
+import { applyPendingCookies, ensureSsrCsrfCookie, replayPendingCookies } from './utils/ssrCookies'
 
 async function resolveTokenStorage(nuxtApp: NuxtApp, logger: ConsolaInstance): Promise<TokenStorage> {
   let appConfig = useSanctumAppConfig()
@@ -114,6 +115,22 @@ export default defineNuxtPlugin({
           await initialIdentityLoad(nuxtApp, client, options, logger)
         },
       )
+    }
+
+    if (import.meta.server) {
+      // establish CSRF/session cookies before the response headers are
+      // committed so they can be forwarded to the client (SSR streaming)
+      await ensureSsrCsrfCookie(options, logger)
+    }
+
+    if (import.meta.client) {
+      // replay the cookies that could not be forwarded during SSR after the
+      // response headers were committed (SSR streaming)
+      const needsSessionRefresh = applyPendingCookies(options)
+
+      if (needsSessionRefresh) {
+        await replayPendingCookies(options, logger)
+      }
     }
 
     return {
