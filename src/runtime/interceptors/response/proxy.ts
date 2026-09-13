@@ -1,14 +1,17 @@
-import type { OutgoingHttpHeaders } from 'node:http'
-import { getResponseHeaders, setResponseHeaders, splitCookiesString } from 'h3'
-import type { H3Event, TypedHeaders } from 'h3'
+import { getResponseHeaders } from 'h3'
 import type { FetchContext } from 'ofetch'
 import type { ConsolaInstance } from 'consola'
 import { useSanctumConfig } from '../../composables/useSanctumConfig'
-import { navigateTo, useRequestEvent } from '#app'
+import { navigateTo, useRequestEvent, useState } from '#app'
 import type { NuxtApp } from '#app'
 import { isServerRuntime } from '../../utils/runtime'
-
-const ServerCookieName = 'set-cookie'
+import { PENDING_COOKIES_STATE_KEY } from '../../utils/constants'
+import {
+  createCookiesMap,
+  extractCookiesFromEventHeaders,
+  extractCookiesFromHeaders,
+  writeCookiesToEvent,
+} from '../../utils/cookies'
 
 /**
  * Append server response headers to the client response
@@ -31,83 +34,33 @@ function appendServerResponseHeaders(
   const eventHeaders = getResponseHeaders(event)
 
   const cookiesFromEvent = extractCookiesFromEventHeaders(eventHeaders)
-  const cookiesFromResponse = extractCookiesFromResponse(ctx, logger)
+  const cookiesFromResponse = extractCookiesFromHeaders(ctx.response?.headers)
+
+  if (cookiesFromResponse.length === 0) {
+    logger.debug(`[response] no cookies to pass to the client [${ctx.request}]`)
+    return
+  }
 
   const cookiesMap = createCookiesMap(cookiesFromEvent, cookiesFromResponse)
 
-  writeCookiesToEventResponse(event, eventHeaders, cookiesMap)
+  const applied = writeCookiesToEvent(event, cookiesMap)
+
+  if (!applied) {
+    // the response headers are already committed (e.g. SSR streaming enabled),
+    // the cookies will be replayed on the client after hydration
+    const pendingCookies = useState<string[]>(PENDING_COOKIES_STATE_KEY, () => [])
+    const uniqueCookies = createCookiesMap(pendingCookies.value, cookiesFromResponse)
+
+    pendingCookies.value = Array.from(uniqueCookies.values())
+
+    logger.warn('[response] response headers are already sent, cookies will be replayed on the client')
+    return
+  }
 
   logger.debug(
-    `[response] pass cookies from server to client response`,
+    '[response] pass cookies from server to client response',
     Array.from(cookiesMap.keys()),
   )
-}
-
-/**
- * Extract cookies from the current H3 event headers
- * @param headers HTTP headers collection
- */
-function extractCookiesFromEventHeaders(headers: OutgoingHttpHeaders): string[] {
-  const cookieHeader = headers[ServerCookieName] ?? []
-
-  if (Array.isArray(cookieHeader)) {
-    return cookieHeader
-  }
-
-  return [cookieHeader]
-}
-
-/**
- * Extract cookies from the remote API response headers
- * @param ctx Remote API fetch context
- * @param logger Module logger instance
- */
-function extractCookiesFromResponse(ctx: FetchContext, logger: ConsolaInstance): string[] {
-  const cookieHeader = ctx.response!.headers.get(ServerCookieName)
-
-  if (cookieHeader === null) {
-    logger.debug(`[response] no cookies to pass to the client [${ctx.request}]`)
-    return []
-  }
-
-  return splitCookiesString(cookieHeader)
-}
-
-/**
- * Create a map of cookies to deduplicate them
- * @param cookieCollections Arrays of cookies to merge
- */
-function createCookiesMap(...cookieCollections: string[][]) {
-  const cookiesMap = new Map<string, string>()
-
-  for (const cookies of cookieCollections) {
-    for (const cookie of cookies) {
-      const cookieName = cookie.split('=')[0]
-
-      if (cookieName === undefined) {
-        continue
-      }
-
-      cookiesMap.set(cookieName, cookie)
-    }
-  }
-
-  return cookiesMap
-}
-
-/**
- * Write cookies to the event response headers, keeping the original headers
- * @param event H3 event instance
- * @param headers HTTP headers collection
- * @param cookiesMap Cookies map
- */
-function writeCookiesToEventResponse(event: H3Event, headers: OutgoingHttpHeaders, cookiesMap: Map<string, string>) {
-  const mergedHeaders = {
-    ...headers,
-    [ServerCookieName]: Array.from(cookiesMap.values()),
-  } as TypedHeaders
-
-  setResponseHeaders(event, mergedHeaders)
 }
 
 /**

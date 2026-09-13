@@ -8,3 +8,11 @@ export function trimTrailingSlash(path: string): string {
   }
   return path
 }
+
+/**
+ * Escapes regex special characters in a string.
+ * @param value String to escape
+ */
+export function escapeRegex(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
