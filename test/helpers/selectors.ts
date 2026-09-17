@@ -8,4 +8,7 @@ export const selectors = {
   profile: {
     logout: 'button#logout',
   },
+  ping: {
+    value: '#ping-value',
+  },
 }
