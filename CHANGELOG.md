@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.1.2
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v3.1.1...v3.1.2)
+
+### 🩹 Fixes
+
+- Support ssr streaming ([#702](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/702))
+
+### ❤️ Contributors
+
+- Artem Manchenkov ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v3.1.1
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v3.1.0...v3.1.1)
