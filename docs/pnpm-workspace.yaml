@@ -14,3 +14,6 @@ ignoredBuiltDependencies:
 onlyBuiltDependencies:
   - better-sqlite3
   - sharp
+
+overrides:
+  mdast-util-to-markdown: 2.1.2
