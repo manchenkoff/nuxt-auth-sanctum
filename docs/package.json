@@ -13,23 +13,23 @@
     "upgrade": "pnpm self-update && npx nuxt upgrade --dedupe && pnpm up && pnpm lint"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.136",
-    "@iconify-json/simple-icons": "^1.2.97",
-    "@iconify-json/vscode-icons": "^1.2.81",
+    "@iconify-json/lucide": "^1.2.138",
+    "@iconify-json/simple-icons": "^1.2.98",
+    "@iconify-json/vscode-icons": "^1.2.83",
     "@nuxt/content": "^3.16.1",
     "@nuxt/image": "^2.1.0",
-    "@nuxt/ui": "^4.11.2",
+    "@nuxt/ui": "^4.11.3",
     "better-sqlite3": "^12.11.1",
     "nuxt": "^4.5.2",
     "nuxt-llms": "0.2.0",
-    "nuxt-og-image": "^6.9.0"
+    "nuxt-og-image": "^6.10.1"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.17.0",
     "@takumi-rs/core": "^0.73.1",
-    "eslint": "^10.11.0",
+    "eslint": "^10.12.0",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.3.11"
+    "vue-tsc": "^3.3.12"
   },
   "resolutions": {
     "unimport": "4.1.1"
