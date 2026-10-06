@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v3.1.3
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v3.1.2...v3.1.3)
+
+### 🩹 Fixes
+
+- Added h3 and consola as explicit dependencies ([#715](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/715))
+
+### 🏡 Chore
+
+- **deps-dev:** Bump vitest from 4.1.11 to 5.0.2 ([#710](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/710))
+- Upgraded deps ([51c5f11](https://github.com/manchenkoff/nuxt-auth-sanctum/commit/51c5f11))
+
+### ❤️ Contributors
+
+- Artem Manchenkov ([@manchenkoff](https://github.com/manchenkoff))
+- Manchenkoff ([@manchenkoff](https://github.com/manchenkoff))
+
 ## v3.1.2
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v3.1.1...v3.1.2)
