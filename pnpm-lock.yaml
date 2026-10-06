@@ -166,9 +166,15 @@ importers:
 
   .:
     dependencies:
+      consola:
+        specifier: ^3.4.2
+        version: 3.4.2
       defu:
         specifier: ^6.1.7
         version: 6.1.7
+      h3:
+        specifier: ^1.15.11
+        version: 1.15.11
       ofetch:
         specifier: ^1.5.1
         version: 1.5.1
@@ -206,15 +212,9 @@ importers:
       changelogen:
         specifier: ^0.6.2
         version: 0.6.2(magicast@0.5.5)
-      consola:
-        specifier: ^3.4.2
-        version: 3.4.2
       eslint:
         specifier: ^10.12.0
         version: 10.12.0(jiti@2.7.0)(supports-color@10.2.2)
-      h3:
-        specifier: 1.15.11
-        version: 1.15.11
       happy-dom:
         specifier: ^20.14.5
         version: 20.14.5
