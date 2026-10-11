@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "nuxt-sanctum-cookie",
+  "type": "module",
   "scripts": {
     "build": "nuxt build",
     "test:types": "nuxt prepare && npx vue-tsc -b --noEmit"
