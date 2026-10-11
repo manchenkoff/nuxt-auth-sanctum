@@ -34,7 +34,9 @@ describe('useLazySanctumFetch', () => {
     const { data } = await useLazySanctumFetch(ENDPOINT)
 
     expect(useSanctumClientMock).toHaveBeenCalled()
-    expect(data.value).toStrictEqual(RESPONSE)
+    await vi.waitFor(() => {
+      expect(data.value).toStrictEqual(RESPONSE)
+    })
   })
 
   it('passes options down to useLazyFetch', async () => {
@@ -49,6 +51,8 @@ describe('useLazySanctumFetch', () => {
     )
 
     expect(useSanctumClientMock).toHaveBeenCalled()
-    expect(data.value).toStrictEqual(RESPONSE)
+    await vi.waitFor(() => {
+      expect(data.value).toStrictEqual(RESPONSE)
+    })
   })
 })
