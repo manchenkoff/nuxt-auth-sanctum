@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.1.4
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v3.1.3...v3.1.4)
+
+### 🩹 Fixes
+
+- Make h3 a direct dependency ([#725](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/725))
+
+### ❤️ Contributors
+
+- Artem Manchenkov <artem@manchenkoff.me>
+
 ## v3.1.3
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v3.1.2...v3.1.3)
