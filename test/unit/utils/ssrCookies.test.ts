@@ -14,14 +14,25 @@ const {
   useRequestHeadersMock,
   useStateMock,
   fetchRawMock,
+  buildFlags,
 } = vi.hoisted(() => {
   return {
     useRequestEventMock: vi.fn(),
     useRequestHeadersMock: vi.fn(),
     useStateMock: vi.fn(),
     fetchRawMock: vi.fn(),
+    buildFlags: { ssrStreaming: true },
   }
 })
+
+vi.mock(
+  '#build/sanctum/ssr-streaming.mjs',
+  () => ({
+    get ssrStreaming() {
+      return buildFlags.ssrStreaming
+    },
+  }),
+)
 
 vi.mock(
   '#app',
@@ -67,9 +78,23 @@ describe('SSR cookies utils', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
+    buildFlags.ssrStreaming = true
   })
 
   describe('ensureSsrCsrfCookie', () => {
+    it('no-op when SSR streaming is disabled', async () => {
+      buildFlags.ssrStreaming = false
+      useRequestHeadersMock.mockReturnValue({})
+
+      const mockLogger = createLoggerMock()
+
+      await ensureSsrCsrfCookie(cookieConfig, mockLogger)
+
+      expect(useRequestHeadersMock).not.toHaveBeenCalled()
+      expect(useRequestEventMock).not.toHaveBeenCalled()
+      expect(fetchRawMock).not.toHaveBeenCalled()
+    })
+
     it('no-op when token mode is enabled', async () => {
       const mockLogger = createLoggerMock()
 
