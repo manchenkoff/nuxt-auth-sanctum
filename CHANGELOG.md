@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.1.5
+
+[compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v3.1.4...v3.1.5)
+
+### 🩹 Fixes
+
+- Only initialize the CSRF cookie during SSR when streaming is enabled ([#724](https://github.com/manchenkoff/nuxt-auth-sanctum/pull/724))
+
+### ❤️ Contributors
+
+- Yannik Firre ([@YannikFirre](https://github.com/YannikFirre))
+
 ## v3.1.4
 
 [compare changes](https://github.com/manchenkoff/nuxt-auth-sanctum/compare/v3.1.3...v3.1.4)
