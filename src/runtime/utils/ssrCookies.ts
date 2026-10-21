@@ -1,6 +1,7 @@
 import { getResponseHeaders } from 'h3'
 import type { ConsolaInstance } from 'consola'
 import { useRequestEvent, useRequestHeaders, useState } from '#app'
+import { ssrStreaming } from '#build/sanctum/ssr-streaming.mjs'
 import type { PublicModuleOptions } from '../types/options'
 import { PENDING_COOKIES_STATE_KEY } from './constants'
 import {
@@ -21,6 +22,10 @@ import { escapeRegex } from './formatter'
  * cannot be forwarded to the client. When the browser has not sent the CSRF
  * cookie yet (first visit or expired session), the module fetches a fresh
  * one from the API while the headers are still writable.
+ *
+ * Without streaming, the headers stay writable until the render ends, and the
+ * client requests the CSRF cookie before its first state-changing request:
+ * the extra API call would only delay every first visit.
  * @param config Module configuration
  * @param logger Logger instance
  */
@@ -28,6 +33,10 @@ export async function ensureSsrCsrfCookie(
   config: PublicModuleOptions,
   logger: ConsolaInstance,
 ): Promise<void> {
+  if (!ssrStreaming) {
+    return
+  }
+
   if (config.mode !== 'cookie') {
     return
   }

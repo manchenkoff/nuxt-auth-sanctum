@@ -75,6 +75,13 @@ declare module '#app' {
   }
 }
 
+declare module '#build/sanctum/ssr-streaming.mjs' {
+  /**
+   * Whether Nuxt's \`experimental.ssrStreaming\` is enabled.
+   */
+  export const ssrStreaming: boolean
+}
+
 declare module 'nitropack/types' {
   interface NitroRuntimeHooks {
     /**

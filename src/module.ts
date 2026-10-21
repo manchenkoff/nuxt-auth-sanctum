@@ -6,6 +6,7 @@ import {
   addRouteMiddleware,
   useLogger,
   addServerHandler,
+  addTemplate,
 } from '@nuxt/kit'
 import { defu } from 'defu'
 import { defaultModuleOptions } from './config'
@@ -48,6 +49,14 @@ export default defineNuxtModule<ModuleOptions>({
 
     _nuxt.options.runtimeConfig.sanctum = sanctumConfig
     _nuxt.options.runtimeConfig.public.sanctum = sanctumClientConfig
+
+    // `experimental.ssrStreaming` only exists at build time: the runtime reads it from this
+    // template, resolved with the same check as Nuxt core.
+    const { ssrStreaming } = _nuxt.options.experimental
+    addTemplate({
+      filename: 'sanctum/ssr-streaming.mjs',
+      getContents: () => `export const ssrStreaming = ${typeof ssrStreaming === 'object' && ssrStreaming.enabled === true}\n`,
+    })
 
     const logger = useLogger(MODULE_NAME, { level: sanctumConfig.logLevel })
 
