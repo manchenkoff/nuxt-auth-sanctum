@@ -13,11 +13,11 @@
     "upgrade": "pnpm self-update && npx nuxt upgrade --dedupe && pnpm up && pnpm lint"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.145",
+    "@iconify-json/lucide": "^1.2.147",
     "@iconify-json/simple-icons": "^1.2.100",
-    "@iconify-json/vscode-icons": "^1.2.90",
+    "@iconify-json/vscode-icons": "^1.2.93",
     "@nuxt/content": "^3.16.2",
-    "@nuxt/image": "^2.1.0",
+    "@nuxt/image": "^2.2.0",
     "@nuxt/ui": "^4.12.0",
     "better-sqlite3": "^12.11.1",
     "nuxt": "^4.6.2",
