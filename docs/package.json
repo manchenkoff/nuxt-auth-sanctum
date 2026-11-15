@@ -13,9 +13,9 @@
     "upgrade": "pnpm self-update && npx nuxt upgrade --dedupe && pnpm up && pnpm lint"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.151",
-    "@iconify-json/simple-icons": "^1.2.101",
-    "@iconify-json/vscode-icons": "^1.2.96",
+    "@iconify-json/lucide": "^1.2.154",
+    "@iconify-json/simple-icons": "^1.2.102",
+    "@iconify-json/vscode-icons": "^1.2.98",
     "@nuxt/content": "^3.16.2",
     "@nuxt/image": "^2.2.1",
     "@nuxt/ui": "^4.12.0",
@@ -27,7 +27,7 @@
   "devDependencies": {
     "@nuxt/eslint": "^1.17.0",
     "@takumi-rs/core": "^0.73.1",
-    "eslint": "^10.14.0",
+    "eslint": "^10.15.0",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.3.14"
   },
